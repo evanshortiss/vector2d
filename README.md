@@ -1,4 +1,4 @@
-Vec2D - Simple 2D Vector Library for JavaScript
+Vec2D - 2D Vector Library for JavaScript
 ===
 
 ### Testing
@@ -6,7 +6,7 @@ Need to write tests.
 Tested on Chrome 27 and Safari 6.0.3.
 
 ### About
-Vec2D will attempt to use Float32Array types internally for faster operation through indexing. If only standard JavaScript arrays are available then these will be used. Alternatively you can force the use of standard JavaScript arrays. Inspired in part by <a href="http://media.tojicode.com/sfjs-vectors/#36">Efficient JavaScript Vector Math</a>(Efficiency not guaranteed).
+Vec2D will attempt to use Float32Array types internally for faster operation through indexing. If only standard JavaScript arrays are available then these will be used. Alternatively you can force the use of standard JavaScript arrays. Inspired in part by <a href="http://media.tojicode.com/sfjs-vectors/#36">Efficient JavaScript Vector Math</a> (I make no efficiency gaurantees yet!).
 
 ```javascript
   // Use standard array instead of Float32Array
