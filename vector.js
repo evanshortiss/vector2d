@@ -394,7 +394,7 @@
      * Same as normalise
      */
     normalize: function(vec) {
-      return this.normalise(v, out);
+      return this.normalise(v);
     },
 
 
@@ -402,7 +402,7 @@
      * Same as normalise.
      */
     unit: function(vec) {
-      return this.normalise(v, out);
+      return this.normalise(v);
     },
 
 
