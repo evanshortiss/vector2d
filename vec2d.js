@@ -46,6 +46,8 @@
     // User passed x and y in an object
     else if (typeof(args[0]) === 'object') {
       return [args[0].x, args[0].y];
+    } else {
+      return [0, 0];
     }
   }
 
@@ -75,6 +77,16 @@
     };
 
   Vector.prototype = {
+    /**
+     * Set both x and y
+     * @param x   New x val 
+     * @param y   New y val
+     */
+    set: function(x, y) {
+
+    },
+
+
     /**
      * Getter for x axis.
      * @return {Number}
@@ -111,9 +123,13 @@
 
     /**
      * View vector as a string such as "Vec2D: (0, 4)"
-     * @return {String}
+     * @param   {Boolean}
+     * @return  {String}
      */
-    toString: function() {
+    toString: function(round) {
+      if(round) {
+        return '(' + Math.round(this.getX()).toString() + ', ' + Math.round(this.getY()).toString() + ')'  
+      }
       return '(' + this.getX().toString() + ', ' + this.getY().toString() + ')'
     },
 
@@ -148,6 +164,7 @@
       this._axes[1] += vec._axes[1];
     },
 
+
     /**
      * Subtract the provided vector from this one.
      * @param {Vector} vec
@@ -164,7 +181,7 @@
      * @return  {Boolean}
      */
     equals: function(vec) {
-      return (vec.getX() === this.getX() && vec.getY() === this.getY());
+      return (vec._axes[0] === this._axes[0] && vec._axes[1] === this._axes[0]);
     },
 
 
@@ -209,8 +226,7 @@
 
 
     /**
-     * Normalise this vector.
-     * Directly affects this vector.
+     * Normalise this vector. Directly affects this vector.
      * Use Vec2D.normalise(vector) to create a normalised clone of this.
      */
     normalise: function() {
@@ -272,10 +288,10 @@
       return ( (this._axes[0]*vec._axes[1]) - (this._axes[1]*vec._axes[0]) );
     },
 
+
     /**
      * Returns the reverse of the provided vector.
      * @param   {Vector} vec
-     * @return  {Vector}
      */
     reverse: function(vec) {
       this._axes[0] = -this._axes[0];
@@ -326,7 +342,7 @@
 
 
     /**
-     * Add two provided Vectors to produce a new one.
+     * Add v0 to v1 to produce a new vector
      * @param   {Vector} v0
      * @param   {Vector} v1
      * @return  {Vector}
@@ -343,7 +359,7 @@
      * @return  {Vector}
      */
     subtract: function(v0, v1) {
-      return this.create(v0._axes[0] + v1._axes[0], v0._axes[1] + v1._axes[1])
+      return this.create(v0._axes[0] - v1._axes[0], v0._axes[1] - v1._axes[1])
     },
 
 
@@ -443,6 +459,17 @@
      */
     length: function(vec) {
       return vec.magnitude();
+    },
+
+
+    /**
+     * Find sqaure distance between two vectors.
+     * @param   {Vector} v0
+     * @param   {Vector} v1
+     * @return  {Number}
+     */
+    distance: function(v0, v1) {
+      return Math.sqrt( (v0.getX() - v1.getX()) * (v0.getX() - v1.getX()) + (v0.getY() - v1.getY()) * (v0.getY() - v1.getY()) )
     },
 
 

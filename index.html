@@ -2,9 +2,75 @@
 <html>
   <head>
     <title>Vec2D</title>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        font-family: Helvetica, Arial, Sans-Serif;
+      }
+
+      #canvas {
+        border: 0.3em solid black;
+        margin: auto;
+      }
+    </style>
+
+    <script>
+      var WIDTH, HEIGHT;
+      var ball, ctx;
+      var prevFrame;
+
+      function randFloat(min, max)  {
+        return min + (max - min) * Math.random()
+      }
+
+      function init() {
+        WIDTH = document.getElementById('canvas').offsetWidth;
+        HEIGHT = document.getElementById('canvas').offsetHeight;
+        ctx = document.getElementById('canvas').getContext('2d');
+        ball = Vec2D.create(WIDTH/2, HEIGHT/2);
+        ball.radius = 7;
+        ball.velocity = Vec2D.create(randFloat(-0.5, 0.5), randFloat(-0.5, 0.5));
+
+        prevFrameTime = new Date().getTime();
+
+        setInterval(function() {
+          update();
+        }, 1000/60);
+      }
+
+      function update() {
+        var dt = new Date().getTime() - prevFrameTime;
+        prevFrameTime = new Date().getTime();
+
+        // Update ball position
+        ball.setX(ball.getX() + ball.velocity.getX() * dt);
+        ball.setY(ball.getY() + ball.velocity.getY() * dt);
+        document.getElementById('position').innerHTML = "Ball Position: " + ball.toString(true);
+
+        // Kepp ball in bounds
+        if(ball.getX() >= WIDTH || ball.getX() <= 0) {
+          ball.velocity.setX(-ball.velocity.getX());
+        }
+        if(ball.getY() >= HEIGHT || ball.getY() <= 0) {
+          ball.velocity.setY(-ball.velocity.getY());
+        }
+
+        // Draw code
+        canvas.width = canvas.width;
+        ctx.arc(Math.round(ball.getX()), Math.round(ball.getY()), ball.radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'black';
+        ctx.fill();
+      }
+    </script>
   </head>
 
-  <body>
-    <script src="./vector.js"></script>
+  <body onload="init()">
+    <h2>Vec2D - 2D Vector Library</h2>
+    <canvas id="canvas" width="800" height="500"></canvas>
+    <p id="position"></p>
+    <script src="./vec2d.js"></script>
   </body>
 </html>
