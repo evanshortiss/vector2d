@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-(function(window, undefined) {
+(function() {
 
   // The array type to use for storage of axes.
   var AxesArray = Array;
@@ -82,8 +82,9 @@
      * @param x   New x val 
      * @param y   New y val
      */
-    set: function(x, y) {
-
+    setAxes: function(x, y) {
+      this._axes[0] = x;
+      this._axes[1] = y;
     },
 
 
@@ -128,9 +129,9 @@
      */
     toString: function(round) {
       if(round) {
-        return '(' + Math.round(this.getX()).toString() + ', ' + Math.round(this.getY()).toString() + ')'  
+        return '(' + Math.round(this.getX()) + ', ' + Math.round(this.getY()) + ')'  
       }
-      return '(' + this.getX().toString() + ', ' + this.getY().toString() + ')'
+      return '(' + this.getX() + ', ' + this.getY() + ')'
     },
 
 
@@ -139,7 +140,7 @@
      * @return {Array}
      */
     toArray: function() {
-      return new Array([this.getX(), this.getY()]);
+      return new Array(this.getX(), this.getY());
     },
 
 
@@ -162,6 +163,7 @@
     add: function(vec) {
       this._axes[0] += vec._axes[0];
       this._axes[1] += vec._axes[1];
+      return this;
     },
 
 
@@ -172,6 +174,7 @@
     subtract: function(vec) {
       this._axes[0] -= vec._axes[0];
       this._axes[1] -= vec._axes[1];
+      return this;
     },
 
 
@@ -181,7 +184,7 @@
      * @return  {Boolean}
      */
     equals: function(vec) {
-      return (vec._axes[0] === this._axes[0] && vec._axes[1] === this._axes[0]);
+      return (vec._axes[0] == this._axes[0] && vec._axes[1] == this._axes[1]);
     },
 
 
@@ -192,6 +195,7 @@
     multiplyByVector: function(vec) {
       this._axes[0] *= vec._axes[0];
       this._axes[1] *= vec._axes[1];
+      return this;
     },
 
 
@@ -202,6 +206,7 @@
     divideByVector: function(vec) {
       this._axes[0] /= vec._axes[0];
       this._axes[1] /= vec._axes[1];
+      return this;
     },
 
 
@@ -212,6 +217,7 @@
     multiplyByScalar: function(n) {
       this._axes[0] *= n;
       this._axes[1] *= n;
+      return this;
     },
 
 
@@ -222,6 +228,7 @@
     divideByScalar: function(n) {
       this._axes[0] /= n;
       this._axes[1] /= n;
+      return this;
     },
 
 
@@ -230,7 +237,7 @@
      * Use Vec2D.normalise(vector) to create a normalised clone of this.
      */
     normalise: function() {
-      this.multiplyByScalar(1 / this.magnitude());
+      return this.multiplyByScalar(1 / this.magnitude());
     },
 
 
@@ -484,10 +491,10 @@
   };
 
   // Expose publically
-  if (window) {
+  if (typeof window !== 'undefined') {
     window.Vec2D = new Vec2D();
   } else {
     module.exports = new Vec2D();
   }
 
-})(window);
+})();
