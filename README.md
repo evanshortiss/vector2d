@@ -20,9 +20,21 @@ Inspired in part by <a href="http://media.tojicode.com/sfjs-vectors/">Efficient 
   Vec2D.useStandardArrays();
 ```
 
+### About
+Inspired in part by <a href="http://media.tojicode.com/sfjs-vectors/">Efficient JavaScript Vector Math</a> (I make no efficiency guarantees!). Vec2D provides 3 main modes of operation: Array (Default mode), Float32Array, and Object. Using the library in ecah mode is transparent but internal vector representation is handled differently. Float32Arrays can be used for fast operations on vectors (but creating these is expensive). If only standard JavaScript arrays are available then these will be used in place of Float32Array. Don't mix operation modes as this isn't supported!
+
+```javascript
+  // Use Float32 Arrays
+  Vec2D.useFloat32Arrays();
+  // Use Objects
+  Vec2D.useObjects();
+  // Go back to default Array mode
+  Vec2D.useStandardArrays();
+```
+
 ### Usage
 Can be used in browser or within a node.js application.
-Usage of instance methods and static methods is different. Instance methods do not produce new vector instances as results, they instead modify the Vector they are called on, this applies to all operations. The code snippet below demonstrates this behaviour. Instance operations such as cross and dot products return results and will not modify the underlying Vector.
+Usage of instance methods and static methods is different. Instance methods do not produce new vector instances as results, they instead modify the Vector they are called upon, this applies to almost all operations (obviously clone() will return a new instance and magnitude() returns a number). The code snippet below demonstrates this behaviour. Using instance methods to perform vector operations as much as possible will minimise garbage collection and result in better application performance.
 
 ```javascript
   // Create vectors using different parameter types
@@ -48,3 +60,6 @@ Usage of instance methods and static methods is different. Instance methods do n
   // Will return -14402
   v2.dot(v0)
 ```
+
+### Performance Statistics
+This section will be filled in soon. For now running the tests will provide a basic performance overview prior to tests. Tests can be run be running the mocha command in the project root directory.

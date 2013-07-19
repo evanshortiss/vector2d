@@ -21,11 +21,8 @@
 (function() {
   var useObjects = false;
 
-  // The array type to use for storage of axes.
+  // Default is to use standard array
   var AxesArray = Array;
-  if (typeof(Float32Array) !== 'undefined') {
-    AxesArray = Float32Array;
-  }
 
 
   /**
