@@ -3,12 +3,12 @@
  * Some performance tests.
  */
 
-var Vec2D = require('./vec2d.js'),
+var Vec2D = require('../vec2d.js'),
   program = require('commander');
 
 program
   .version('0.0.1')
-  .option('-c, --count <count>', 'Number of times to perform each operation', Number, 1000000)
+  .option('-c, --count <count>', 'Number of times to perform each operation', Number, 100000)
   .option('-rmin, --rmin <rmin>', 'Smallest random number to use.', Number, -10000)
   .option('-rmax, --rmax <rmax>', 'Largest random number to use.', Number, 10000)
   .parse(process.argv);
@@ -73,7 +73,7 @@ var suite = {
     start();
     var i = OPERATION_COUNT;
 
-    Vec2D.useStandardArrays(false);
+    Vec2D.useFloat32Arrays();
 
     var float32Vectors = [];
     while (i) {
@@ -89,7 +89,7 @@ var suite = {
     start();
     var i = OPERATION_COUNT;
 
-    Vec2D.useStandardArrays(true);
+    Vec2D.useStandardArrays();
 
     var vectors = [];
     while (i) {
@@ -100,6 +100,24 @@ var suite = {
     end();
     return vectors;
   },
+
+
+  generateObjects: function(start, end) {
+    start();
+    var i = OPERATION_COUNT;
+
+    Vec2D.useObjects();
+
+    var vectors = [];
+    while (i) {
+      vectors.push(Vec2D.create(randomFloat(), randomFloat()));
+      i--;
+    }
+
+    end();
+    return vectors;
+  },
+
 
   addFloat32: function(start, end) {
     var vectors = this.generateFloat32(function(){}, function(){});
@@ -116,6 +134,19 @@ var suite = {
 
   addArray: function(start, end) {
     var vectors = this.generateStandard(function(){}, function(){});
+    start();
+
+    var i = vectors.length-1;
+    while(i) {
+      vectors[i].add(vectors[i]);
+      i--;
+    }
+
+    end();
+  },
+
+  addObjects: function(start, end) {
+    var vectors = this.generateObjects(function(){}, function(){});
     start();
 
     var i = vectors.length-1;
@@ -151,13 +182,29 @@ var suite = {
     }
 
     end();
+  },
+
+  updateObjects: function(start, end) {
+    var vectors = this.generateObjects(function(){}, function(){});
+    start();
+
+    var i = vectors.length-1;
+    while(i) {
+      vectors[i].setAxes(randomFloat(), randomFloat());
+      i--;
+    }
+
+    end();
   }
 }
 
-console.log('Running performance tests...');
+console.log('Running performance tests with ' + OPERATION_COUNT + ' vectors per test item...');
 util.runTask('generateFloat32');
 util.runTask('generateStandard');
+util.runTask('generateObjects');
 util.runTask('addFloat32');
 util.runTask('addArray');
+util.runTask('addObjects');
 util.runTask('updateFloat32');
 util.runTask('updateArray');
+util.runTask('updateObjects');
