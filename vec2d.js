@@ -303,6 +303,7 @@
     reverse: function(vec) {
       this._axes[0] = -this._axes[0];
       this._axes[1] = -this._axes[1];
+      return this;
     },
 
 
@@ -311,7 +312,7 @@
      * @return {Vector}
      */
     clone: function() {
-      return new Vector(this._axes[0], this._axes[1])
+      return new Vector([this._axes[0], this._axes[1]]);
     }
   };
 
@@ -342,9 +343,14 @@
      * Instruct the library to use standard JavaScript arrays.
      * Otherwise the library will try use Float32Arrays if available.
      */
-    useStandardArrays: function() {
-      AxesArray = Array;
-      useFloat32 = false;
+    useStandardArrays: function(use) {
+      if(use) {
+        AxesArray = Array;
+        useFloat32 = false;
+      } else {
+        AxesArray = Float32Array;
+        useFloat32 = true;
+      }
     },
 
 

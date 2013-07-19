@@ -1,0 +1,27 @@
+{
+    "name": "Vec2D",
+    "keywords": ["vector", "2d", "float", "float32", "Float32Array"],
+    "description": "2D Vector library offering Float32 or standard Array based vectors.",
+    "main": ".index.js",
+    "author": "Evan Shortiss",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/evanshortiss/vec2d.git"
+    },
+    "directories": {
+        "test": "./test"
+    },
+    "bugs": {
+        "url": "https://github.com/evanshortiss/vec2d/issues"
+    },
+    "licenses": [{
+        "type": "MIT",
+    }],
+    "dependencies": {
+        "commander": "1.2.0"
+    },
+    "engines": {
+        "node": ">=0.8.8"
+    }
+}

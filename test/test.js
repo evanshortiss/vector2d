@@ -232,4 +232,25 @@ describe('Test Vec2D Library instance methods.', function() {
       assert(v1.getY() === -9);
     });
   });
+
+  describe('clone()', function() {
+    it('Should create a copy of the vector.', function() {
+      var v1 = Vec2D.create(47, 345);
+      var clone = v1.clone();
+
+      assert(clone != v1);
+      assert(clone.equals(v1));
+    });
+  });
+
+  describe('cross()', function() {
+    it('Should return a scalar value.', function() {
+      var v1 = Vec2D.create(12, 32);
+      var v2 = Vec2D.create(2, 56);
+
+      assert(v1.cross(v2) === (v1.getX() * v2.getY() - v1.getY() *v2.getX()) );
+      assert(v1.getX() === 12 && v1.getY() === 32);
+      assert(v2.getX() === 2 && v2.getY() === 56);
+    });
+  })
 });
