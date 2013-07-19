@@ -1,7 +1,7 @@
 {
     "name": "Vec2D",
     "keywords": ["vector", "2d", "float", "float32", "Float32Array"],
-    "description": "2D Vector library offering Float32 or standard Array based vectors.",
+    "description": "2D Vector library offering Float32 or standard Array based vectors",
     "main": ".index.js",
     "author": "Evan Shortiss",
     "version": "0.0.1",
