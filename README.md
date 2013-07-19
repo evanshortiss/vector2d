@@ -14,13 +14,6 @@ Tests are being written currently. Running tests requires node.js and the mocha 
 Tested as working on Chrome 27 and Safari 6.0.3.
 
 ### About
-Inspired in part by <a href="http://media.tojicode.com/sfjs-vectors/">Efficient JavaScript Vector Math</a> (I make no efficiency guarantees!). Vec2D will attempt to use Float32Array types internally for faster operation through indexing. If only standard JavaScript arrays are available then these will be used. Alternatively you can force the use of standard JavaScript arrays as this may be faster if you plan to create many vector objects repeatedly.
-```javascript
-  // Use standard array instead of Float32Array
-  Vec2D.useStandardArrays();
-```
-
-### About
 Inspired in part by <a href="http://media.tojicode.com/sfjs-vectors/">Efficient JavaScript Vector Math</a> (I make no efficiency guarantees!). Vec2D provides 3 main modes of operation: Array (Default mode), Float32Array, and Object. Using the library in ecah mode is transparent but internal vector representation is handled differently. Float32Arrays can be used for fast operations on vectors (but creating these is expensive). If only standard JavaScript arrays are available then these will be used in place of Float32Array. Don't mix operation modes as this isn't supported!
 
 ```javascript
