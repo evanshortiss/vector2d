@@ -16,7 +16,7 @@
         "url": "https://github.com/evanshortiss/vec2d/issues"
     },
     "licenses": [{
-        "type": "MIT",
+        "type": "MIT"
     }],
     "dependencies": {
         "commander": "1.2.0"
