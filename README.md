@@ -30,6 +30,11 @@ Can be used in browser or within a node.js application.
 Usage of instance methods and static methods is different. Instance methods do not produce new vector instances as results, they instead modify the Vector they are called upon, this applies to almost all operations (obviously clone() will return a new instance and magnitude() returns a number). The code snippet below demonstrates this behaviour. Using instance methods to perform vector operations as much as possible will minimise garbage collection and result in better application performance.
 
 ```javascript
+  // Usage in node.js application
+  var Vec2D = require('vector2d');
+```
+
+```javascript
   // Create vectors using different parameter types
   var v0 = Vec2D.create({
     x: 23,
