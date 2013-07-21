@@ -629,10 +629,7 @@
      * @return  {Vector}
      */
     add: function(v0, v1) {
-      if(useObjects) {
-        return this.create(v0._axes.x + v1._axes.x, v0._axes.y + v1._axes.y);
-      }
-      return this.create(v0._axes[0] + v1._axes[0], v0._axes[1] + v1._axes[1])
+      return this.create(v0.getX() + v1.getX(), v0.getY() + v1.getY())
     },
 
 
@@ -643,10 +640,7 @@
      * @return  {Vector}
      */
     subtract: function(v0, v1) {
-      if(useObjects) {
-        return this.create(v0._axes.x + v1._axes.x, v0._axes.y + v1._axes.y);
-      }
-      return this.create(v0._axes[0] - v1._axes[0], v0._axes[1] - v1._axes[1])
+      return this.create(v0.getX() - v1.getX(), v0.getY()- v1.getY())
     },
 
 
@@ -668,10 +662,7 @@
      * @return  {Vector}
      */
     vectorTimesVector: function(v0, v1) {
-      if(useObjects) {
-        return this.create(v0._axes.x * v1._axes.x, v0._axes.y * v1._axes.y)
-      }
-      return this.create(v0._axes[0] * v1._axes[0], v0._axes[1] * v1._axes[1]);
+      return this.create(v0.getX() * v1.getX(), v0.getY() * v1.getY());
     },
 
 
@@ -682,10 +673,7 @@
      * @return  {Vector}
      */
     vectorTimesScalar: function(vec, n) {
-      if(useObjects) {
-        return this.create(vec._axes.x * n, vec._axes.y * n)
-      }
-      return this.create(vec._axes[0] * n, vec._axes[1] * n)
+      return this.create(vec.getX() * n, vec.getY() * n)
     },
 
 
@@ -722,10 +710,7 @@
      * @return  {Number}
      */
     dot: function(v0, v1) {
-      if(useObjects) {
-        return (v0._axes.x * v1._axes.x) + (v0._axes.y * v1._axes.y);  
-      }
-      return (v0._axes[0] * v1._axes[0]) + (v0._axes[1] * v1._axes[1]);
+      return (v0.getX() * v1.getX()) + (v0.getY() * v1.getY());
     },
 
 
@@ -736,10 +721,7 @@
      * @param   {Vector}
      */
     cross: function(v0, v1) {
-      if(useObjects) {
-        return ((v0._axes.x * v1._axes.y) - (v0._axes.y * v1._axes.x));  
-      }
-      return ((v0._axes[0] * v1._axes[1]) - (v0._axes[1] * v1._axes[0]));
+      return ((v0.getX() * v1.getY()) - (v0.getY() * v1.getX()));
     },
 
 
@@ -778,10 +760,7 @@
      * @return  {Vector}
      */
     reverse: function(vec) {
-      if(useObjects) {
-        return this.create(-vec._axes.x, -vec._axes.y);
-      }
-      return this.create(-vec._axes[0], -vec._axes[1]);
+      return this.create(-vec.getX(), -vec.getY());
     }
   };
 

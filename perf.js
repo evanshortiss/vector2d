@@ -3,7 +3,7 @@
  * Some performance tests.
  */
 
-var Vec2D = require('../vec2d.js'),
+var Vec2D = require('./vec2d.js'),
   program = require('commander');
 
 program

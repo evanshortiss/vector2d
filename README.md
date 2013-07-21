@@ -60,4 +60,4 @@ Usage of instance methods and static methods is different. Instance methods do n
 ```
 
 ### Performance Statistics
-This section will be filled in soon. For now running the tests will provide a basic performance overview prior to tests. Tests can be run be running the mocha command in the project root directory.
+This section will be filled in soon. For now running the file <pre>perf.js<pre> will provide performance indication.
