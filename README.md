@@ -60,4 +60,4 @@ Usage of instance methods and static methods is different. Instance methods do n
 ```
 
 ### Performance Statistics
-This section will be filled in soon. For now running the file <pre>perf.js<pre> will provide performance indication.
+This section will be filled in soon. For now running the file *perf.js* will provide performance indication.
