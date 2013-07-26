@@ -1,22 +1,20 @@
 Vec2D - 2D Vector Library for JavaScript
 ===
 
-### Testing
-Tests are being written currently. Running tests requires node.js and the mocha framework.
+## About
+An easy to use 2D Vector library with 3 methods of Vector representation for performance tuning, and all within 5KB.
 
-```
-  $ npm install -g mocha
-  $ cd ved2d
-  $ mocha
-  .......
-```
+Vec2D provides 3 main modes of operation (Vector representations): 
 
-Tested as working on Chrome 27 and Safari 6.0.3.
+* Array (Default mode)
+* Float32Array
+* Object
 
-### About
-Inspired in part by <a href="http://media.tojicode.com/sfjs-vectors/">Efficient JavaScript Vector Math</a> (I make no efficiency guarantees!). Vec2D provides 3 main modes of operation: Array (Default mode), Float32Array, and Object. Using the library in ecah mode is transparent but internal vector representation is handled differently. Float32Arrays can be used for fast operations on vectors (but creating these is expensive). If only standard JavaScript arrays are available then these will be used in place of Float32Array. Don't mix operation modes as this isn't supported!
+Regardless of operation mode all library functions can be used in the same manner and developers will not need to worry about the vector representation. 
 
 ```javascript
+  // You only need to call these once if you don't plan on changing mode
+
   // Use Float32 Arrays
   Vec2D.useFloat32Arrays();
   // Use Objects
@@ -25,14 +23,46 @@ Inspired in part by <a href="http://media.tojicode.com/sfjs-vectors/">Efficient 
   Vec2D.useStandardArrays();
 ```
 
-### Usage
-Can be used in browser or within a node.js application.
-Usage of instance methods and static methods is different. Instance methods do not produce new vector instances as results, they instead modify the Vector they are called upon, this applies to almost all operations (obviously clone() will return a new instance and magnitude() returns a number). The code snippet below demonstrates this behaviour. Using instance methods to perform vector operations as much as possible will minimise garbage collection and result in better application performance.
+In some instances mixing operation modes may work but I have not yet tested for all use cases. The mode used depends on use case, for example if you plan to create many vectors in each frame of a game, but perform very few operations on them then Objects might be fastest. Float32Arrays can be used for faster operations on vectors, but creating these is expensive so it is important to choose the best vector representation for your application. See the [Performance Statistics](#perf) section for more info.
 
+## Testing
+Running tests requires node.js and the mocha framework.
+
+```
+  $ npm install -g mocha
+  $ cd ved2d
+  $ mocha
+  .......
+```
+
+Tested on: 
+* Node.js 0.8.8
+* Chrome 27
+* Safari 6.0.3.
+
+
+## Usage
+
+### Node.js
+To install:
+```
+  $ npm install vector2d
+```
+
+To use:
 ```javascript
-  // Usage in node.js application
+  // Usage in node.js application if installed via npm
   var Vec2D = require('vector2d');
 ```
+
+### Browser
+Just include a script tag as you'd expect:
+```html
+<script src="path/to/vec2d.js" type="text/javascript"></script>
+```
+
+### Library Functions
+To avoid garbage collection and allow for faster operation all vector instance methods will modify the existing vector where possible. If you want to produce a new vector as a result of an operation do not use instance methods. The example below demonstrates this.
 
 ```javascript
   // Create vectors using different parameter types
@@ -52,12 +82,13 @@ Usage of instance methods and static methods is different. Instance methods do n
 
   // Add v1 to v0 using instance method.
   v0.add(v1);
-  // Prints "(46, 300)" as the Vector has been modified
+  // Prints "(46, 300)" as the underlying vector has been modified
   v0.toString();
 
   // Will return -14402
   v2.dot(v0)
 ```
 
-### Performance Statistics
+<a name="perf" />
+## Performance Statistics
 This section will be filled in soon. For now running the file *perf.js* will provide performance indication.

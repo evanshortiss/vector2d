@@ -8,7 +8,7 @@ var Vec2D = require('./vec2d.js'),
 
 program
   .version('0.0.1')
-  .option('-c, --count <count>', 'Number of times to perform each operation', Number, 100000)
+  .option('-c, --count <count>', 'Number of times to perform each operation', Number, 500000)
   .option('-rmin, --rmin <rmin>', 'Smallest random number to use.', Number, -10000)
   .option('-rmax, --rmax <rmax>', 'Largest random number to use.', Number, 10000)
   .parse(process.argv);

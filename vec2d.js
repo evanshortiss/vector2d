@@ -19,8 +19,8 @@
 // THE SOFTWARE.
 
 (function() {
+  // Default is to not use objects
   var useObjects = false;
-
   // Default is to use standard array
   var AxesArray = Array;
 
@@ -673,7 +673,7 @@
      * @return  {Vector}
      */
     vectorTimesScalar: function(vec, n) {
-      return this.create(vec.getX() * n, vec.getY() * n)
+      return this.create(vec.getX() * n, vec.getY() * n);
     },
 
 
@@ -683,7 +683,7 @@
      * @return  {Vector}
      */
     nomalise: function(vec) {
-      return this.timesScalar(vec, 1 / vec.magnitude())
+      return this.timesScalar(vec, 1 / vec.magnitude());
     },
 
 
@@ -691,7 +691,7 @@
      * Same as normalise
      */
     normalize: function(vec) {
-      return this.normalise(v);
+      return this.normalise(vec);
     },
 
 
@@ -699,7 +699,7 @@
      * Same as normalise.
      */
     unit: function(vec) {
-      return this.normalise(v);
+      return this.normalise(vec);
     },
 
 
