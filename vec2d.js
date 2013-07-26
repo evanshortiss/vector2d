@@ -242,7 +242,7 @@
      * Same as unit/normalise function.
      */
     normalize: function() {
-      this.normalise();
+      return this.normalise();
     },
 
 
@@ -250,7 +250,7 @@
      * The same as normalise.
      */
     unit: function() {
-      this.normalise();
+      return this.normalise();
     },
 
 
@@ -496,7 +496,7 @@
      * Same as unit/normalise function.
      */
     normalize: function() {
-      this.normalise();
+      return this.normalise();
     },
 
 
@@ -504,7 +504,7 @@
      * The same as normalise.
      */
     unit: function() {
-      this.normalise();
+      return this.normalise();
     },
 
 
