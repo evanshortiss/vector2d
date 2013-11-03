@@ -17,7 +17,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
 (function() {
   // Default is to not use objects
   var useObjects = false;
@@ -30,6 +29,7 @@
    * @param {Mixed}   args  The argument array from caller function.
    * @return {Array}        The resulting axes array.
    */
+
   function parseArgs(args) {
     // User passed x and y
     if (args.length === 2) {
@@ -53,6 +53,7 @@
    * @param   {Mixed}   v   The var to check.
    * @return  {Boolean}     The result of check.
    */
+
   function isVector(v) {
     return v instanceof Vector || v instanceof ObjectVector;
   };
@@ -64,13 +65,13 @@
    * @param {Array}  axes
    ****************************************************************************/
   var Vector = function(axes) {
-    // Constructor for each array type is different. (Float32Array vs Array)
-    if (AxesArray.name === 'Float32Array') {
-      this._axes = new AxesArray([axes[0], axes[1]]);
-    } else {
-      this._axes = new AxesArray(axes[0], axes[1]);
-    }
-  };
+      // Constructor for each array type is different. (Float32Array vs Array)
+      if (AxesArray.name === 'Float32Array') {
+        this._axes = new AxesArray([axes[0], axes[1]]);
+      } else {
+        this._axes = new AxesArray(axes[0], axes[1]);
+      }
+    };
 
   Vector.prototype = {
     /**
@@ -273,6 +274,15 @@
 
 
     /**
+     * Return the squred length of a vector
+     * @return {Number}
+     */
+    lengthSq: function() {
+      return (this._axes[0] * this._axes[0]) + (this._axes[1] * this._axes[1]);
+    },
+
+
+    /**
      * Get the dot product of this vector by another.
      * @param   {Vector} vec
      * @return  {Number}
@@ -319,12 +329,12 @@
    * @param {Array}  axes
    ****************************************************************************/
   var ObjectVector = function(axes) {
-    // Constructor for each array type is different. (Float32Array vs Array)
-    this._axes = {
-      x: axes[0],
-      y: axes[1]
+      // Constructor for each array type is different. (Float32Array vs Array)
+      this._axes = {
+        x: axes[0],
+        y: axes[1]
+      };
     };
-  };
 
   ObjectVector.prototype = {
     /**
@@ -527,6 +537,15 @@
 
 
     /**
+     * Return the squred length of a vector
+     * @return {Number}
+     */
+    lengthSq: function() {
+      return (this._axes.x * this._axes.x) + (this._axes.y * this._axes.y);
+    },
+
+
+    /**
      * Get the dot product of this vector by another.
      * @param   {Vector} vec
      * @return  {Number}
@@ -572,7 +591,7 @@
    ****************************************************************************/
   var Vec2D = function() {
 
-  };
+    };
 
 
   Vec2D.prototype = {
@@ -587,10 +606,35 @@
      * @param {Array}   [axes]
      */
     create: function() {
-      if(useObjects) {
+      if (useObjects == true) {
         return new this.ObjectVector(parseArgs(arguments));
       }
       return new this.Vector(parseArgs(arguments));
+    },
+
+
+    /**
+     * Create a randomised vector, with specified min and max values.
+     * @param {Number} minX
+     * @param {Number} maxX
+     * @param {Number} minY
+     * @param {Number} maxY
+     */
+    random: function(minX, maxX, minY, maxY) {
+      var x = minX + (maxX - minX) * Math.random();
+      var y = minY + (maxY - minY) * Math.random();
+
+      return this.create(x, y);
+    },
+
+
+    /**
+     * Get absolute vector from provided vector.
+     * @param   {Vector}
+     * @return  {Vector}
+     */
+    abs: function(vec) {
+      return this.create(Math.abs(vec.getX(), vec.getY()));
     },
 
 
@@ -640,7 +684,7 @@
      * @return  {Vector}
      */
     subtract: function(v0, v1) {
-      return this.create(v0.getX() - v1.getX(), v0.getY()- v1.getY())
+      return this.create(v0.getX() - v1.getX(), v0.getY() - v1.getY())
     },
 
 
@@ -750,7 +794,10 @@
      * @return  {Number}
      */
     distance: function(v0, v1) {
-      return Math.sqrt((v0.getX() - v1.getX()) * (v0.getX() - v1.getX()) + (v0.getY() - v1.getY()) * (v0.getY() - v1.getY()))
+      var x = v0.getX() - v1.getX();
+      var y = v0.getY() - v1.getY();
+
+      return Math.sqrt((x * x) + (y * y));
     },
 
 
