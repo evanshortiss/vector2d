@@ -9,7 +9,7 @@ module.exports = function(grunt) {
         src: [
           './src/*.js',
         ]
-      },
+      }
     },
 
     replace: {
@@ -35,8 +35,7 @@ module.exports = function(grunt) {
       test: {
         options: {
           reporter: 'nyan',
-          quiet: false,
-          captureFile: './coverage.html'
+          quiet: false
         },
         src: ['./test/*'],
         dest: './'
@@ -51,7 +50,8 @@ module.exports = function(grunt) {
       },
       prettify: {
         options: {
-          preserveComments: false,
+          banner: grunt.file.read('./LICENSE'),
+          preserveComments: true,
           compress: false,
           beautify: {
             beautify: true,
