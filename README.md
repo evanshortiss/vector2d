@@ -25,18 +25,8 @@ Regardless of operation mode all library functions can be used in the same manne
 
 In some instances mixing operation modes may work but I have not yet tested for all use cases. The mode used depends on use case, for example if you plan to create many vectors in each frame of a game, but perform very few operations on them then Objects might be fastest. Float32Arrays can be used for faster operations on vectors, but creating these is expensive so it is important to choose the best vector representation for your application. See the [Performance Statistics](#perf) section for more info.
 
-## Testing
-Running tests requires node.js and the mocha framework.
-
-```
-  $ npm install -g mocha
-  $ cd ved2d
-  $ mocha
-  .......
-```
-
 Tested on: 
-* Node.js 0.8.8
+* Node.js 0.8.8, 0.10.15
 * Chrome 27
 * Safari 6.0.3.
 
@@ -65,12 +55,7 @@ Just include a script tag as you'd expect:
 To avoid garbage collection and allow for faster operation all vector instance methods will modify the existing vector where possible. If you want to produce a new vector as a result of an operation do not use instance methods. The example below demonstrates this.
 
 ```javascript
-  // Create vectors using different parameter types
-  var v0 = Vec2D.create({
-    x: 23,
-    y: 150
-  });
-  var v1 = Vec2D.create([23, 150]);
+  // Create a vector
   var v2 = Vec2D.create(13, -50);
 
   // Add v1 and v0 to produce a new Vector
