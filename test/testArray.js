@@ -4,7 +4,7 @@
  */
 
 var assert = require('assert'),
-  Vec2D = require('../vec2d.js');
+  Vec2D = require('../build/vec2d.js');
 
 
 describe('Test Vec2D Library instance methods.', function() {
@@ -14,33 +14,17 @@ describe('Test Vec2D Library instance methods.', function() {
   });
 
   describe('Vector creation methods.', function() {
-    it('Should create a vectors successfully from array, object and x, y params', function() {
-      var v1 = Vec2D.create({
-        x: 1,
-        y: 2
-      });
+    it('Should create a vector successfully', function() {
+      var v1 = Vec2D.create(1, 2);
       assert(v1);
       assert(v1.getX() === 1);
       assert(v1.getY() === 2);
-
-      var v2 = Vec2D.create([1, 2]);
-      assert(v2);
-      assert(v2.getX() === 1);
-      assert(v2.getY() === 2);
-
-      var v3 = Vec2D.create(1, 2);
-      assert(v3);
-      assert(v3.getX() === 1);
-      assert(v3.getY() === 2);
     });
   });
 
   describe('Setting vector x and y params (Setters)', function() {
     it('Should modify vector axes to provided values.', function() {
-      var v1 = Vec2D.create({
-        x: 1,
-        y: 2
-      });
+      var v1 = Vec2D.create(1, 2);
 
       // Set both x and y
       v1.setAxes(33, 57);
@@ -59,10 +43,7 @@ describe('Test Vec2D Library instance methods.', function() {
 
   describe('toString()', function() {
     it('Should return vector as properly formatted string', function() {
-      var v1 = Vec2D.create({
-        x: 10.9,
-        y: 20.3
-      });
+      var v1 = Vec2D.create(10.9, 20.3);
 
       assert(v1.toString() === '(' + v1.getX() + ', ' + v1.getY() + ')');
       assert(v1.toString(true) === '(11, 20)');
@@ -71,10 +52,7 @@ describe('Test Vec2D Library instance methods.', function() {
 
   describe('toArray()', function() {
     it('Should return vector as standard array.', function() {
-      var v1 = Vec2D.create({
-        x: 645,
-        y: 234
-      });
+      var v1 = Vec2D.create(645, 234);
 
       var res = v1.toArray();
       assert(res[0] === 645);
@@ -84,10 +62,7 @@ describe('Test Vec2D Library instance methods.', function() {
 
   describe('toObject()', function() {
     it('Should return an object containgin x and y properties', function() {
-      var v1 = Vec2D.create({
-        x: 645,
-        y: 234
-      });
+      var v1 = Vec2D.create(645, 234);
 
       var res = v1.toObject();
       assert(res.x === 645);

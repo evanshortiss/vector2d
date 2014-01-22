@@ -3,7 +3,7 @@
  * Some performance tests.
  */
 
-var Vec2D = require('./vec2d-min.js'),
+var Vec2D = require('./build/vec2d.min.js'),
   program = require('commander');
 
 program
