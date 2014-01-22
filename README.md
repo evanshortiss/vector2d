@@ -90,5 +90,8 @@ To avoid garbage collection and allow for faster operation all vector instance m
 ```
 
 <a name="perf" />
-## Performance Statistics
-This section will be filled in soon. For now running the file *perf.js* will provide performance indication.
+## Performance
+To get an idea of the different performance based on the types being used run ```node perf.js``` in the project root directory. This compares the same operation set using each of the three Vector representations, Array, Float32Array and Object. 
+
+
+

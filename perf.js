@@ -3,7 +3,7 @@
  * Some performance tests.
  */
 
-var Vec2D = require('./vec2d.js'),
+var Vec2D = require('./vec2d-min.js'),
   program = require('commander');
 
 program
@@ -199,12 +199,15 @@ var suite = {
 }
 
 console.log('Running performance tests with ' + OPERATION_COUNT + ' vectors per test item...');
+console.log('\n============ FLOAT32ARRAY ============');
 util.runTask('generateFloat32');
-util.runTask('generateStandard');
-util.runTask('generateObjects');
 util.runTask('addFloat32');
-util.runTask('addArray');
-util.runTask('addObjects');
 util.runTask('updateFloat32');
+console.log('\n============ ARRAY ============');
+util.runTask('generateStandard');
+util.runTask('addArray');
 util.runTask('updateArray');
+console.log('\n============ OBJECT ============');
+util.runTask('generateObjects');
+util.runTask('addObjects');
 util.runTask('updateObjects');

@@ -6,10 +6,13 @@
 var assert = require('assert'),
   Vec2D = require('../vec2d.js');
 
-Vec2D.useFloat32Arrays();
-
 
 describe('Test Vec2D Library instance methods.', function() {
+
+  beforeEach(function() {
+    Vec2D.useFloat32Arrays();
+  });
+
   describe('Vector creation methods.', function() {
     it('Should create a vectors successfully from array, object and x, y params', function() {
       var v1 = Vec2D.create({

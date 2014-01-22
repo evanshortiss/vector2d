@@ -1,27 +1,44 @@
 {
-    "name": "vector2d",
-    "keywords": ["vector", "2d", "float", "float32", "Float32Array"],
-    "description": "2D Vector library offering Float32Array, Object or standard Array based vectors.",
-    "main": "./vec2d.js",
-    "author": "Evan Shortiss",
-    "version": "0.0.2",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/evanshortiss/vec2d.git"
-    },
-    "directories": {
-        "test": "./test"
-    },
-    "bugs": {
-        "url": "https://github.com/evanshortiss/vec2d/issues"
-    },
-    "licenses": [{
-        "type": "MIT"
-    }],
-    "dependencies": {
-        "commander": "1.2.0"
-    },
-    "engines": {
-        "node": ">=0.8.8"
+  "name": "vector2d",
+  "keywords": [
+    "vector",
+    "2d",
+    "float",
+    "float32",
+    "Float32Array"
+  ],
+  "description": "2D Vector library offering Float32Array, Object or standard Array based vectors.",
+  "main": "./vec2d.js",
+  "author": "Evan Shortiss",
+  "version": "0.0.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/evanshortiss/vec2d.git"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.3.1",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-mocha-test": "~0.8.2",
+    "grunt-string-replace": "~0.2.7"
+  },
+  "directories": {
+    "test": "./test"
+  },
+  "bugs": {
+    "url": "https://github.com/evanshortiss/vec2d/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
     }
+  ],
+  "dependencies": {
+    "commander": "1.2.0"
+  },
+  "engines": {
+    "node": ">=0.8.8"
+  }
 }

@@ -6,10 +6,13 @@
 var assert = require('assert'),
   Vec2D = require('../vec2d.js');
 
-Vec2D.useObjects();
-
 
 describe('Test Vec2D Library instance methods.', function() {
+
+  beforeEach(function() {
+    Vec2D.useObjects();
+  });
+
   describe('Vector creation methods.', function() {
     it('Should create a vectors successfully from array, object and x, y params', function() {
       var v1 = Vec2D.create({
@@ -194,7 +197,7 @@ describe('Test Vec2D Library instance methods.', function() {
       v1.normalise();
 
       // Rounding error occurs in object version
-      if(v1._axes.x) {
+      if(v1.x) {
         // Screw it, will sort out epsilon val or something when I can
       } else {
         assert(v1.equals(v2));
