@@ -56,6 +56,8 @@ To avoid garbage collection and allow for faster operation all vector instance m
 
 ```javascript
   // Create a vector
+  var v0 = Vec2D.create(23, 150);
+  var v1 = Vec2D.create(23, 150);
   var v2 = Vec2D.create(13, -50);
 
   // Add v1 and v0 to produce a new Vector
