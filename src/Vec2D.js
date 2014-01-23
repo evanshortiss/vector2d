@@ -30,14 +30,6 @@ Vec2D.prototype = {
    * @param {Number}  [y]
    */
   create: function(x, y) {
-    if(!x) {
-      x = 0;
-    }
-
-    if(!y) {
-      y = 0;
-    }
-
     if (useObjects === true) {
       return new ObjectVector(x, y);
     } else {
