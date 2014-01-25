@@ -25,12 +25,9 @@
  * @param {Array}  axes
  ****************************************************************************/
   function ArrayVector(x, y) {
-    // Constructor for each array type is different. (Float32Array vs Array)
-    if (AxesArray.name === "Float32Array") {
-      this._axes = new AxesArray([ x, y ]);
-    } else {
-      this._axes = new AxesArray(x, y);
-    }
+    this._axes = new AxesArray(2);
+    this._axes[0] = x;
+    this._axes[1] = y;
   }
   ArrayVector.prototype = {
     /**
@@ -41,6 +38,7 @@
     setAxes: function(x, y) {
       this._axes[0] = x;
       this._axes[1] = y;
+      return this;
     },
     /**
    * Getter for x axis.

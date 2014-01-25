@@ -3,19 +3,79 @@
  * Some performance tests.
  */
 
-var Vec2D = require('./build/vec2d.min.js'),
-  program = require('commander');
+var Vec2D = require('./build/vec2d.js');
 
-program
-  .version('0.0.1')
-  .option('-c, --count <count>', 'Number of times to perform each operation', Number, 500000)
-  .option('-rmin, --rmin <rmin>', 'Smallest random number to use.', Number, -10000)
-  .option('-rmax, --rmax <rmax>', 'Largest random number to use.', Number, 10000)
-  .parse(process.argv);
+var RAND_MIN = -1000,
+  RAND_MAX = 1000,
+  OPERATION_COUNT = 500000;
 
-var RAND_MIN = program.rmin,
-  RAND_MAX = program.rmax,
-  OPERATION_COUNT = program.count;
+
+// Generate num vectors of type
+function create(type) {
+  var vectors = [];
+
+  if (type === 'float32') {
+    Vec2D.useFloat32Arrays();
+  } else if (type === 'array') {
+    Vec2D.useStandardArrays();
+  } else if ('object') {
+    Vec2D.useObjects();
+  } else {
+    throw new Error('Invalid type for creating vectors...');
+  }
+
+  var i = 0;
+  while (i < OPERATION_COUNT) {
+    i++;
+    vectors.push(Vec2D.create(randomFloat(), randomFloat()));
+  }
+
+  return vectors;
+}
+
+
+// Test time for updating vector values.
+function update(type) {
+  var vectors = create(type);
+  
+  return t = time(function() {
+    var i = 0;
+
+    while (i < OPERATION_COUNT) {
+      vectors[i].setAxes(randomFloat(), randomFloat());
+      i++;
+    }
+  });
+}
+
+
+// Add two vectors using instance methods
+function addV(type) {
+  var vectors = create(type);
+
+  return t = time(function() {
+    var i = 0;
+
+    while (i < OPERATION_COUNT) {
+      vectors[i].add(vectors[randomInt(1, OPERATION_COUNT-1)]);
+      i++;
+    }
+  });
+}
+
+
+// Determine time taken to run a function.
+function time(fn, callback) {
+  var start = Date.now();
+  var res = fn();
+  var time = Date.now() - start;
+
+  if (callback) {
+    return callback(time, res);
+  } else {
+    return time;
+  }
+}
 
 
 function randomFloat(min, max) {
@@ -30,6 +90,7 @@ function randomFloat(min, max) {
   return min + (max - min) * Math.random();
 }
 
+
 function randomInt(min, max) {
   if (!min) {
     min = RAND_MIN;
@@ -42,172 +103,29 @@ function randomInt(min, max) {
   return Math.floor(min + (1 + max - min) * Math.random());
 }
 
-var util = {
-  start: null,
 
-  startTimer: function() {
-    this.start = new Date().getTime();
-  },
+console.log('\n====================== STARTING TESTS ======================\n');
 
-  getTimePassed: function() {
-    return new Date().getTime() - this.start;
-  },
+// Create
+console.log('%sms to create Object...\n', time(function() {
+  create('object');
+}));
+console.log('%sms to create Array...\n', time(function() {
+  create('array');
+}));
+console.log('%sms to create Float32...\n', time(function() {
+  create('float32');
+}));
+console.log('===============================================================\n');
 
-  runTask: function(name, callback) {
-    var self = this;
+// Add
+console.log('%sms to add vector to itself in existing Object type...\n', addV('object'));
+console.log('%sms to add vector to itself in existing Array type...\n', addV('array'));
+console.log('%sms to add vector to itself in existing Float32 type...\n', addV('float32'));
 
-    suite[name](function() {
-      self.startTimer();
-      console.log('\nStart task: ' + name);
-    }, function() {
-      console.log('Finished task: ' + name + ' in ' + self.getTimePassed().toString() + 'ms');
-      if (callback) {
-        callback();
-      }
-    });
-  }
-};
+console.log('===============================================================\n');
 
-var suite = {
-  generateFloat32: function(start, end) {
-    start();
-    var i = OPERATION_COUNT;
-
-    Vec2D.useFloat32Arrays();
-
-    var float32Vectors = [];
-    while (i) {
-      float32Vectors.push(Vec2D.create(randomFloat(), randomFloat()));
-      i--;
-    }
-
-    end();
-    return float32Vectors;
-  },
-
-  generateStandard: function(start, end) {
-    start();
-    var i = OPERATION_COUNT;
-
-    Vec2D.useStandardArrays();
-
-    var vectors = [];
-    while (i) {
-      vectors.push(Vec2D.create(randomFloat(), randomFloat()));
-      i--;
-    }
-
-    end();
-    return vectors;
-  },
-
-
-  generateObjects: function(start, end) {
-    start();
-    var i = OPERATION_COUNT;
-
-    Vec2D.useObjects();
-
-    var vectors = [];
-    while (i) {
-      vectors.push(Vec2D.create(randomFloat(), randomFloat()));
-      i--;
-    }
-
-    end();
-    return vectors;
-  },
-
-
-  addFloat32: function(start, end) {
-    var vectors = this.generateFloat32(function(){}, function(){});
-    start();
-
-    var i = vectors.length-1;
-    while(i) {
-      vectors[i].add(vectors[i]);
-      i--;
-    }
-
-    end();
-  },
-
-  addArray: function(start, end) {
-    var vectors = this.generateStandard(function(){}, function(){});
-    start();
-
-    var i = vectors.length-1;
-    while(i) {
-      vectors[i].add(vectors[i]);
-      i--;
-    }
-
-    end();
-  },
-
-  addObjects: function(start, end) {
-    var vectors = this.generateObjects(function(){}, function(){});
-    start();
-
-    var i = vectors.length-1;
-    while(i) {
-      vectors[i].add(vectors[i]);
-      i--;
-    }
-
-    end();
-  },
-
-  updateFloat32: function(start, end) {
-    var vectors = this.generateFloat32(function(){}, function(){});
-    start();
-
-    var i = vectors.length-1;
-    while(i) {
-      vectors[i].setAxes(randomFloat(), randomFloat());
-      i--;
-    }
-
-    end();
-  },
-
-  updateArray: function(start, end) {
-    var vectors = this.generateStandard(function(){}, function(){});
-    start();
-
-    var i = vectors.length-1;
-    while(i) {
-      vectors[i].setAxes(randomFloat(), randomFloat());
-      i--;
-    }
-
-    end();
-  },
-
-  updateObjects: function(start, end) {
-    var vectors = this.generateObjects(function(){}, function(){});
-    start();
-
-    var i = vectors.length-1;
-    while(i) {
-      vectors[i].setAxes(randomFloat(), randomFloat());
-      i--;
-    }
-
-    end();
-  }
-}
-
-console.log('Running performance tests with ' + OPERATION_COUNT + ' vectors per test item...');
-console.log('\n============ FLOAT32ARRAY ============');
-util.runTask('generateFloat32');
-util.runTask('addFloat32');
-util.runTask('updateFloat32');
-console.log('\n============ ARRAY ============');
-util.runTask('generateStandard');
-util.runTask('addArray');
-util.runTask('updateArray');
-console.log('\n============ OBJECT ============');
-util.runTask('generateObjects');
-util.runTask('addObjects');
-util.runTask('updateObjects');
+// Update
+console.log('%sms to update existing Object type...\n', update('object'));
+console.log('%sms to update existing Array type...\n', update('array'));
+console.log('%sms to update existing Float32 type...\n', update('float32'));
