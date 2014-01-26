@@ -23,6 +23,7 @@ function Vec2D() {}
 Vec2D.prototype = {
   ArrayVector: ArrayVector, 
   ObjectVector: ObjectVector,
+  Float32Vector: Float32Vector,
 
   /**
    * Create a new Vector.
@@ -135,6 +136,9 @@ Vec2D.prototype = {
   },
 
 
+  multV: this.vectorTimesVector,
+
+
   /**
    * Multiply a vector by a number to produce a new vector.
    * @param   {Vector} vec    The var to store a result in.
@@ -144,6 +148,9 @@ Vec2D.prototype = {
   vectorTimesScalar: function(vec, n) {
     return this.create(vec.getX() * n, vec.getY() * n);
   },
+
+
+  multS: this.vectorTimesScalar,
 
 
   /**
@@ -159,17 +166,13 @@ Vec2D.prototype = {
   /**
    * Same as normalise
    */
-  normalize: function(vec) {
-    return this.normalise(vec);
-  },
+  normalize: this.nomalise,
 
 
   /**
    * Same as normalise.
    */
-  unit: function(vec) {
-    return this.normalise(vec);
-  },
+  unit: this.normalise,
 
 
   /**

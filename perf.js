@@ -26,8 +26,8 @@ function create(type) {
 
   var i = 0;
   while (i < OPERATION_COUNT) {
+    vectors[i] = Vec2D.create(randomFloat(), randomFloat());
     i++;
-    vectors.push(Vec2D.create(randomFloat(), randomFloat()));
   }
 
   return vectors;
@@ -42,7 +42,23 @@ function update(type) {
     var i = 0;
 
     while (i < OPERATION_COUNT) {
-      vectors[i].setAxes(randomFloat(), randomFloat());
+      vectors[i].setX(randomFloat());
+      i++;
+    }
+  });
+}
+
+
+// Test read speed
+function read(type) {
+  var vectors = create(type);
+
+  return t = time(function() {
+    var i = 0;
+    var val = 0.1;
+
+    while (i < OPERATION_COUNT) {
+      val = vectors[i].getX();
       i++;
     }
   });
@@ -57,7 +73,7 @@ function addV(type) {
     var i = 0;
 
     while (i < OPERATION_COUNT) {
-      vectors[i].add(vectors[randomInt(1, OPERATION_COUNT-1)]);
+      vectors[i].add(vectors[randomInt(1, OPERATION_COUNT - 1)]);
       i++;
     }
   });
@@ -105,27 +121,30 @@ function randomInt(min, max) {
 
 
 console.log('\n====================== STARTING TESTS ======================\n');
+console.log('Tests regenerate new vectors for each operation set, be patient!\n\n');
+console.log('===============================================================\n');
 
-// Create
 console.log('%sms to create Object...\n', time(function() {
   create('object');
 }));
+console.log('%sms to add vector to itself in existing Object type...\n', addV('object'));
+console.log('%sms to update existing Object type...\n', update('object'));
+console.log('%sms to read from Object type...\n', read('object'));
+console.log('===============================================================\n');
+
 console.log('%sms to create Array...\n', time(function() {
   create('array');
 }));
+console.log('%sms to add vector to itself in existing Array type...\n', addV('array'));
+console.log('%sms to update existing Array type...\n', update('array'));
+console.log('%sms to read from Array type...\n', read('array'));
+console.log('===============================================================\n');
+
 console.log('%sms to create Float32...\n', time(function() {
   create('float32');
 }));
-console.log('===============================================================\n');
-
-// Add
-console.log('%sms to add vector to itself in existing Object type...\n', addV('object'));
-console.log('%sms to add vector to itself in existing Array type...\n', addV('array'));
 console.log('%sms to add vector to itself in existing Float32 type...\n', addV('float32'));
-
+console.log('%sms to update existing Float32 type...\n', update('float32'));
+console.log('%sms to read from Float32 type...\n', read('float32'));
 console.log('===============================================================\n');
 
-// Update
-console.log('%sms to update existing Object type...\n', update('object'));
-console.log('%sms to update existing Array type...\n', update('array'));
-console.log('%sms to update existing Float32 type...\n', update('float32'));

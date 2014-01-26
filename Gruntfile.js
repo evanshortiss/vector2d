@@ -44,6 +44,9 @@ module.exports = function(grunt) {
 
     uglify: {
       mangle: {
+        options: {
+          banner: grunt.file.read('./LICENSE'),
+        },
         files: {
           './build/vec2d.min.js': './build/vec2d.js'
         }

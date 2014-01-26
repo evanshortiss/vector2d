@@ -19,6 +19,14 @@ describe('Test Vec2D Library instance methods.', function() {
       assert(v1);
       assert(v1.getX() === 1);
       assert(v1.getY() === 2);
+      assert(v1 instanceof Vec2D.ObjectVector);
+    });
+
+    it('Should create an ObjectVector directly', function() {
+      var v = new Vec2D.ObjectVector(0, 23);
+
+      assert(v.getX() === 0);
+      assert(v.getY() === 23);
     });
   });
 

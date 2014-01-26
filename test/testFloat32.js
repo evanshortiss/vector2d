@@ -20,6 +20,13 @@ describe('Test Vec2D Library instance methods.', function() {
       assert(v1.getX() === 1);
       assert(v1.getY() === 2);
     });
+
+    it('Should create an Float32Vector directly', function() {
+      var v = new Vec2D.Float32Vector(0, 23);
+
+      assert(v.getX() === 0);
+      assert(v.getY() === 23);
+    });
   });
 
   describe('Setting vector x and y params (Setters)', function() {

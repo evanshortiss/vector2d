@@ -4,10 +4,27 @@
  * @param {Array}  axes
  ****************************************************************************/
 function ArrayVector(x, y) {
-  this._axes = new AxesArray(2);
+  if(AxesArray === Array) {
+    this._axes = [x, y];
+  } else {
+    this._axes = new AxesArray(2);
+    this._axes[0] = x;
+    this._axes[1] = y;
+  }
+}
 
-  this._axes[0] = x;
-  this._axes[1] = y;
+function Float32Vector(x, y) {
+  var originalType = AxesArray;
+
+  // Force use of Float32Array
+  AxesArray = Float32Array;
+
+  var v = new ArrayVector(x, y);
+
+  // Switch to previous type
+  AxesArray = originalType;
+
+  return v;
 }
 
 ArrayVector.prototype = {
@@ -272,7 +289,7 @@ ArrayVector.prototype = {
    * @return  {Vector}
    */
   zero: function() {
-    this._axes[0] = this._axes = 0;
+    this._axes[0] = this._axes[1] = 0;
     return this;
   },
 

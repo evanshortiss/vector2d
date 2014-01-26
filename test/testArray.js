@@ -19,6 +19,14 @@ describe('Test Vec2D Library instance methods.', function() {
       assert(v1);
       assert(v1.getX() === 1);
       assert(v1.getY() === 2);
+      assert(v1._axes instanceof Array);
+    });
+
+    it('Should create an ArrayVector directly', function() {
+      var v = new Vec2D.ArrayVector(0, 23);
+
+      assert(v.getX() === 0);
+      assert(v.getY() === 23);
     });
   });
 
