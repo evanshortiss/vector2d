@@ -1,7 +1,9 @@
 {
   "name": "vector2d",
   "keywords": [
-    "vector",
+    "physics",
+    "math",
+    "vectors",
     "2d",
     "float",
     "float32",

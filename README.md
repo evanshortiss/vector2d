@@ -156,7 +156,7 @@ Returns a clone of this vector.
 
 
 ### Static Class Methods
-These methods when called return a new Vector. **ArrayVector** and **ObjectVector** must be called using the new keyword.
+These methods when called return a new Vector. **ArrayVector** and **ObjectVector** must be called using the new keyword. For example **Vec2D.ArrayVector(x, y)** or **Vec2D.abs(myVec)**.
 
 ##### ArrayVector(x, y) 
 Use to create an Array based vector.
