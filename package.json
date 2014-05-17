@@ -10,23 +10,37 @@
     "Float32Array"
   ],
   "description": "2D Vector library offering Float32Array, Object or standard Array based vectors.",
-  "main": "./build/vec2d.js",
+  "main": "./src/Vec2D.js",
   "author": "Evan Shortiss",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/evanshortiss/vec2d.git"
   },
+    "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "ie/8..latest",
+      "chrome/22..latest",
+      "firefox/16..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6",
+      "android-browser/latest"
+    ]
+  },
   "devDependencies": {
-    "commander": "1.2.0",
+    "mocha": "1.18.2",
     "grunt": "~0.4.2",
     "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-nodeunit": "~0.2.0",
     "grunt-contrib-uglify": "~0.3.1",
-    "grunt-contrib-concat": "~0.3.0",
     "grunt-mocha-test": "~0.8.2",
-    "grunt-text-replace": "~0.3.10",
-    "jsdoc": "~3.3.0-alpha3"
+    "browserify": "^4.1.5",
+    "grunt-browserify": "^2.1.0"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
   },
   "directories": {
     "test": "./test"

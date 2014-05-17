@@ -1,19 +1,3 @@
-
-// Default is to not use objects
-var useObjects = false;
-// Default is to use standard array
-var AxesArray = Array;
-
-/**
- * Check is the passed param a Vec2D instance.
- * @param   {Mixed}   v   The var to check.
- * @return  {Boolean}     The result of check.
- */
-
-function isVector(v) {
-  return v instanceof ArrayVector || v instanceof ObjectVector;
-}
-
 // *****************************************************************************
 // Publically exposed Vector interface.
 // *****************************************************************************
@@ -21,23 +5,9 @@ function isVector(v) {
 function Vec2D() {}
 
 Vec2D.prototype = {
-  ArrayVector: ArrayVector, 
-  ObjectVector: ObjectVector,
-  Float32Vector: Float32Vector,
-
-  /**
-   * Create a new Vector.
-   * @param {Number}  [x]
-   * @param {Number}  [y]
-   */
-  create: function(x, y) {
-    if (useObjects === true) {
-      return new ObjectVector(x, y);
-    } else {
-      return new ArrayVector(x, y);
-    }
-  },
-
+  ArrayVector: require('./ArrayVector'),
+  ObjectVector: require('./ObjectVector'),
+  Float32Vector: require('./Float32Vector'),
 
   /**
    * Create a randomised vector, with specified min and max values.
@@ -61,34 +31,6 @@ Vec2D.prototype = {
    */
   abs: function(vec) {
     return this.create(Math.abs(vec.getX(), vec.getY()));
-  },
-
-
-  /**
-   * Instruct the library to use standard JavaScript arrays.
-   * Otherwise the library will try use Float32Arrays if available. (This is default)
-   */
-  useStandardArrays: function() {
-    useObjects = false;
-    AxesArray = Array;
-  },
-
-
-  /**
-   * Instruct the library to use Float32 JavaScript arrays. (This is default)
-   * Otherwise the library will use standard array.
-   */
-  useFloat32Arrays: function() {
-    useObjects = false;
-    AxesArray = Float32Array;
-  },
-
-
-  /**
-   * Instruct library to use Objects to represent vectors.
-   */
-  useObjects: function() {
-    useObjects = true;
   },
 
 
@@ -222,10 +164,10 @@ Vec2D.prototype = {
    * return {Vector}
    */
   rotate: function(vec, rads) {
-    var cos = Math.cos(rads), 
+    var cos = Math.cos(rads),
       sin = Math.sin(rads);
 
-    var ox = vec.getX(), 
+    var ox = vec.getX(),
       oy = vec.getY();
 
     var x = ox * cos - oy * sin;
@@ -259,9 +201,4 @@ Vec2D.prototype = {
   }
 };
 
-// Expose publically
-if (typeof window !== 'undefined') {
-  window.Vec2D = new Vec2D();
-} else {
-  module.exports = new Vec2D();
-}
+module.exports = new Vec2D();

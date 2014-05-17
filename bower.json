@@ -1,10 +1,10 @@
 {
   "name": "vec2d",
   "main": "./build/vec2d.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/evanshortiss/vec2d",
   "authors": [
-    "Evan Shortiss <evanshortiss@gmail.com>"
+    "Evan Shortiss"
   ],
   "license": "MIT",
   "ignore": [

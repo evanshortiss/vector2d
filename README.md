@@ -4,13 +4,13 @@ Vec2D - 2D Vector Library for JavaScript
 ## About
 An easy to use 2D Vector library with 3 methods of Vector representation for performance tuning, and all within 5KB.
 
-Vec2D provides 3 main modes of operation (Vector representations): 
+Vec2D provides 3 main modes of operation (Vector representations):
 
 * Array (Default mode)
 * Float32Array
 * Object
 
-Regardless of operation mode all library functions can be used in the same manner and developers will not need to worry about the vector representation. 
+Regardless of operation mode all library functions can be used in the same manner and developers will not need to worry about the vector representation.
 
 ```
   // You only need to call these once if you don't plan on changing mode
@@ -25,7 +25,7 @@ Regardless of operation mode all library functions can be used in the same manne
 
 In some instances mixing operation modes may work but I have not yet tested for all use cases. The mode used depends on use case, for example if you plan to create many vectors in each frame of a game, but perform very few operations on them then Objects might be fastest. Float32Arrays can be used for faster operations on vectors, but creating these is expensive so it is important to choose the best vector representation for your application. See the [Performance Statistics](#perf) section for more info.
 
-Tested on: 
+Tested on:
 * Node.js 0.8.8, 0.10.15
 * Chrome 27
 * Safari 6.0.3.
@@ -56,7 +56,7 @@ Just include a script tag as you'd expect:
 
 ## Library Function Structure
 To avoid garbage collection and allow for faster operation all vector instance methods will modify the existing vector where possible. If you want to produce a new vector as a result of an operation do not use instance methods. The example below demonstrates this.
- 
+
 
 ```
   // Create a vector
@@ -158,40 +158,40 @@ Returns a clone of this vector.
 ### Static Class Methods
 These methods when called return a new Vector. **ArrayVector** and **ObjectVector** must be called using the new keyword. For example **Vec2D.ArrayVector(x, y)** or **Vec2D.abs(myVec)**.
 
-##### ArrayVector(x, y) 
+##### ArrayVector(x, y)
 Use to create an Array based vector.
 
-##### ObjectVector(x, y) 
+##### ObjectVector(x, y)
 Use to create an Object based vector.
 
 ##### Float32Vector(x, y)
 Use to create a Float32 based vector.
 
-##### create(x, y) 
+##### create(x, y)
 Create a vector using the current type. For example, by default this will create Array based Vectors. If you called **Vec2D.useObjects()** it will create Object based Vectors.
 
-##### random(min, max) 
+##### random(min, max)
 Create a random vector with specified min and max values.
 
-##### abs(vector) 
+##### abs(vector)
 Return an instance of the passed vector with it's the absolute values for it's x and y components.
 
-##### useStandardArrays() 
+##### useStandardArrays()
 Force **Vec2D.create(x, y)** to use Array for vector class.
 
-##### useFloat32Arrays() 
+##### useFloat32Arrays()
 Force **Vec2D.create(x, y)** to use Float32Array vector class.
 
-##### useObjects() 
+##### useObjects()
 Force **Vec2D.create(x, y)** to use Object for class.
 
-##### add(v1, v2) 
+##### add(v1, v2)
 Add two vectors to produce a new output.
 
 ##### subtract(v1, v2);
 Subtract v2 from v1 to produce a new vector.
 
-##### equals(v1, v2) 
+##### equals(v1, v2)
 See if the provided Vectors are equal.
 
 ##### vectorTimesVector(v1, v2) / multV(v1, v2)
@@ -200,26 +200,18 @@ Multiply v1 by v2 to return a new vector.
 ##### vectorTimesScalar(vector, number) / multS(vector, number)
 Multiply vector by the provided number to create a new vector.
 
-##### nomalise(vector) / normalize(vector) / unit(vector) 
+##### nomalise(vector) / normalize(vector) / unit(vector)
 Normalise this vector
 
-##### dot(v1, v2) 
+##### dot(v1, v2)
 
-##### cross(v1, v2) 
+##### cross(v1, v2)
 
-##### magnitude(vector) / length(vector) 
+##### magnitude(vector) / length(vector)
 
-##### rotate(vector, radians) 
+##### rotate(vector, radians)
 
-##### distance(v1, v2) 
+##### distance(v1, v2)
 
-##### reverse(vector) 
-
-
-## Performance
-To get an idea of the different performance based on the types being used run ```node perf.js``` in the project root directory. This compares the same operation set using each of the three Vector representations, Array, Float32Array and Object. 
-
-Strangely the new performance file seems to indicate that FLoat32Array representation isn't as fast as the ```old.perf.js``` file. Run ```node old.perf.js``` to see the difference.
-
-
+##### reverse(vector)
 

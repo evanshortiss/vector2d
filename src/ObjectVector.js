@@ -7,6 +7,7 @@ function ObjectVector(x, y) {
   this.x = x;
   this.y = y;
 }
+module.exports = ObjectVector;
 
 ObjectVector.prototype = {
   /**
@@ -272,7 +273,7 @@ ObjectVector.prototype = {
    * @return  {Vector}
    */
   rotate: function(rads) {
-    var cos = Math.cos(rads), 
+    var cos = Math.cos(rads),
       sin = Math.sin(rads);
 
     var ox = this.x,
