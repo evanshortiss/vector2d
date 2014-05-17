@@ -18,6 +18,7 @@
     "url": "https://github.com/evanshortiss/vec2d.git"
   },
     "testling": {
+    "harness": "mocha-tdd",
     "files": "test/*.js",
     "browsers": [
       "ie/8..latest",
@@ -40,7 +41,7 @@
     "grunt-browserify": "^2.1.0"
   },
   "scripts": {
-    "test": "mocha test/*.js"
+    "test": "mocha --ui tdd"
   },
   "directories": {
     "test": "./test"
