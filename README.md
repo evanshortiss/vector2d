@@ -1,8 +1,8 @@
 Vec2D - 2D Vector Library for JavaScript
 ===
 
-[![browser support](https://ci.testling.com/evanshortiss/evanshortiss.png)
-](https://ci.testling.com/evanshortiss/evanshortiss)
+[![browser support](https://ci.testling.com/evanshortiss/vec2d.png)
+](https://ci.testling.com/evanshortiss/vec2d)
 
 ## About
 An easy to use 2D Vector library with 3 methods of Vector representation for performance tuning, and all within 5KB.
