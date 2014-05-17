@@ -4,7 +4,7 @@
  */
 
 var assert = require('assert'),
-  Vec2D = require('../src/Vec2d.js');
+  Vec2D = require('../src/Vec2D.js');
 
 describe('Test Vec2D Library instance methods.', function() {
 
