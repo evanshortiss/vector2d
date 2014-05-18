@@ -10,7 +10,7 @@ Full API support is available in the browsers listed in green above. Browsers ma
 ## Version 2.0.0+ Breaking Changes
 Version 2.0.0 has been updated to remove my manual build steps in favour of using the awesome [browserify](http://browserify.org/).
 
-As of version 2.0.0 the **Vec2D.create**, **Vec2D.random** functions have been removed. I made this choice to ensure it's always explicitly known which type of Vector is being created. Naturally this means that the **useObjects**, **useFloat32Arrays** and **useStandardArrays** are no longer present.
+As of version 2.0.0 all methods on the Vec2D object have been removed, only the classes *ArrayVector*, *Float32Vector* and *ObjectVector* are left. I made this choice to ensure it's always explicitly known which type of Vector is being created and to make the library easier to work with.
 
 ## About
 An easy to use 2D Vector library with 3 methods of Vector representation to allow you to squeeze out as much performance as possible.
@@ -44,7 +44,7 @@ To use:
 ### Browser
 Just include a script tag as you'd expect:
 
-```
+```javascript
 <script src="path/to/vec2d.js" type="text/javascript"></script>
 ```
 
@@ -112,7 +112,7 @@ To avoid garbage collection and allow for faster operation all vector instance m
   var v2 = Vec2D.ObjectVector(13, -50);
 
   // Add v1 and v0 to produce a new Vector
-  var result = Vec2D.add(v0, v1);
+  var result = v0.clone().add(v1);
   // Prints "(46, 300)"
   result.toString();
   // Prints "(23, 150)"
