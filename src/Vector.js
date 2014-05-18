@@ -79,8 +79,10 @@ Vector.prototype = {
    * Return an array containing the vector axes.
    * @return {Array}
    */
-  toArray: function() {
-    return new Array(this._axes[0], this._axes[1]);
+  toArray: function(v) {
+    v = v || this;
+
+    return new Array(v._axes[0], v._axes[1]);
   },
 
 
@@ -88,10 +90,12 @@ Vector.prototype = {
    * Return an array containing the vector axes.
    * @return {Object}
    */
-  toObject: function() {
+  toObject: function(v) {
+    v = v || this;
+
     return {
-      x: this._axes[0],
-      y: this._axes[1]
+      x: v._axes[0],
+      y: v._axes[1]
     };
   },
 
@@ -287,6 +291,18 @@ Vector.prototype = {
   zero: function() {
     this._axes[0] = this._axes[1] = 0;
     return this;
+  },
+
+
+  /**
+   * Distance between this vector and another.
+   * @param {Vector} v
+   */
+  distance: function (v) {
+    var x = this._axes[0] - v._axes[0];
+    var y = this._axes[1] - v._axes[1];
+
+    return Math.sqrt((x * x) + (y * y));
   },
 
 

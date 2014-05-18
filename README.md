@@ -129,8 +129,22 @@ To avoid garbage collection and allow for faster operation all vector instance m
 
 ## API
 
-###Vector Instance Methods
+### Instance Methods
 Vectors returned by calling **Vec2D.ObjectVector/ArrayVector/Float32Vector(x, y)** have the following methods accessible on them. All instance methods modify the underlying vector where appropriate. For example calling *multiplyByScalar* will multiply the vector x and y components by the provided number and return the updated underlying vector itself (a reference to *this*) rather than a new instance. The benefit if this is that less objects are created meaning improved performance and methods can be chained.
+
+So, what if I don't want to modify the underlying vector you ask!? Simple *v.clone()*, checkout the example below.
+
+```javascript
+  var av0 = Vec2D.ArrayVector(10, 0),
+    av1 = Vec2D.ArrayVector(0, 5);
+
+  // Methods are chainable where you'd expect
+  var result = av0.clone().add(av1);
+  result.toString(); // (10, 5)
+
+  // It hasn't changed!
+  av0.toString(); // (10, 0)
+```
 
 ##### setAxes(x, y)
 
@@ -184,6 +198,9 @@ Reverse the values in this vector.
 ##### abs()
 Convert stored values to absolute values.
 
+##### distance(vec)
+Find the distance between this vector and the provided _vec_;
+
 ##### zero()
 Set vector values to 0.
 
@@ -198,61 +215,4 @@ Returns a clone of this vector.
 ##### magnitude() / length()
 
 ##### lengthSq()
-
-
-### Static Methods
-These methods when called return a new Vector where appropriate. If the return type is a Vector the returned Vector will be of the first vector input class, for example.
-
-
-```javascript
-  var fv = Vec2D.Float32Vector(5, 10),
-    ov = Vec2D.ObjectVEctor(5, 5);
-
-  // Result is a Float32Vector as that was the first input type.
-  var result = Vec2D.subtract(fv, ov);
-
-  result.toString(); // (0, 5)
-```
-
-##### ArrayVector(x, y)
-Use to create an Array based vector.
-
-##### ObjectVector(x, y)
-Use to create an Object based vector.
-
-##### Float32Vector(x, y)
-Use to create a Float32 based vector.
-
-##### abs(vector)
-Return an instance of the passed vector with it's the absolute values for it's x and y components.
-
-##### add(v1, v2)
-Add two vectors to produce a new output.
-
-##### subtract(v1, v2);
-Subtract v2 from v1 to produce a new vector.
-
-##### equals(v1, v2)
-See if the provided Vectors are equal.
-
-##### vectorTimesVector(v1, v2) / multV(v1, v2)
-Multiply v1 by v2 to return a new vector.
-
-##### vectorTimesScalar(vector, number) / multS(vector, number)
-Multiply vector by the provided number to create a new vector.
-
-##### nomalise(vector) / normalize(vector) / unit(vector)
-Normalise this vector
-
-##### dot(v1, v2)
-
-##### cross(v1, v2)
-
-##### magnitude(vector) / length(vector)
-
-##### rotate(vector, radians)
-
-##### distance(v1, v2)
-
-##### reverse(vector)
 
