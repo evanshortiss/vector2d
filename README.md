@@ -10,7 +10,7 @@ Full API support is available in the browsers listed in green above. Browsers ma
 ## Version 2.0.0+ Breaking Changes
 Version 2.0.0 has been updated to remove my manual build steps in favour of using the awesome [browserify](http://browserify.org/).
 
-As of version 2.0.0 the **Vec2D.create**, **Vec2D.random** functions have been removed. I made this choice to ensure it's always explicitly known which type of Vector is being created. Naturally this means that the **useObjects**, **useFloat32Arrays** and **useStandardArrays** are no longer present.
+As of version 2.0.0 all methods on the Vec2D object have been removed, only the classes *ArrayVector*, *Float32Vector* and *ObjectVector* are left. I made this choice to ensure it's always explicitly known which type of Vector is being created and to make the library easier to work with.
 
 ## About
 An easy to use 2D Vector library with 3 methods of Vector representation to allow you to squeeze out as much performance as possible.
@@ -44,7 +44,7 @@ To use:
 ### Browser
 Just include a script tag as you'd expect:
 
-```
+```javascript
 <script src="path/to/vec2d.js" type="text/javascript"></script>
 ```
 
@@ -59,25 +59,46 @@ Performance can be gauged by running the command below. This currently only oper
   Tests are averaged from 5 passes/runs on a set of 100000 vectors. Please wait...
 
   Float32Vector:
-  1343ms "generate (e.g new Float32Vector)"
-  29.8ms "add"
-  31ms "subtract"
-  3.8ms "round"
-  2.4ms "magnitude"
+  "generate (e.g new Float32Vector)", 1222ms
+  "add", 33ms
+  "subtract", 32.6ms
+  "round", 4.6ms
+  "abs", 3ms
+  "magnitude", 3ms
+  "clone", 1056.6ms
+  "zero", 2.8ms
+  "reverse", 3ms
+  "toString", 10.6ms
+  "multiplyByScalar", 4ms
+  "normalise", 6.6ms
 
   ArrayVector:
-  14ms "generate (e.g new Vector)"
-  66.6ms "add"
-  39.8ms "subtract"
-  5.4ms "round"
-  3.8ms "magnitude"
+  "generate (e.g new Vector)", 31ms
+  "add", 59.2ms
+  "subtract", 40.2ms
+  "round", 7ms
+  "abs", 4.4ms
+  "magnitude", 5.2ms
+  "clone", 7ms
+  "zero", 2.8ms
+  "reverse", 5.8ms
+  "toString", 12.6ms
+  "multiplyByScalar", 7.4ms
+  "normalise", 13ms
 
   ObjectVector:
-  104ms "generate (e.g new ObjectVector)"
-  55.6ms "add"
-  57.2ms "subtract"
-  23ms "round"
-  3.8ms "magnitude"
+  "generate (e.g new ObjectVector)", 103ms
+  "add", 54ms
+  "subtract", 55ms
+  "round", 25.6ms
+  "abs", 6.8ms
+  "magnitude", 6ms
+  "clone", 25.8ms
+  "zero", 3ms
+  "reverse", 16.4ms
+  "toString", 13.4ms
+  "multiplyByScalar", 6.4ms
+  "normalise", 16.8ms
 ```
 
 ## Library Function Structure
@@ -91,7 +112,7 @@ To avoid garbage collection and allow for faster operation all vector instance m
   var v2 = Vec2D.ObjectVector(13, -50);
 
   // Add v1 and v0 to produce a new Vector
-  var result = Vec2D.add(v0, v1);
+  var result = v0.clone().add(v1);
   // Prints "(46, 300)"
   result.toString();
   // Prints "(23, 150)"
@@ -108,8 +129,22 @@ To avoid garbage collection and allow for faster operation all vector instance m
 
 ## API
 
-###Vector Instance Methods
+### Instance Methods
 Vectors returned by calling **Vec2D.ObjectVector/ArrayVector/Float32Vector(x, y)** have the following methods accessible on them. All instance methods modify the underlying vector where appropriate. For example calling *multiplyByScalar* will multiply the vector x and y components by the provided number and return the updated underlying vector itself (a reference to *this*) rather than a new instance. The benefit if this is that less objects are created meaning improved performance and methods can be chained.
+
+So, what if I don't want to modify the underlying vector you ask!? Simple *v.clone()*, checkout the example below.
+
+```javascript
+  var av0 = Vec2D.ArrayVector(10, 0),
+    av1 = Vec2D.ArrayVector(0, 5);
+
+  // Methods are chainable where you'd expect
+  var result = av0.clone().add(av1);
+  result.toString(); // (10, 5)
+
+  // It hasn't changed!
+  av0.toString(); // (10, 0)
+```
 
 ##### setAxes(x, y)
 
@@ -163,6 +198,9 @@ Reverse the values in this vector.
 ##### abs()
 Convert stored values to absolute values.
 
+##### distance(vec)
+Find the distance between this vector and the provided _vec_;
+
 ##### zero()
 Set vector values to 0.
 
@@ -177,61 +215,4 @@ Returns a clone of this vector.
 ##### magnitude() / length()
 
 ##### lengthSq()
-
-
-### Static Methods
-These methods when called return a new Vector where appropriate. If the return type is a Vector the returned Vector will be of the first vector input class, for example.
-
-
-```javascript
-  var fv = Vec2D.Float32Vector(5, 10),
-    ov = Vec2D.ObjectVEctor(5, 5);
-
-  // Result is a Float32Vector as that was the first input type.
-  var result = Vec2D.subtract(fv, ov);
-
-  result.toString(); // (0, 5)
-```
-
-##### ArrayVector(x, y)
-Use to create an Array based vector.
-
-##### ObjectVector(x, y)
-Use to create an Object based vector.
-
-##### Float32Vector(x, y)
-Use to create a Float32 based vector.
-
-##### abs(vector)
-Return an instance of the passed vector with it's the absolute values for it's x and y components.
-
-##### add(v1, v2)
-Add two vectors to produce a new output.
-
-##### subtract(v1, v2);
-Subtract v2 from v1 to produce a new vector.
-
-##### equals(v1, v2)
-See if the provided Vectors are equal.
-
-##### vectorTimesVector(v1, v2) / multV(v1, v2)
-Multiply v1 by v2 to return a new vector.
-
-##### vectorTimesScalar(vector, number) / multS(vector, number)
-Multiply vector by the provided number to create a new vector.
-
-##### nomalise(vector) / normalize(vector) / unit(vector)
-Normalise this vector
-
-##### dot(v1, v2)
-
-##### cross(v1, v2)
-
-##### magnitude(vector) / length(vector)
-
-##### rotate(vector, radians)
-
-##### distance(v1, v2)
-
-##### reverse(vector)
 

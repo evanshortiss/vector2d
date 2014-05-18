@@ -10,6 +10,8 @@ module.exports = Vector;
 var precision = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
 
 Vector.prototype = {
+  ctor: Vector,
+
   /**
    * Set both x and y
    * @param x   New x val
@@ -77,8 +79,10 @@ Vector.prototype = {
    * Return an array containing the vector axes.
    * @return {Array}
    */
-  toArray: function() {
-    return new Array(this._axes[0], this._axes[1]);
+  toArray: function(v) {
+    v = v || this;
+
+    return new Array(v._axes[0], v._axes[1]);
   },
 
 
@@ -86,10 +90,12 @@ Vector.prototype = {
    * Return an array containing the vector axes.
    * @return {Object}
    */
-  toObject: function() {
+  toObject: function(v) {
+    v = v || this;
+
     return {
-      x: this._axes[0],
-      y: this._axes[1]
+      x: v._axes[0],
+      y: v._axes[1]
     };
   },
 
@@ -135,7 +141,9 @@ Vector.prototype = {
     this._axes[1] *= vec._axes[1];
     return this;
   },
-  mulV: this.multiplyByVector,
+  mulV: function(v) {
+    return this.multiplyByVector(v);
+  },
 
 
   /**
@@ -147,7 +155,9 @@ Vector.prototype = {
     this._axes[1] /= vec._axes[1];
     return this;
   },
-  divV: this.divideByVector,
+  divV: function(v) {
+    return this.divideByVector(v);
+  },
 
 
   /**
@@ -157,9 +167,12 @@ Vector.prototype = {
   multiplyByScalar: function(n) {
     this._axes[0] *= n;
     this._axes[1] *= n;
+
     return this;
   },
-  mulS: this.multiplyByScalar,
+  mulS: function(n) {
+    return this.multiplyByScalar(n);
+  },
 
 
   /**
@@ -171,7 +184,9 @@ Vector.prototype = {
     this._axes[1] /= n;
     return this;
   },
-  divS: this.divideByScalar,
+  divS: function(n) {
+    return this.divideByScalar(n);
+  },
 
 
   /**
@@ -249,9 +264,8 @@ Vector.prototype = {
 
   /**
    * Reverses this vector.
-   * @param   {Vector} vec
    */
-  reverse: function(vec) {
+  reverse: function() {
     this._axes[0] = -this._axes[0];
     this._axes[1] = -this._axes[1];
     return this;
@@ -277,6 +291,18 @@ Vector.prototype = {
   zero: function() {
     this._axes[0] = this._axes[1] = 0;
     return this;
+  },
+
+
+  /**
+   * Distance between this vector and another.
+   * @param {Vector} v
+   */
+  distance: function (v) {
+    var x = this._axes[0] - v._axes[0];
+    var y = this._axes[1] - v._axes[1];
+
+    return Math.sqrt((x * x) + (y * y));
   },
 
 
@@ -321,6 +347,6 @@ Vector.prototype = {
    * @return {Vector}
    */
   clone: function() {
-    return new Vector(this._axes[0], this._axes[1]);
+    return new this.ctor(this._axes[0], this._axes[1]);
   }
 };
