@@ -59,25 +59,25 @@ Performance can be gauged by running the command below. This currently only oper
   Tests are averaged from 5 passes/runs on a set of 100000 vectors. Please wait...
 
   Float32Vector:
-  1284ms "generate (e.g new Float32Vector)"
-  30ms "add"
-  29.6ms "subtract"
-  16.2ms "round"
-  2.6ms "magnitude"
+  1343ms "generate (e.g new Float32Vector)"
+  29.8ms "add"
+  31ms "subtract"
+  3.8ms "round"
+  2.4ms "magnitude"
 
   ArrayVector:
-  25ms "generate (e.g new Vector)"
-  45.6ms "add"
-  53ms "subtract"
-  25.8ms "round"
-  4.8ms "magnitude"
+  14ms "generate (e.g new Vector)"
+  66.6ms "add"
+  39.8ms "subtract"
+  5.4ms "round"
+  3.8ms "magnitude"
 
   ObjectVector:
-  93ms "generate (e.g new ObjectVector)"
-  56.8ms "add"
-  56ms "subtract"
-  41.6ms "round"
-  5.6ms "magnitude"
+  104ms "generate (e.g new ObjectVector)"
+  55.6ms "add"
+  57.2ms "subtract"
+  23ms "round"
+  3.8ms "magnitude"
 ```
 
 ## Library Function Structure
