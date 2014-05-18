@@ -4,7 +4,7 @@
  */
 
 var assert = require('assert'),
-  Vec2D = require('../build/vec2d.js');
+  Vec2D = require('../src/vec2d.js');
 
 
 describe('Float32Vector', function() {
@@ -92,6 +92,16 @@ describe('Float32Vector', function() {
       v1.subtract(v2);
       assert(v1.getX() === -1 && v1.getY() === -30);
       assert(v2.getX() === 3 && v2.getY() === 34);
+    });
+  });
+
+  describe('round()', function() {
+    it('Should return the correct rounded value.', function() {
+      var v1 = new Vec2D.ArrayVector(5.222, 0.592);
+      v1.round();
+
+      assert(v1.getX() === 5.22);
+      assert(v1.getY() === 0.59);
     });
   });
 

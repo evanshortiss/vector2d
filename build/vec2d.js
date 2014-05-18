@@ -1,8 +1,4 @@
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Vec2D=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-(function (global){
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Vec2D=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-(function (global){
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Vec2D=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -691,7 +687,7 @@ function hasOwnProperty(obj, prop) {
 }).call(this,_dereq_("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./support/isBuffer":3,"FWaASH":2,"inherits":1}],5:[function(_dereq_,module,exports){
 var util = _dereq_('util'),
-  Vector = _dereq_('./Vector');
+  Vector = _dereq_('./Vector.js');
 
 function Float32Vector(x, y) {
   if (this instanceof Float32Vector === false) {
@@ -703,15 +699,16 @@ function Float32Vector(x, y) {
   this._axes[1] = y;
 }
 util.inherits(Float32Vector, Vector);
-module.exports = Float32Vector;
 
 Float32Vector.prototype.clone = function() {
   return new Float32Vector(this._axes[0], this._axes[1]);
 };
 
-},{"./Vector":8,"util":4}],6:[function(_dereq_,module,exports){
+module.exports = Float32Vector;
+
+},{"./Vector.js":8,"util":4}],6:[function(_dereq_,module,exports){
 var util = _dereq_('util'),
-  Vector = _dereq_('./Vector');
+  Vector = _dereq_('./Vector.js');
 
 function ObjectVector(x, y) {
   if (this instanceof ObjectVector === false) {
@@ -724,22 +721,18 @@ function ObjectVector(x, y) {
   };
 }
 util.inherits(ObjectVector, Vector);
-module.exports = ObjectVector;
 
 ObjectVector.prototype.clone = function() {
   return new ObjectVector(this._axes[0], this._axes[1]);
 };
 
-},{"./Vector":8,"util":4}],7:[function(_dereq_,module,exports){
-// *****************************************************************************
-// Publically exposed Vector interface.
-// *****************************************************************************
+module.exports = ObjectVector;
 
-var Vector = _dereq_('./Vector'),
-  Float32Vector = _dereq_('./Float32Vector'),
-  ObjectVector = _dereq_('./ObjectVector');
-
-function Vec2D() {}
+},{"./Vector.js":8,"util":4}],7:[function(_dereq_,module,exports){
+var Vector = _dereq_('./Vector.js'),
+  Float32Vector = _dereq_('./Float32Vector.js'),
+  ObjectVector = _dereq_('./ObjectVector.js'),
+  precision =[1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
 
 /**
  * Some methods below return copies of vectors.
@@ -748,17 +741,19 @@ function Vec2D() {}
  * @param {Number} x
  * @param {Number} y
  */
-function create(v, x, y) {
-  if (v instanceof ObjectVector) {
-    return new ObjectVector(x, y);
-  } else if (v instanceof Vector) {
-    return new Vector(x, y);
-  } else if (v instanceof Float32Vector) {
-    return new Float32Vector(x, y);
+function create(vec, newx, newy) {
+  if (vec instanceof ObjectVector) {
+    return new ObjectVector(newx, newy);
+  } else if (vec instanceof Vector) {
+    return new Vector(newx, newy);
+  } else if (vec instanceof Float32Vector) {
+    return new Float32Vector(newx, newy);
   } else {
     throw new Error('Vector of unknown type was passed to create!');
   }
 }
+
+function Vec2D() {}
 
 Vec2D.prototype = {
   ArrayVector: Vector,
@@ -784,10 +779,10 @@ Vec2D.prototype = {
     // Default is two decimals
     n = n || 2;
 
-    vec._axes[0] = Number(vec._axes[0]).toFixed(n);
-    vec._axes[1] = Number(vec._axes[1]).toFixed(n);
+    var x = ((0.5 + (this._axes[0] * precision[n])) << 0) / precision[n];
+    var y = ((0.5 + (this._axes[1] * precision[n])) << 0) / precision[n];
 
-    return vec;
+    return create(vec, x, y);
   },
 
 
@@ -959,7 +954,8 @@ Vec2D.prototype = {
 };
 
 module.exports = new Vec2D();
-},{"./Float32Vector":5,"./ObjectVector":6,"./Vector":8}],8:[function(_dereq_,module,exports){
+
+},{"./Float32Vector.js":5,"./ObjectVector.js":6,"./Vector.js":8}],8:[function(_dereq_,module,exports){
 function Vector(x, y) {
   if (this instanceof Vector === false) {
     return new Vector(x, y);
@@ -968,6 +964,8 @@ function Vector(x, y) {
   this._axes = [x, y];
 }
 module.exports = Vector;
+
+var precision = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
 
 Vector.prototype = {
   /**
@@ -1027,9 +1025,9 @@ Vector.prototype = {
    */
   toString: function(round) {
     if (round) {
-      return '(' + Math.round(this.getX()) + ', ' + Math.round(this.getY()) + ')';
+      return '(' + Math.round(this._axes[0]) + ', ' + Math.round(this._axes[1]) + ')';
     }
-    return '(' + this.getX() + ', ' + this.getY() + ')';
+    return '(' + this._axes[0] + ', ' + this._axes[1] + ')';
   },
 
 
@@ -1267,8 +1265,10 @@ Vector.prototype = {
     // Default is two decimals
     n = n || 2;
 
-    this._axes[0] = Number(this._axes[0]).toFixed(n);
-    this._axes[1] = Number(this._axes[1]).toFixed(n);
+    // This performs waaay better than toFixed and give Float32 the edge again.
+    // http://www.dynamicguru.com/javascript/round-numbers-with-precision/
+    this._axes[0] = ((0.5 + (this._axes[0] * precision[n])) << 0) / precision[n];
+    this._axes[1] = ((0.5 + (this._axes[1] * precision[n])) << 0) / precision[n];
 
     return this;
   },
@@ -1282,14 +1282,7 @@ Vector.prototype = {
     return new Vector(this._axes[0], this._axes[1]);
   }
 };
+
 },{}]},{},[7])
 (7)
-});
-}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[1])
-(1)
-});
-}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[1])
-(1)
 });
