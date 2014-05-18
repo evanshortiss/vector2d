@@ -5,9 +5,9 @@ Vec2D - 2D Vector Library for JavaScript
 [![browser support](https://ci.testling.com/evanshortiss/vec2d.png)
 ](https://ci.testling.com/evanshortiss/vec2d)
 
-Full API support is available in the browsers listed in green above. Browsers marked in red generally support the library, but do not support Float32Arrays so simply don't use these.
+Full API support is available in the browsers listed in green above. Browsers marked in red generally support the library, but do not support Float32Vectors so simply don't use these and you'll be fine.
 
-## Version 2.0.0 Breaking Changes
+## Version 2.0.0+ Breaking Changes
 Version 2.0.0 has been updated to remove my manual build steps in favour of using the awesome [browserify](http://browserify.org/).
 
 As of version 2.0.0 the **Vec2D.create**, **Vec2D.random** functions have been removed. I made this choice to ensure it's always explicitly known which type of Vector is being created. Naturally this means that the **useObjects**, **useFloat32Arrays** and **useStandardArrays** are no longer present.
@@ -23,7 +23,7 @@ Vec2D provides 3 main modes of operation (Vector representations):
 
 Regardless of operation mode all library functions can be used in the same manner and developers will not need to worry about the vector representation.
 
-In some instances mixing operation modes may work but I have not yet tested for all use cases. The mode used depends on use case, for example if you plan to create many vectors in each frame of a game, but perform very few operations on them then Objects might be fastest. Float32Arrays can be used for faster operations on vectors, but creating these is expensive so it is important to choose the best vector representation for your application. See the [Performance Statistics](#perf) section for more info.
+In some instances mixing operation modes may work but I have not yet tested for all use cases. The mode used depends on use case, for example if you plan to create many vectors in each frame of a game, but perform very few operations on them then ArrayVector might be fastest. Float32Arrays can be used for faster operations on vectors, but creating these is expensive so it is important to choose the best vector representation for your application. See the [Performance Statistics](#perf) section for more info.
 
 ## Usage
 
@@ -46,6 +46,38 @@ Just include a script tag as you'd expect:
 
 ```
 <script src="path/to/vec2d.js" type="text/javascript"></script>
+```
+
+
+## Performance
+
+Performance can be gauged by running the command below. This currently only operates in a node environment so you need to run it from a terminal.
+
+```bash
+  ~/workspaces/vec2d$ node performance/index.js
+
+  Tests are averaged from 5 passes/runs on a set of 100000 vectors. Please wait...
+
+  Float32Vector:
+  1284ms "generate (e.g new Float32Vector)"
+  30ms "add"
+  29.6ms "subtract"
+  16.2ms "round"
+  2.6ms "magnitude"
+
+  ArrayVector:
+  25ms "generate (e.g new Vector)"
+  45.6ms "add"
+  53ms "subtract"
+  25.8ms "round"
+  4.8ms "magnitude"
+
+  ObjectVector:
+  93ms "generate (e.g new ObjectVector)"
+  56.8ms "add"
+  56ms "subtract"
+  41.6ms "round"
+  5.6ms "magnitude"
 ```
 
 ## Library Function Structure
@@ -77,7 +109,7 @@ To avoid garbage collection and allow for faster operation all vector instance m
 ## API
 
 ###Vector Instance Methods
-Vectors returned by calling **Vec2D.[ObjectVector/ArrayVector/Float32Vector](x, y)** have the following methods accessible on them. All instance methods modify the underlying vector where appropriate. For example calling *multiplyByScalar* will multiply the vector x and y components by the provided number and return the updated underlying vector itself rather than a new instance.
+Vectors returned by calling **Vec2D.ObjectVector/ArrayVector/Float32Vector(x, y)** have the following methods accessible on them. All instance methods modify the underlying vector where appropriate. For example calling *multiplyByScalar* will multiply the vector x and y components by the provided number and return the updated underlying vector itself rather than a new instance.
 
 The benefit if this is that less objects are created and methods can be chained.
 

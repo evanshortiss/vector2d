@@ -4,7 +4,7 @@
  */
 
 var assert = require('assert'),
-  Vec2D = require('../src/Vec2D.js');
+  Vec2D = require('../build/vec2d.js');
 
 describe('ArrayVector', function() {
 
@@ -174,10 +174,10 @@ describe('ArrayVector', function() {
       var v2 = new Vec2D.ArrayVector(v1.getX() / len, v1.getY() / len);
       v1.normalise();
 
-      // Rounding error occurs in object version
-      if(v1._axes[0]) {
-        // Screw it, will sort out epsilon val or something when I can
-      }
+      v1.round();
+      v2.round()
+
+      assert(v1.equals(v2));
     });
   });
 
@@ -208,6 +208,7 @@ describe('ArrayVector', function() {
       var v1 = new Vec2D.ArrayVector(47, 345);
       var clone = v1.clone();
 
+      assert(clone instanceof Vec2D.ArrayVector);
       assert(clone != v1);
       assert(clone.equals(v1));
     });

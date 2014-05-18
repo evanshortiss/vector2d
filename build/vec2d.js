@@ -1,4 +1,6 @@
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Vec2D=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function (global){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Vec2D=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -686,12 +688,286 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,_dereq_("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./support/isBuffer":3,"FWaASH":2,"inherits":1}],5:[function(_dereq_,module,exports){
-function ArrayVector(x, y) {
+var util = _dereq_('util'),
+  Vector = _dereq_('./Vector');
+
+function Float32Vector(x, y) {
+  if (this instanceof Float32Vector === false) {
+    return new Float32Vector(x, y);
+  }
+
+  this._axes = new Float32Array(2);
+  this._axes[0] = x;
+  this._axes[1] = y;
+}
+util.inherits(Float32Vector, Vector);
+module.exports = Float32Vector;
+
+Float32Vector.prototype.clone = function() {
+  return new Float32Vector(this._axes[0], this._axes[1]);
+};
+
+},{"./Vector":8,"util":4}],6:[function(_dereq_,module,exports){
+var util = _dereq_('util'),
+  Vector = _dereq_('./Vector');
+
+function ObjectVector(x, y) {
+  if (this instanceof ObjectVector === false) {
+    return new ObjectVector(x, y);
+  }
+
+  this._axes = {
+    0: x,
+    1: y
+  };
+}
+util.inherits(ObjectVector, Vector);
+module.exports = ObjectVector;
+
+ObjectVector.prototype.clone = function() {
+  return new ObjectVector(this._axes[0], this._axes[1]);
+};
+
+},{"./Vector":8,"util":4}],7:[function(_dereq_,module,exports){
+// *****************************************************************************
+// Publically exposed Vector interface.
+// *****************************************************************************
+
+var Vector = _dereq_('./Vector'),
+  Float32Vector = _dereq_('./Float32Vector'),
+  ObjectVector = _dereq_('./ObjectVector');
+
+function Vec2D() {}
+
+/**
+ * Some methods below return copies of vectors.
+ * This function will determine the type of instance to return.
+ * @param {Vector} v
+ * @param {Number} x
+ * @param {Number} y
+ */
+function create(v, x, y) {
+  if (v instanceof ObjectVector) {
+    return new ObjectVector(x, y);
+  } else if (v instanceof Vector) {
+    return new Vector(x, y);
+  } else if (v instanceof Float32Vector) {
+    return new Float32Vector(x, y);
+  } else {
+    throw new Error('Vector of unknown type was passed to create!');
+  }
+}
+
+Vec2D.prototype = {
+  ArrayVector: Vector,
+  ObjectVector: ObjectVector,
+  Float32Vector: Float32Vector,
+
+
+  /**
+   * Get absolute vector from provided vector.
+   * @param   {Vector}
+   * @return  {Vector}
+   */
+  abs: function(vec) {
+    return create(vec, Math.abs(vec._axes[0], vec._axes[1]));
+  },
+
+
+  /**
+   * Round this vector to n decimal places
+   * @param {Number}  n
+   */
+  round: function(vec, n) {
+    // Default is two decimals
+    n = n || 2;
+
+    vec._axes[0] = Number(vec._axes[0]).toFixed(n);
+    vec._axes[1] = Number(vec._axes[1]).toFixed(n);
+
+    return vec;
+  },
+
+
+  /**
+   * Add v0 to v1 to produce a new vector
+   * @param   {Vector} v0
+   * @param   {Vector} v1
+   * @return  {Vector}
+   */
+  add: function(v0, v1) {
+    return create(v0, v0._axes[0] + v1._axes[0], v0._axes[1] + v1._axes[1]);
+  },
+
+
+  /**
+   * Subtract v0 from v1 to produce a new Vector.
+   * @param   {Vector} v0
+   * @param   {Vector} v1
+   * @return  {Vector}
+   */
+  subtract: function(v0, v1) {
+    return create(v0, v0._axes[0] - v1._axes[0], v0._axes[1] - v1._axes[1]);
+  },
+
+
+  /**
+   * Check are the provided vectors equal.
+   * @param   {Vector}   v0
+   * @param   {Vector}   v1
+   * @return  {Boolean}
+   */
+  equals: function(v0, v1) {
+    return v0.equals(v1);
+  },
+
+
+  /**
+   * Multiply a vector by a vector to produce a new Vector
+   * @param   {Vector} v0
+   * @param   {Vector} v1
+   * @return  {Vector}
+   */
+  vectorTimesVector: function(v0, v1) {
+    return create(v0, v0._axes[0] * v1._axes[0], v0._axes[1] * v1._axes[1]);
+  },
+
+
+  multV: this.vectorTimesVector,
+
+
+  /**
+   * Multiply a vector by a number to produce a new vector.
+   * @param   {Vector} vec    The var to store a result in.
+   * @param   {Number} n      The Vector to subtract from this one.
+   * @return  {Vector}
+   */
+  vectorTimesScalar: function(vec, n) {
+    return create(vec, vec._axes[0] * n, vec._axes[1] * n);
+  },
+
+
+  multS: this.vectorTimesScalar,
+
+
+  /**
+   * Return a normalised version of provided vector.
+   * @param   {Vector} vec
+   * @return  {Vector}
+   */
+  nomalise: function(vec) {
+    return this.timesScalar(vec, 1 / vec.magnitude());
+  },
+
+
+  /**
+   * Same as normalise
+   */
+  normalize: this.nomalise,
+
+
+  /**
+   * Same as normalise.
+   */
+  unit: this.normalise,
+
+
+  /**
+   * Return the dot product of two vectors or this vector dot another.
+   * @param   {Vector} v0
+   * @param   {Vector} v1
+   * @return  {Number}
+   */
+  dot: function(v0, v1) {
+    return (v0._axes[0] * v1._axes[0]) + (v0._axes[1] * v1._axes[1]);
+  },
+
+
+  /**
+   * Calculate the cross product of two vectors.
+   * @param   {Vector} v0
+   * @param   {Vector} v1
+   * @param   {Vector}
+   */
+  cross: function(v0, v1) {
+    return ((v0._axes[0] * v1._axes[1]) - (v0._axes[1] * v1._axes[0]));
+  },
+
+
+  /**
+   * Return the magnitude (length) of a vector.
+   * @param   {Vector} vec
+   * @return  {Number}
+   */
+  magnitude: function(vec) {
+    return vec.magnitude();
+  },
+
+
+  /**
+   * Same as the magnitude.
+   */
+  length: function(vec) {
+    return vec.magnitude();
+  },
+
+
+  /**
+   * Rotate the given vector by given radians and return new vector.
+   * @param {Vector}  vec
+   * @param {Number}  rad
+   * return {Vector}
+   */
+  rotate: function(vec, rads) {
+    var cos = Math.cos(rads),
+      sin = Math.sin(rads);
+
+    var ox = vec._axes[0],
+      oy = vec._axes[1];
+
+    var x = ox * cos - oy * sin;
+    var y = ox * sin + oy * cos;
+
+    return create(vec, x, y);
+  },
+
+
+  /**
+   * Find sqaure distance between two vectors.
+   * @param   {Vector} v0
+   * @param   {Vector} v1
+   * @return  {Number}
+   */
+  distance: function(v0, v1) {
+    var x = v0._axes[0] - v1._axes[0];
+    var y = v0._axes[1] - v1._axes[1];
+
+    return Math.sqrt((x * x) + (y * y));
+  },
+
+
+  /**
+   * Returns the reverse of the provided vector.
+   * @param   {Vector} vec
+   * @return  {Vector}
+   */
+  reverse: function(vec) {
+    return create(vec, -vec._axes[0], -vec._axes[1]);
+  }
+};
+
+module.exports = new Vec2D();
+},{"./Float32Vector":5,"./ObjectVector":6,"./Vector":8}],8:[function(_dereq_,module,exports){
+function Vector(x, y) {
+  if (this instanceof Vector === false) {
+    return new Vector(x, y);
+  }
+
   this._axes = [x, y];
 }
-module.exports = ArrayVector;
+module.exports = Vector;
 
-ArrayVector.prototype = {
+Vector.prototype = {
   /**
    * Set both x and y
    * @param x   New x val
@@ -770,8 +1046,8 @@ ArrayVector.prototype = {
    */
   toObject: function() {
     return {
-      "x": this._axes[0],
-      "y": this._axes[1]
+      x: this._axes[0],
+      y: this._axes[1]
     };
   },
 
@@ -982,326 +1258,16 @@ ArrayVector.prototype = {
 
 
   /**
-   * Create a copy of this vector.
-   * @return {Vector}
+   * Round this vector to n decimal places
+   * @param {Number}  n
    */
-  clone: function() {
-    return new ArrayVector(this._axes[0], this._axes[1]);
-  }
-};
-},{}],6:[function(_dereq_,module,exports){
-var util = _dereq_('util'),
-  ArrayVector = _dereq_('./ArrayVector');
+  round: function(n) {
+    // Default is two decimals
+    n = n || 2;
 
-function Float32Vector(x, y) {
-  this._axes = new Float32Array(2);
-  this._axes[0] = x;
-  this._axes[1] = y;
-}
-util.inherits(Float32Vector, ArrayVector);
+    this._axes[0] = Number(this._axes[0]).toFixed(n);
+    this._axes[1] = Number(this._axes[1]).toFixed(n);
 
-module.exports = Float32Vector;
-
-
-},{"./ArrayVector":5,"util":4}],7:[function(_dereq_,module,exports){
-/****************************************************************************
- * Main object based vector class. Has instance methods attached to prototype.
- * @constructor
- * @param {Array}  axes
- ****************************************************************************/
-function ObjectVector(x, y) {
-  this.x = x;
-  this.y = y;
-}
-module.exports = ObjectVector;
-
-ObjectVector.prototype = {
-  /**
-   * Set both x and y
-   * @param x   New x val
-   * @param y   New y val
-   */
-  setAxes: function(x, y) {
-    this.x = x;
-    this.y = y;
-
-    return this;
-  },
-
-
-  /**
-   * Getter for x axis.
-   * @return {Number}
-   */
-  getX: function() {
-    return this.x;
-  },
-
-
-  /**
-   * Setter for x axis.
-   */
-  setX: function(x) {
-    this.x = x;
-
-    return this;
-  },
-
-
-  /**
-   * Getter for y axis.
-   * @return {Number}
-   */
-  getY: function() {
-    return this.y;
-  },
-
-
-  /**
-   * Setter for y axis.
-   */
-  setY: function(y) {
-    this.y = y;
-
-    return this;
-  },
-
-
-  /**
-   * View vector as a string such as "Vec2D: (0, 4)"
-   * @param   {Boolean}
-   * @return  {String}
-   */
-  toString: function(round) {
-    if (round) {
-      return '(' + Math.round(this.getX()) + ', ' + Math.round(this.getY()) + ')';
-    }
-    return '(' + this.getX() + ', ' + this.getY() + ')';
-  },
-
-
-  /**
-   * Return an array containing the vector axes.
-   * @return {Array}
-   */
-  toArray: function() {
-    return new Array(this.x, this.y);
-  },
-
-
-  /**
-   * Return an array containing the vector axes.
-   * @return {Object}
-   */
-  toObject: function() {
-    return {
-      "x": this.x,
-      "y": this.y
-    };
-  },
-
-
-  /**
-   * Add the provided Vector to this one.
-   * @param {Vector} vec
-   */
-  add: function(vec) {
-    this.x += vec.x;
-    this.y += vec.y;
-    return this;
-  },
-
-
-  /**
-   * Subtract the provided vector from this one.
-   * @param {Vector} vec
-   */
-  subtract: function(vec) {
-    this.x -= vec.x;
-    this.y -= vec.y;
-    return this;
-  },
-
-
-  /**
-   * Check is the vector provided equal to this one.
-   * @param   {Vec2D}   vec
-   * @return  {Boolean}
-   */
-  equals: function(vec) {
-    return (vec.x == this.x && vec.y == this.y);
-  },
-
-
-  /**
-   * Multiply this vector by the provided vector.
-   * @param {Vector} vec
-   */
-  multiplyByVector: function(vec) {
-    this.x *= vec.x;
-    this.y *= vec.y;
-    return this;
-  },
-  mulV: this.multiplyByVector,
-
-
-  /**
-   * Multiply this vector by the provided vector.
-   * @param {Vector} vec
-   */
-  divideByVector: function(vec) {
-    this.x /= vec.x;
-    this.y /= vec.y;
-    return this;
-  },
-  divV: this.divideByVector,
-
-
-  /**
-   * Multiply this vector by the provided number
-   * @param {Number} n
-   */
-  multiplyByScalar: function(n) {
-    this.x *= n;
-    this.y *= n;
-    return this;
-  },
-  mulS: this.multiplyByScalar,
-
-
-  /**
-   * Divive this vector by the provided number
-   * @param {Number} n
-   */
-  divideByScalar: function(n) {
-    this.x /= n;
-    this.y /= n;
-    return this;
-  },
-  divS: this.divideByScalar,
-
-
-  /**
-   * Normalise this vector. Directly affects this vector.
-   * Use Vec2D.normalise(vector) to create a normalised clone of this.
-   */
-  normalise: function() {
-    return this.multiplyByScalar(1 / this.magnitude());
-  },
-
-
-  /**
-   * For American spelling.
-   * Same as unit/normalise function.
-   */
-  normalize: function() {
-    return this.normalise();
-  },
-
-
-  /**
-   * The same as normalise.
-   */
-  unit: function() {
-    return this.normalise();
-  },
-
-
-  /**
-   * Return the magnitude (length) of this vector.
-   * @return  {Number}
-   */
-  magnitude: function() {
-    return Math.sqrt((this.x * this.x) + (this.y * this.y));
-  },
-
-
-  /**
-   * Return the magnitude (length) of this vector.
-   * @return  {Number}
-   */
-  length: function() {
-    return this.magnitude();
-  },
-
-
-  /**
-   * Return the squred length of a vector
-   * @return {Number}
-   */
-  lengthSq: function() {
-    return (this.x * this.x) + (this.y * this.y);
-  },
-
-
-  /**
-   * Get the dot product of this vector by another.
-   * @param   {Vector} vec
-   * @return  {Number}
-   */
-  dot: function(vec) {
-    return (vec.x * this.x) + (vec.y * this.y);
-  },
-
-
-  /**
-   * Get the cross product of this vector by another.
-   * @param   {Vector} vec
-   * @return  {Number}
-   */
-  cross: function(vec) {
-    return ((this.x * vec.y) - (this.y * vec.x));
-  },
-
-
-  /**
-   * Returns the reverse of the provided vector.
-   * @param   {Vector} vec
-   */
-  reverse: function(vec) {
-    this.x = -this.x;
-    this.y = -this.y;
-    return this;
-  },
-
-
-  /**
-   * Convert vector to absolute values.
-   * @param   {Vector} vec
-   */
-  abs: function() {
-    this.x = Math.abs(this.x);
-    this.y = Math.abs(this.y);
-
-    return this;
-  },
-
-
-  /**
-   * Rotate the vetor by provided radians.
-   * @param   {Number}  rads
-   * @return  {Vector}
-   */
-  rotate: function(rads) {
-    var cos = Math.cos(rads),
-      sin = Math.sin(rads);
-
-    var ox = this.x,
-      oy = this.y;
-
-    this.x = ox * cos - oy * sin;
-    this.y = ox * sin + oy * cos;
-
-    return this;
-  },
-
-
-  /**
-   * Zeroes the vector
-   * @return  {Vector}
-   */
-  zero: function() {
-    this.x = this.y = 0;
     return this;
   },
 
@@ -1311,214 +1277,13 @@ ObjectVector.prototype = {
    * @return {Vector}
    */
   clone: function() {
-    return new ObjectVector(this.x, this.y);
+    return new Vector(this._axes[0], this._axes[1]);
   }
 };
-},{}],8:[function(_dereq_,module,exports){
-// *****************************************************************************
-// Publically exposed Vector interface.
-// *****************************************************************************
-
-function Vec2D() {}
-
-Vec2D.prototype = {
-  ArrayVector: _dereq_('./ArrayVector'),
-  ObjectVector: _dereq_('./ObjectVector'),
-  Float32Vector: _dereq_('./Float32Vector'),
-
-  /**
-   * Create a randomised vector, with specified min and max values.
-   * @param {Number} minX
-   * @param {Number} maxX
-   * @param {Number} minY
-   * @param {Number} maxY
-   */
-  random: function(minX, maxX, minY, maxY) {
-    var x = minX + (maxX - minX) * Math.random();
-    var y = minY + (maxY - minY) * Math.random();
-
-    return this.create(x, y);
-  },
-
-
-  /**
-   * Get absolute vector from provided vector.
-   * @param   {Vector}
-   * @return  {Vector}
-   */
-  abs: function(vec) {
-    return this.create(Math.abs(vec.getX(), vec.getY()));
-  },
-
-
-  /**
-   * Add v0 to v1 to produce a new vector
-   * @param   {Vector} v0
-   * @param   {Vector} v1
-   * @return  {Vector}
-   */
-  add: function(v0, v1) {
-    return this.create(v0.getX() + v1.getX(), v0.getY() + v1.getY());
-  },
-
-
-  /**
-   * Subtract v0 from v1 to produce a new Vector.
-   * @param   {Vector} v0
-   * @param   {Vector} v1
-   * @return  {Vector}
-   */
-  subtract: function(v0, v1) {
-    return this.create(v0.getX() - v1.getX(), v0.getY() - v1.getY());
-  },
-
-
-  /**
-   * Check are the provided vectors equal.
-   * @param   {Vector}   v0
-   * @param   {Vector}   v1
-   * @return  {Boolean}
-   */
-  equals: function(v0, v1) {
-    return v0.equals(v1);
-  },
-
-
-  /**
-   * Multiply a vector by a vector to produce a new Vector
-   * @param   {Vector} v0
-   * @param   {Vector} v1
-   * @return  {Vector}
-   */
-  vectorTimesVector: function(v0, v1) {
-    return this.create(v0.getX() * v1.getX(), v0.getY() * v1.getY());
-  },
-
-
-  multV: this.vectorTimesVector,
-
-
-  /**
-   * Multiply a vector by a number to produce a new vector.
-   * @param   {Vector} vec    The var to store a result in.
-   * @param   {Number} n      The Vector to subtract from this one.
-   * @return  {Vector}
-   */
-  vectorTimesScalar: function(vec, n) {
-    return this.create(vec.getX() * n, vec.getY() * n);
-  },
-
-
-  multS: this.vectorTimesScalar,
-
-
-  /**
-   * Return a normalised version of provided vector.
-   * @param   {Vector} vec
-   * @return  {Vector}
-   */
-  nomalise: function(vec) {
-    return this.timesScalar(vec, 1 / vec.magnitude());
-  },
-
-
-  /**
-   * Same as normalise
-   */
-  normalize: this.nomalise,
-
-
-  /**
-   * Same as normalise.
-   */
-  unit: this.normalise,
-
-
-  /**
-   * Return the dot product of two vectors or this vector dot another.
-   * @param   {Vector} v0
-   * @param   {Vector} v1
-   * @return  {Number}
-   */
-  dot: function(v0, v1) {
-    return (v0.getX() * v1.getX()) + (v0.getY() * v1.getY());
-  },
-
-
-  /**
-   * Calculate the cross product of two vectors.
-   * @param   {Vector} v0
-   * @param   {Vector} v1
-   * @param   {Vector}
-   */
-  cross: function(v0, v1) {
-    return ((v0.getX() * v1.getY()) - (v0.getY() * v1.getX()));
-  },
-
-
-  /**
-   * Return the magnitude (length) of a vector.
-   * @param   {Vector} vec
-   * @return  {Number}
-   */
-  magnitude: function(vec) {
-    return vec.magnitude();
-  },
-
-
-  /**
-   * Same as the magnitude.
-   */
-  length: function(vec) {
-    return vec.magnitude();
-  },
-
-
-  /**
-   * Rotate the given vector by given radians and return new vector.
-   * @param {Vector}  vec
-   * @param {Number}  rad
-   * return {Vector}
-   */
-  rotate: function(vec, rads) {
-    var cos = Math.cos(rads),
-      sin = Math.sin(rads);
-
-    var ox = vec.getX(),
-      oy = vec.getY();
-
-    var x = ox * cos - oy * sin;
-    var y = ox * sin + oy * cos;
-
-    return this.create(x, y);
-  },
-
-
-  /**
-   * Find sqaure distance between two vectors.
-   * @param   {Vector} v0
-   * @param   {Vector} v1
-   * @return  {Number}
-   */
-  distance: function(v0, v1) {
-    var x = v0.getX() - v1.getX();
-    var y = v0.getY() - v1.getY();
-
-    return Math.sqrt((x * x) + (y * y));
-  },
-
-
-  /**
-   * Returns the reverse of the provided vector.
-   * @param   {Vector} vec
-   * @return  {Vector}
-   */
-  reverse: function(vec) {
-    return this.create(-vec.getX(), -vec.getY());
-  }
-};
-
-module.exports = new Vec2D();
-},{"./ArrayVector":5,"./Float32Vector":6,"./ObjectVector":7}]},{},[8])
-(8)
+},{}]},{},[7])
+(7)
+});
+}).call(this,typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}]},{},[1])
+(1)
 });
