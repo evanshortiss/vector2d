@@ -87,7 +87,7 @@ describe('ObjectVector', function() {
 
   describe('round()', function() {
     it('Should return the correct rounded value.', function() {
-      var v1 = new Vec2D.ArrayVector(5.222, 0.592);
+      var v1 = new Vec2D.ObjectVector(5.222, 0.592);
       v1.round();
 
       assert(v1.getX() === 5.22);
