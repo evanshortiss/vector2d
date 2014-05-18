@@ -1,7 +1,3 @@
-// *****************************************************************************
-// Publically exposed Vector interface.
-// *****************************************************************************
-
 var Vector = require('./Vector.js'),
   Float32Vector = require('./Float32Vector.js'),
   ObjectVector = require('./ObjectVector.js'),
@@ -14,13 +10,13 @@ var Vector = require('./Vector.js'),
  * @param {Number} x
  * @param {Number} y
  */
-function create(v, x, y) {
-  if (v instanceof ObjectVector) {
-    return new ObjectVector(x, y);
-  } else if (v instanceof Vector) {
-    return new Vector(x, y);
-  } else if (v instanceof Float32Vector) {
-    return new Float32Vector(x, y);
+function create(vec, newx, newy) {
+  if (vec instanceof ObjectVector) {
+    return new ObjectVector(newx, newy);
+  } else if (vec instanceof Vector) {
+    return new Vector(newx, newy);
+  } else if (vec instanceof Float32Vector) {
+    return new Float32Vector(newx, newy);
   } else {
     throw new Error('Vector of unknown type was passed to create!');
   }
@@ -52,8 +48,8 @@ Vec2D.prototype = {
     // Default is two decimals
     n = n || 2;
 
-    var x = Math.round(vec._axes[0] * precision[n]) / precision[n];
-    var y = Math.round(vec._axes[1] * precision[n]) / precision[n];
+    var x = ((0.5 + (this._axes[0] * precision[n])) << 0) / precision[n];
+    var y = ((0.5 + (this._axes[1] * precision[n])) << 0) / precision[n];
 
     return create(vec, x, y);
   },

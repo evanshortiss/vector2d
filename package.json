@@ -11,7 +11,6 @@
   ],
   "description": "2D Vector library offering Float32Array, Object or standard Array based vectors.",
   "main": "./src/Vec2D.js",
-  "browser": "./build/vec2d.js",
   "author": "Evan Shortiss",
   "version": "2.0.1",
   "repository": {
