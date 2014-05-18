@@ -2,9 +2,10 @@
 // Publically exposed Vector interface.
 // *****************************************************************************
 
-var Vector = require('./Vector'),
-  Float32Vector = require('./Float32Vector'),
-  ObjectVector = require('./ObjectVector');
+var Vector = require('./Vector.js'),
+  Float32Vector = require('./Float32Vector.js'),
+  ObjectVector = require('./ObjectVector.js'),
+  precision =[1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
 
 /**
  * Some methods below return copies of vectors.
@@ -24,8 +25,6 @@ function create(v, x, y) {
     throw new Error('Vector of unknown type was passed to create!');
   }
 }
-
-var precision = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
 
 function Vec2D() {}
 

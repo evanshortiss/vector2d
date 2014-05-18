@@ -4,7 +4,7 @@
  */
 
 var assert = require('assert'),
-  Vec2D = require('../build/vec2d.js');
+  Vec2D = require('../src/Vec2D.js');
 
 
 describe('Float32Vector', function() {

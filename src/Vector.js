@@ -309,8 +309,11 @@ Vector.prototype = {
 
     // This performs waaay better than toFixed and give Float32 the edge again.
     // http://www.dynamicguru.com/javascript/round-numbers-with-precision/
-    this._axes[0] = Math.round(this._axes[0] *precision[n])/precision[n];
-    this._axes[1] = Math.round(this._axes[1] *precision[n])/precision[n];
+    this._axes[0] = Math.round(this._axes[0] * precision[n]) / precision[n];
+    this._axes[1] = Math.round(this._axes[1] * precision[n]) / precision[n];
+
+    // this._axes[0] = ((0.5 + (this._axes[0] * precision[n])) << 0) / precision[n];
+    // this._axes[1] = ((0.5 + (this._axes[1] * precision[n])) << 0) / precision[n];
 
     return this;
   },

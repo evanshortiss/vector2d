@@ -4,7 +4,7 @@
  */
 
 var assert = require('assert'),
-  Vec2D = require('../build/vec2d.js');
+  Vec2D = require('../src/Vec2D.js');
 
 describe('ArrayVector', function() {
 
@@ -175,7 +175,7 @@ describe('ArrayVector', function() {
       v1.normalise();
 
       v1.round();
-      v2.round()
+      v2.round();
 
       assert(v1.equals(v2));
     });
@@ -200,6 +200,16 @@ describe('ArrayVector', function() {
 
       assert(v1.getX() === -6);
       assert(v1.getY() === -9);
+    });
+  });
+
+  describe('round()', function() {
+    it('Should return the correct rounded value.', function() {
+      var v1 = new Vec2D.ArrayVector(5.222, 0.592);
+      v1.round();
+
+      assert(v1.getX() === 5.22);
+      assert(v1.getY() === 0.59);
     });
   });
 

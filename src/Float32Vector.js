@@ -1,5 +1,5 @@
 var util = require('util'),
-  Vector = require('./Vector');
+  Vector = require('./Vector.js');
 
 function Float32Vector(x, y) {
   if (this instanceof Float32Vector === false) {
@@ -11,8 +11,9 @@ function Float32Vector(x, y) {
   this._axes[1] = y;
 }
 util.inherits(Float32Vector, Vector);
-module.exports = Float32Vector;
 
 Float32Vector.prototype.clone = function() {
   return new Float32Vector(this._axes[0], this._axes[1]);
 };
+
+module.exports = Float32Vector;
