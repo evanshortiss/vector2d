@@ -829,10 +829,8 @@ Vector.prototype = {
    * Return an array containing the vector axes.
    * @return {Array}
    */
-  toArray: function(v) {
-    v = v || this;
-
-    return new Array(v._axes[0], v._axes[1]);
+  toArray: function() {
+    return new Array(this._axes[0], this._axes[1]);
   },
 
 
@@ -840,12 +838,10 @@ Vector.prototype = {
    * Return an array containing the vector axes.
    * @return {Object}
    */
-  toObject: function(v) {
-    v = v || this;
-
+  toObject: function() {
     return {
-      x: v._axes[0],
-      y: v._axes[1]
+      x: this._axes[0],
+      y: this._axes[1]
     };
   },
 
