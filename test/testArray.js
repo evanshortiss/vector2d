@@ -6,7 +6,7 @@
 var assert = require('assert'),
   Vec2D = require('../src/Vec2D.js');
 
-describe('Test Vec2D Library instance methods.', function() {
+describe('ArrayVector', function() {
 
   describe('Vector creation methods.', function() {
     it('Should create a vector successfully', function() {

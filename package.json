@@ -41,7 +41,7 @@
     "grunt-browserify": "^2.1.0"
   },
   "scripts": {
-    "test": "mocha --ui bdd"
+    "test": "grunt build && mocha --ui bdd"
   },
   "directories": {
     "test": "./test"
