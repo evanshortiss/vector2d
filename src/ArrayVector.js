@@ -129,6 +129,7 @@ ArrayVector.prototype = {
     this._axes[1] *= vec._axes[1];
     return this;
   },
+  mulV: this.multiplyByVector,
 
 
   /**
@@ -140,6 +141,7 @@ ArrayVector.prototype = {
     this._axes[1] /= vec._axes[1];
     return this;
   },
+  divV: this.divideByVector,
 
 
   /**
@@ -151,6 +153,7 @@ ArrayVector.prototype = {
     this._axes[1] *= n;
     return this;
   },
+  mulS: this.multiplyByScalar,
 
 
   /**
@@ -162,6 +165,7 @@ ArrayVector.prototype = {
     this._axes[1] /= n;
     return this;
   },
+  divS: this.divideByScalar,
 
 
   /**

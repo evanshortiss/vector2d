@@ -30,9 +30,9 @@
         WIDTH = document.getElementById('canvas').offsetWidth;
         HEIGHT = document.getElementById('canvas').offsetHeight;
         ctx = document.getElementById('canvas').getContext('2d');
-        ball = Vec2D.create(WIDTH/2, HEIGHT/2);
+        ball = new Vec2D.ArrayVector(WIDTH/2, HEIGHT/2);
         ball.radius = 7;
-        ball.velocity = Vec2D.create(randFloat(-0.5, 0.5), randFloat(-0.5, 0.5));
+        ball.velocity = new Vec2D.ArrayVector(randFloat(-0.5, 0.5), randFloat(-0.5, 0.5));
 
         prevFrameTime = new Date().getTime();
 

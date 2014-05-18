@@ -1,4 +1,5 @@
 test
 bower.json
-perf.js
-old.perf.js
+index.html
+build
+Gruntfile.js

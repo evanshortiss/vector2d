@@ -136,6 +136,7 @@ ObjectVector.prototype = {
     this.y *= vec.y;
     return this;
   },
+  mulV: this.multiplyByVector,
 
 
   /**
@@ -147,6 +148,7 @@ ObjectVector.prototype = {
     this.y /= vec.y;
     return this;
   },
+  divV: this.divideByVector,
 
 
   /**
@@ -158,6 +160,7 @@ ObjectVector.prototype = {
     this.y *= n;
     return this;
   },
+  mulS: this.multiplyByScalar,
 
 
   /**
@@ -169,6 +172,7 @@ ObjectVector.prototype = {
     this.y /= n;
     return this;
   },
+  divS: this.divideByScalar,
 
 
   /**

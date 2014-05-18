@@ -1,38 +1,29 @@
 Vec2D - 2D Vector Library for JavaScript
 ===
 
+## Browser Support
 [![browser support](https://ci.testling.com/evanshortiss/vec2d.png)
 ](https://ci.testling.com/evanshortiss/vec2d)
 
+Full API support is available in the browsers listed in green above. Browsers marked in red generally support the library, but do not support Float32Arrays so simply don't use these.
+
+## Version 2.0.0 Breaking Changes
+Version 2.0.0 has been updated to remove my manual build steps in favour of using the awesome [browserify](http://browserify.org/).
+
+As of version 2.0.0 the **Vec2D.create**, **Vec2D.random** functions have been removed. I made this choice to ensure it's always explicitly known which type of Vector is being created. Naturally this means that the **useObjects**, **useFloat32Arrays** and **useStandardArrays** are no longer present.
+
 ## About
-An easy to use 2D Vector library with 3 methods of Vector representation for performance tuning, and all within 5KB.
+An easy to use 2D Vector library with 3 methods of Vector representation for performance tuning.
 
 Vec2D provides 3 main modes of operation (Vector representations):
 
-* Array (Default mode)
+* ArrayVector
 * Float32Array
-* Object
+* ObjectVector
 
 Regardless of operation mode all library functions can be used in the same manner and developers will not need to worry about the vector representation.
 
-```
-  // You only need to call these once if you don't plan on changing mode
-
-  // Use Float32 Arrays
-  Vec2D.useFloat32Arrays();
-  // Use Objects
-  Vec2D.useObjects();
-  // Go back to default Array mode
-  Vec2D.useStandardArrays();
-```
-
 In some instances mixing operation modes may work but I have not yet tested for all use cases. The mode used depends on use case, for example if you plan to create many vectors in each frame of a game, but perform very few operations on them then Objects might be fastest. Float32Arrays can be used for faster operations on vectors, but creating these is expensive so it is important to choose the best vector representation for your application. See the [Performance Statistics](#perf) section for more info.
-
-Tested on:
-* Node.js 0.8.8, 0.10.15
-* Chrome 27
-* Safari 6.0.3.
-
 
 ## Usage
 
@@ -63,9 +54,9 @@ To avoid garbage collection and allow for faster operation all vector instance m
 
 ```
   // Create a vector
-  var v0 = Vec2D.create(23, 150);
-  var v1 = Vec2D.create(23, 150);
-  var v2 = Vec2D.create(13, -50);
+  var v0 = Vec2D.ObjectVector(23, 150);
+  var v1 = Vec2D.ObjectVector(23, 150);
+  var v2 = Vec2D.ObjectVector(13, -50);
 
   // Add v1 and v0 to produce a new Vector
   var result = Vec2D.add(v0, v1);
@@ -85,10 +76,10 @@ To avoid garbage collection and allow for faster operation all vector instance m
 
 ## API
 
-
-
 ###Vector Instance Methods
-Vectors returned by calling **Vec2D.create(x, y)** have the following methods accessible on them. All instance methods modify the underlying vector where appropriate. For example calling mulS will multiply the vector x and y components by the provided number. Instance methods that don't have a regular return value **multV** for example will simple return the vector itself meaning these methods can be chained.
+Vectors returned by calling **Vec2D.[ObjectVector/ArrayVector/Float32Vector](x, y)** have the following methods accessible on them. All instance methods modify the underlying vector where appropriate. For example calling *multiplyByScalar* will multiply the vector x and y components by the provided number and return the updated underlying vector itself rather than a new instance.
+
+The benefit if this is that less objects are created and methods can be chained.
 
 ##### setAxes(x, y)
 
@@ -107,7 +98,7 @@ Convert vector to a String with format "(0, 0)"
 Convert vector to standard JavaScript Array [2.823, 1.541]
 
 ##### toObject()
-Covert vector to a JSON object.
+Covert vector to a JSON object with format { x: 1.4, y: 8 }.
 
 ##### add(vector)
 Modify this vector by adding the provided vector to it.
@@ -118,13 +109,13 @@ Modify this vector by subtracting the provided vector from it.
 ##### equals(vector)
 Check does this vector equal the provided vector.
 
-##### multV(vector)
+##### mulV(vector)
 Multiply this vector by provided vector.
 
 ##### divV(vector)
 Divide this vector by provided vector.
 
-##### multS(number)
+##### mulS(number)
 Multiply this vector by a number.
 
 ##### divS(number)
@@ -159,7 +150,7 @@ Returns a clone of this vector.
 
 
 ### Static Class Methods
-These methods when called return a new Vector. **ArrayVector** and **ObjectVector** must be called using the new keyword. For example **Vec2D.ArrayVector(x, y)** or **Vec2D.abs(myVec)**.
+These methods when called return a new Vector where appropriate. **ArrayVector**, **ObjectVector** and **Float32Vector** must be called using the new keyword. For example **new Vec2D.ArrayVector(x, y)**.
 
 ##### ArrayVector(x, y)
 Use to create an Array based vector.
@@ -170,23 +161,8 @@ Use to create an Object based vector.
 ##### Float32Vector(x, y)
 Use to create a Float32 based vector.
 
-##### create(x, y)
-Create a vector using the current type. For example, by default this will create Array based Vectors. If you called **Vec2D.useObjects()** it will create Object based Vectors.
-
-##### random(min, max)
-Create a random vector with specified min and max values.
-
 ##### abs(vector)
 Return an instance of the passed vector with it's the absolute values for it's x and y components.
-
-##### useStandardArrays()
-Force **Vec2D.create(x, y)** to use Array for vector class.
-
-##### useFloat32Arrays()
-Force **Vec2D.create(x, y)** to use Float32Array vector class.
-
-##### useObjects()
-Force **Vec2D.create(x, y)** to use Object for class.
 
 ##### add(v1, v2)
 Add two vectors to produce a new output.
