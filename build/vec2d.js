@@ -1221,8 +1221,14 @@ Vector.prototype = {
    * @param   {Vector} vec
    */
   abs: function() {
-    this._axes[0] = Math.abs(this._axes[0]);
-    this._axes[1] = Math.abs(this._axes[1]);
+    // http://lab.polygonal.de/?p=81
+    // i = x < 0 ? -x : x;
+
+    var x = this._axes[0],
+      y = this._axes[1];
+
+    this._axes[0] = x < 0 ? -x : x;
+    this._axes[1] = y < 0 ? -y : y;
 
     return this;
   },

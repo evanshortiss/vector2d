@@ -213,6 +213,16 @@ describe('ArrayVector', function() {
     });
   });
 
+  describe('abs()', function() {
+    it('Should set values to positives', function() {
+      var v1 = new Vec2D.ArrayVector(-1.43, -8.3);
+      v1.abs();
+
+      assert(v1.getX() === 1.43);
+      assert(v1.getY() === 8.3);
+    });
+  });
+
   describe('clone()', function() {
     it('Should create a copy of the vector.', function() {
       var v1 = new Vec2D.ArrayVector(47, 345);

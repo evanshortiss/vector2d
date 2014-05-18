@@ -95,16 +95,6 @@ describe('Float32Vector', function() {
     });
   });
 
-  describe('round()', function() {
-    it('Should return the correct rounded value.', function() {
-      var v1 = new Vec2D.Float32Vector(5.222, 0.592);
-      v1.round();
-
-      assert(v1.getX() === 5.22);
-      assert(v1.getY() === 0.59);
-    });
-  });
-
   describe('equals()', function() {
     it('Should determine vectors are equal before any modifications and not after.', function() {
       var v1 = new Vec2D.Float32Vector(3, 34);
@@ -115,6 +105,16 @@ describe('Float32Vector', function() {
       v1.add(v2);
       assert(!v1.equals(v2));
       assert(!v2.equals(v1));
+    });
+  });
+
+  describe('abs()', function() {
+    it('Should set values to positives', function() {
+      var v1 = new Vec2D.ArrayVector(-1.43, -8.3);
+      v1.abs();
+
+      assert(v1.getX() === 1.43);
+      assert(v1.getY() === 8.3);
     });
   });
 

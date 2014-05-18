@@ -13,6 +13,7 @@ Suite.prototype = {
     this.add();
     this.subtract();
     this.round();
+    this.abs();
     this.magnitude();
 
     return this.results;
@@ -100,6 +101,27 @@ Suite.prototype = {
     this.results.push({
       time: time / this.rounds,
       name: 'magnitude'
+    });
+  },
+
+  abs: function() {
+    var time = 0;
+
+    for(var i = 0; i < this.rounds; i++) {
+      var s = Date.now(),
+        len = this.vectors.length;
+
+      for(var j = 0; j < len ; j++) {
+        this.vectors[j].abs();
+      }
+
+      time += (Date.now() - s);
+    }
+
+    // Time averaged over passes
+    this.results.push({
+      time: time / this.rounds,
+      name: 'abs'
     });
   },
 
