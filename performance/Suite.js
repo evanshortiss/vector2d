@@ -15,8 +15,32 @@ Suite.prototype = {
     this.round();
     this.abs();
     this.magnitude();
+    this.clone();
+    this.zero();
+    this.reverse();
+    this.toString();
+    this.multiplyByScalar();
+    this.normalise();
+    this.divS();
 
     return this.results;
+  },
+
+  _run: function (fn) {
+    var time = 0;
+
+    for(var i = 0; i < this.rounds; i++) {
+      var s = Date.now(),
+        len = this.vectors.length;
+
+      for(var j = 0; j < len ; j++) {
+        fn(j);
+      }
+
+      time += (Date.now() - s);
+    }
+
+    return time / this.rounds;
   },
 
   // Generate vectors for the test
@@ -40,110 +64,134 @@ Suite.prototype = {
 
   // Perform additions
   add: function () {
-    var time = 0;
+    var self = this;
 
-    for(var i = 0; i < this.rounds; i++) {
-      var s = Date.now(),
-        len = this.vectors.length;
-
-      for(var j = 0; j < len ; j++) {
-        // Add vector to another random vector
-        this.vectors[j].add(this.vectors[randInt(0, this.vectors.length - 1)]);
-      }
-
-      time += (Date.now() - s);
-    }
-
-    // Time averaged over passes
     this.results.push({
-      time: time / this.rounds,
+      time: this._run(function (index) {
+        self.vectors[index].add(self.vectors[randInt(0, self.vectors.length - 1)]);
+      }),
       name: 'add'
     });
   },
 
   subtract: function () {
-    var time = 0;
+    var self = this;
 
-    for(var i = 0; i < this.rounds; i++) {
-      var s = Date.now(),
-        len = this.vectors.length;
-
-      for(var j = 0; j < len ; j++) {
-        // Add vector to another random vector
-        this.vectors[j].subtract(this.vectors[randInt(0, this.vectors.length - 1)]);
-      }
-
-      time += (Date.now() - s);
-    }
-
-    // Time averaged over passes
     this.results.push({
-      time: time / this.rounds,
+      time: this._run(function (index) {
+        self.vectors[index].subtract(self.vectors[randInt(0, self.vectors.length - 1)]);
+      }),
       name: 'subtract'
     });
   },
 
   magnitude: function() {
-    var time = 0;
+    var self = this;
 
-    for(var i = 0; i < this.rounds; i++) {
-      var s = Date.now(),
-        len = this.vectors.length;
-
-      for(var j = 0; j < len ; j++) {
-        this.vectors[j].magnitude();
-      }
-
-      time += (Date.now() - s);
-    }
-
-    // Time averaged over passes
     this.results.push({
-      time: time / this.rounds,
+      time: this._run(function (index) {
+        self.vectors[index].magnitude();
+      }),
       name: 'magnitude'
     });
   },
 
   abs: function() {
-    var time = 0;
+    var self = this;
 
-    for(var i = 0; i < this.rounds; i++) {
-      var s = Date.now(),
-        len = this.vectors.length;
-
-      for(var j = 0; j < len ; j++) {
-        this.vectors[j].abs();
-      }
-
-      time += (Date.now() - s);
-    }
-
-    // Time averaged over passes
     this.results.push({
-      time: time / this.rounds,
+      time: this._run(function (index) {
+        self.vectors[index].abs();
+      }),
       name: 'abs'
     });
   },
 
   round: function() {
-    var time = 0;
+    var self = this;
 
-    for(var i = 0; i < this.rounds; i++) {
-      var s = Date.now(),
-        len = this.vectors.length;
-
-      for(var j = 0; j < len ; j++) {
-        // Round to four places
-        this.vectors[j].round(4);
-      }
-
-      time += (Date.now() - s);
-    }
-
-    // Time averaged over passes
     this.results.push({
-      time: time / this.rounds,
+      time: this._run(function (index) {
+        self.vectors[index].round();
+      }),
       name: 'round'
+    });
+  },
+
+  clone: function() {
+    var self = this;
+
+    this.results.push({
+      time: this._run(function (index) {
+        self.vectors[index].clone();
+      }),
+      name: 'clone'
+    });
+  },
+
+  zero: function() {
+    var self = this;
+
+    this.results.push({
+      time: this._run(function (index) {
+        self.vectors[index].zero();
+      }),
+      name: 'zero'
+    });
+  },
+
+  reverse: function() {
+    var self = this;
+
+    this.results.push({
+      time: this._run(function (index) {
+        self.vectors[index].reverse();
+      }),
+      name: 'reverse'
+    });
+  },
+
+  toString: function() {
+    var self = this;
+
+    this.results.push({
+      time: this._run(function (index) {
+        self.vectors[index].toString();
+      }),
+      name: 'toString'
+    });
+  },
+
+  multiplyByScalar: function() {
+    var self = this;
+
+    this.results.push({
+      time: this._run(function (index) {
+        self.vectors[index].multiplyByScalar(randInt(1, 10));
+      }),
+      name: 'multiplyByScalar'
+    });
+  },
+
+  normalise: function() {
+    var self = this;
+
+    this.results.push({
+      time: this._run(function (index) {
+        self.vectors[index].normalise(randInt(1, 10));
+      }),
+      name: 'normalise'
+    });
+  },
+
+  divS: function() {
+    var self = this;
+
+    this.results.push({
+      time: this._run(function (index) {
+        self.vectors[index].divS(randInt(1, 10));
+      }),
+      name: 'divS'
     });
   }
 };

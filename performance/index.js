@@ -6,12 +6,12 @@ var VECTOR_COUNT = 100000,
 
 console.log('Tests are averaged from %d passes/runs on a set of %d vectors. Please wait...', TEST_PASSES, VECTOR_COUNT);
 
-var fv = new Suite(Vec2D.Float32Vector, 100000, 5).run();
 var av = new Suite(Vec2D.ArrayVector, 100000, 5).run();
+var fv = new Suite(Vec2D.Float32Vector, 100000, 5).run();
 var ov = new Suite(Vec2D.ObjectVector, 100000, 5).run();
 
 function stats(item) {
-  console.log('%dms "%s"', item.time, item.name);
+  console.log('"%s", %dms', item.name, item.time);
 }
 
 console.log('\nFloat32Vector:');

@@ -12,6 +12,8 @@ function Float32Vector(x, y) {
 }
 util.inherits(Float32Vector, Vector);
 
+Float32Vector.prototype.ctor = Float32Vector;
+
 Float32Vector.prototype.clone = function() {
   return new Float32Vector(this._axes[0], this._axes[1]);
 };

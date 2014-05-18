@@ -59,25 +59,46 @@ Performance can be gauged by running the command below. This currently only oper
   Tests are averaged from 5 passes/runs on a set of 100000 vectors. Please wait...
 
   Float32Vector:
-  1343ms "generate (e.g new Float32Vector)"
-  29.8ms "add"
-  31ms "subtract"
-  3.8ms "round"
-  2.4ms "magnitude"
+  "generate (e.g new Float32Vector)", 1222ms
+  "add", 33ms
+  "subtract", 32.6ms
+  "round", 4.6ms
+  "abs", 3ms
+  "magnitude", 3ms
+  "clone", 1056.6ms
+  "zero", 2.8ms
+  "reverse", 3ms
+  "toString", 10.6ms
+  "multiplyByScalar", 4ms
+  "normalise", 6.6ms
 
   ArrayVector:
-  14ms "generate (e.g new Vector)"
-  66.6ms "add"
-  39.8ms "subtract"
-  5.4ms "round"
-  3.8ms "magnitude"
+  "generate (e.g new Vector)", 31ms
+  "add", 59.2ms
+  "subtract", 40.2ms
+  "round", 7ms
+  "abs", 4.4ms
+  "magnitude", 5.2ms
+  "clone", 7ms
+  "zero", 2.8ms
+  "reverse", 5.8ms
+  "toString", 12.6ms
+  "multiplyByScalar", 7.4ms
+  "normalise", 13ms
 
   ObjectVector:
-  104ms "generate (e.g new ObjectVector)"
-  55.6ms "add"
-  57.2ms "subtract"
-  23ms "round"
-  3.8ms "magnitude"
+  "generate (e.g new ObjectVector)", 103ms
+  "add", 54ms
+  "subtract", 55ms
+  "round", 25.6ms
+  "abs", 6.8ms
+  "magnitude", 6ms
+  "clone", 25.8ms
+  "zero", 3ms
+  "reverse", 16.4ms
+  "toString", 13.4ms
+  "multiplyByScalar", 6.4ms
+  "normalise", 16.8ms
 ```
 
 ## Library Function Structure
