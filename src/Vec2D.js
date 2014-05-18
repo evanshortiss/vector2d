@@ -2,26 +2,37 @@
 // Publically exposed Vector interface.
 // *****************************************************************************
 
+var Vector = require('./Vector'),
+  Float32Vector = require('./Float32Vector'),
+  ObjectVector = require('./ObjectVector');
+
+/**
+ * Some methods below return copies of vectors.
+ * This function will determine the type of instance to return.
+ * @param {Vector} v
+ * @param {Number} x
+ * @param {Number} y
+ */
+function create(v, x, y) {
+  if (v instanceof ObjectVector) {
+    return new ObjectVector(x, y);
+  } else if (v instanceof Vector) {
+    return new Vector(x, y);
+  } else if (v instanceof Float32Vector) {
+    return new Float32Vector(x, y);
+  } else {
+    throw new Error('Vector of unknown type was passed to create!');
+  }
+}
+
+var precision = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
+
 function Vec2D() {}
 
 Vec2D.prototype = {
-  ArrayVector: require('./ArrayVector'),
-  ObjectVector: require('./ObjectVector'),
-  Float32Vector: require('./Float32Vector'),
-
-  /**
-   * Create a randomised vector, with specified min and max values.
-   * @param {Number} minX
-   * @param {Number} maxX
-   * @param {Number} minY
-   * @param {Number} maxY
-   */
-  random: function(minX, maxX, minY, maxY) {
-    var x = minX + (maxX - minX) * Math.random();
-    var y = minY + (maxY - minY) * Math.random();
-
-    return this.create(x, y);
-  },
+  ArrayVector: Vector,
+  ObjectVector: ObjectVector,
+  Float32Vector: Float32Vector,
 
 
   /**
@@ -30,7 +41,22 @@ Vec2D.prototype = {
    * @return  {Vector}
    */
   abs: function(vec) {
-    return this.create(Math.abs(vec.getX(), vec.getY()));
+    return create(vec, Math.abs(vec._axes[0], vec._axes[1]));
+  },
+
+
+  /**
+   * Round this vector to n decimal places
+   * @param {Number}  n
+   */
+  round: function(vec, n) {
+    // Default is two decimals
+    n = n || 2;
+
+    var x = Math.round(vec._axes[0] * precision[n]) / precision[n];
+    var y = Math.round(vec._axes[1] * precision[n]) / precision[n];
+
+    return create(vec, x, y);
   },
 
 
@@ -41,7 +67,7 @@ Vec2D.prototype = {
    * @return  {Vector}
    */
   add: function(v0, v1) {
-    return this.create(v0.getX() + v1.getX(), v0.getY() + v1.getY());
+    return create(v0, v0._axes[0] + v1._axes[0], v0._axes[1] + v1._axes[1]);
   },
 
 
@@ -52,7 +78,7 @@ Vec2D.prototype = {
    * @return  {Vector}
    */
   subtract: function(v0, v1) {
-    return this.create(v0.getX() - v1.getX(), v0.getY() - v1.getY());
+    return create(v0, v0._axes[0] - v1._axes[0], v0._axes[1] - v1._axes[1]);
   },
 
 
@@ -74,7 +100,7 @@ Vec2D.prototype = {
    * @return  {Vector}
    */
   vectorTimesVector: function(v0, v1) {
-    return this.create(v0.getX() * v1.getX(), v0.getY() * v1.getY());
+    return create(v0, v0._axes[0] * v1._axes[0], v0._axes[1] * v1._axes[1]);
   },
 
 
@@ -88,7 +114,7 @@ Vec2D.prototype = {
    * @return  {Vector}
    */
   vectorTimesScalar: function(vec, n) {
-    return this.create(vec.getX() * n, vec.getY() * n);
+    return create(vec, vec._axes[0] * n, vec._axes[1] * n);
   },
 
 
@@ -124,7 +150,7 @@ Vec2D.prototype = {
    * @return  {Number}
    */
   dot: function(v0, v1) {
-    return (v0.getX() * v1.getX()) + (v0.getY() * v1.getY());
+    return (v0._axes[0] * v1._axes[0]) + (v0._axes[1] * v1._axes[1]);
   },
 
 
@@ -135,7 +161,7 @@ Vec2D.prototype = {
    * @param   {Vector}
    */
   cross: function(v0, v1) {
-    return ((v0.getX() * v1.getY()) - (v0.getY() * v1.getX()));
+    return ((v0._axes[0] * v1._axes[1]) - (v0._axes[1] * v1._axes[0]));
   },
 
 
@@ -167,13 +193,13 @@ Vec2D.prototype = {
     var cos = Math.cos(rads),
       sin = Math.sin(rads);
 
-    var ox = vec.getX(),
-      oy = vec.getY();
+    var ox = vec._axes[0],
+      oy = vec._axes[1];
 
     var x = ox * cos - oy * sin;
     var y = ox * sin + oy * cos;
 
-    return this.create(x, y);
+    return create(vec, x, y);
   },
 
 
@@ -184,8 +210,8 @@ Vec2D.prototype = {
    * @return  {Number}
    */
   distance: function(v0, v1) {
-    var x = v0.getX() - v1.getX();
-    var y = v0.getY() - v1.getY();
+    var x = v0._axes[0] - v1._axes[0];
+    var y = v0._axes[1] - v1._axes[1];
 
     return Math.sqrt((x * x) + (y * y));
   },
@@ -197,7 +223,7 @@ Vec2D.prototype = {
    * @return  {Vector}
    */
   reverse: function(vec) {
-    return this.create(-vec.getX(), -vec.getY());
+    return create(vec, -vec._axes[0], -vec._axes[1]);
   }
 };
 

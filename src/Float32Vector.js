@@ -1,12 +1,18 @@
 var util = require('util'),
-  ArrayVector = require('./ArrayVector');
+  Vector = require('./Vector');
 
 function Float32Vector(x, y) {
+  if (this instanceof Float32Vector === false) {
+    return new Float32Vector(x, y);
+  }
+
   this._axes = new Float32Array(2);
   this._axes[0] = x;
   this._axes[1] = y;
 }
-util.inherits(Float32Vector, ArrayVector);
-
+util.inherits(Float32Vector, Vector);
 module.exports = Float32Vector;
 
+Float32Vector.prototype.clone = function() {
+  return new Float32Vector(this._axes[0], this._axes[1]);
+};

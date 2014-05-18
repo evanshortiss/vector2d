@@ -1,9 +1,15 @@
-function ArrayVector(x, y) {
+function Vector(x, y) {
+  if (this instanceof Vector === false) {
+    return new Vector(x, y);
+  }
+
   this._axes = [x, y];
 }
-module.exports = ArrayVector;
+module.exports = Vector;
 
-ArrayVector.prototype = {
+var precision = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
+
+Vector.prototype = {
   /**
    * Set both x and y
    * @param x   New x val
@@ -61,9 +67,9 @@ ArrayVector.prototype = {
    */
   toString: function(round) {
     if (round) {
-      return '(' + Math.round(this.getX()) + ', ' + Math.round(this.getY()) + ')';
+      return '(' + Math.round(this._axes[0]) + ', ' + Math.round(this._axes[1]) + ')';
     }
-    return '(' + this.getX() + ', ' + this.getY() + ')';
+    return '(' + this._axes[0] + ', ' + this._axes[1] + ')';
   },
 
 
@@ -82,8 +88,8 @@ ArrayVector.prototype = {
    */
   toObject: function() {
     return {
-      "x": this._axes[0],
-      "y": this._axes[1]
+      x: this._axes[0],
+      y: this._axes[1]
     };
   },
 
@@ -294,10 +300,27 @@ ArrayVector.prototype = {
 
 
   /**
+   * Round this vector to n decimal places
+   * @param {Number}  n
+   */
+  round: function(n) {
+    // Default is two decimals
+    n = n || 2;
+
+    // This performs waaay better than toFixed and give Float32 the edge again.
+    // http://www.dynamicguru.com/javascript/round-numbers-with-precision/
+    this._axes[0] = Math.round(this._axes[0] *precision[n])/precision[n];
+    this._axes[1] = Math.round(this._axes[1] *precision[n])/precision[n];
+
+    return this;
+  },
+
+
+  /**
    * Create a copy of this vector.
    * @return {Vector}
    */
   clone: function() {
-    return new ArrayVector(this._axes[0], this._axes[1]);
+    return new Vector(this._axes[0], this._axes[1]);
   }
 };

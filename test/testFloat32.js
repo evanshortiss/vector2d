@@ -174,12 +174,7 @@ describe('Float32Vector', function() {
       var v2 = new Vec2D.Float32Vector(v1.getX() / len, v1.getY() / len);
       v1.normalise();
 
-      // Rounding error occurs in object version
-      if(v1._axes.x) {
-        // Screw it, will sort out epsilon val or something when I can
-      } else {
-        assert(v1.equals(v2));
-      }
+      assert(v1.equals(v2));
     });
   });
 
@@ -210,6 +205,7 @@ describe('Float32Vector', function() {
       var v1 = new Vec2D.Float32Vector(47, 345);
       var clone = v1.clone();
 
+      assert(clone instanceof Vec2D.Float32Vector);
       assert(clone != v1);
       assert(clone.equals(v1));
     });
