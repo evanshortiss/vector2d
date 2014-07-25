@@ -1,8 +1,8 @@
 var Vec2D = require('../src/Vec2D.js'),
   Suite = require('./Suite');
 
-var VECTOR_COUNT = 100000,
-  TEST_PASSES = 5;
+var VECTOR_COUNT = 1000000,
+  TEST_PASSES = 10;
 
 console.log('Tests are averaged from %d passes/runs on a set of %d vectors. Please wait...', TEST_PASSES, VECTOR_COUNT);
 

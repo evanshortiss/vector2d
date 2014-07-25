@@ -940,7 +940,7 @@ Vector.prototype = {
    * Use Vec2D.normalise(vector) to create a normalised clone of this.
    */
   normalise: function() {
-    return this.multiplyByScalar(1 / this.magnitude());
+    return this.divideByScalar(this.magnitude());
   },
 
 
@@ -966,7 +966,13 @@ Vector.prototype = {
    * @return  {Number}
    */
   magnitude: function() {
-    return Math.sqrt((this._axes[0] * this._axes[0]) + (this._axes[1] * this._axes[1]));
+    // This is faster than having multiple reads
+    // i.e faster than
+    // return Math.sqrt((this._axes[0] * this._axes[0]) + (this._axes[1] * this._axes[1]));
+    var x = this._axes[0],
+      y = this._axes[1];
+
+    return Math.sqrt((x * x) + (y * y));
   },
 
 
@@ -984,7 +990,10 @@ Vector.prototype = {
    * @return {Number}
    */
   lengthSq: function() {
-    return (this._axes[0] * this._axes[0]) + (this._axes[1] * this._axes[1]);
+    var x = this._axes[0],
+      y = this._axes[1];
+
+    return (x * x) + (y * y);
   },
 
 
@@ -1035,7 +1044,9 @@ Vector.prototype = {
    * @return  {Vector}
    */
   zero: function() {
-    this._axes[0] = this._axes[1] = 0;
+    // this._axes[0] = this._axes[1] = 0;
+    this._axes[0] = 0;
+    this._axes[1] = 0;
     return this;
   },
 

@@ -22,6 +22,7 @@ Suite.prototype = {
     this.multiplyByScalar();
     this.normalise();
     this.divS();
+    this.lengthSq();
 
     return this.results;
   },
@@ -192,6 +193,17 @@ Suite.prototype = {
         self.vectors[index].divS(randInt(1, 10));
       }),
       name: 'divS'
+    });
+  },
+
+  lengthSq: function() {
+    var self = this;
+
+    this.results.push({
+      time: this._run(function (index) {
+        self.vectors[index].lengthSq(randInt(1, 10));
+      }),
+      name: 'lengthSq'
     });
   }
 };
