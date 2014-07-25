@@ -15,7 +15,7 @@
     "tests",
     "index.html",
     "src",
-    "Gruntfile.js"
+    "Gruntfile.js",
     "package.json"
   ]
 }
