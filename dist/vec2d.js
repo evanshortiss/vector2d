@@ -1,4 +1,4 @@
-!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Vec2D=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.Vec2D=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -23,7 +23,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],2:[function(_dereq_,module,exports){
+},{}],2:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -88,14 +88,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],3:[function(_dereq_,module,exports){
+},{}],3:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],4:[function(_dereq_,module,exports){
+},{}],4:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -622,7 +622,7 @@ function isPrimitive(arg) {
 }
 exports.isPrimitive = isPrimitive;
 
-exports.isBuffer = _dereq_('./support/isBuffer');
+exports.isBuffer = require('./support/isBuffer');
 
 function objectToString(o) {
   return Object.prototype.toString.call(o);
@@ -666,7 +666,7 @@ exports.log = function() {
  *     prototype.
  * @param {function} superCtor Constructor function to inherit prototype from.
  */
-exports.inherits = _dereq_('inherits');
+exports.inherits = require('inherits');
 
 exports._extend = function(origin, add) {
   // Don't do anything if add isn't an object
@@ -684,10 +684,12 @@ function hasOwnProperty(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
-}).call(this,_dereq_("FWaASH"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":3,"FWaASH":2,"inherits":1}],5:[function(_dereq_,module,exports){
-var util = _dereq_('util'),
-  Vector = _dereq_('./Vector.js');
+}).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./support/isBuffer":3,"_process":2,"inherits":1}],5:[function(require,module,exports){
+'use strict';
+
+var util = require('util')
+  , Vector = require('./Vector.js');
 
 function Float32Vector(x, y) {
   if (this instanceof Float32Vector === false) {
@@ -702,15 +704,13 @@ util.inherits(Float32Vector, Vector);
 
 Float32Vector.prototype.ctor = Float32Vector;
 
-Float32Vector.prototype.clone = function() {
-  return new Float32Vector(this._axes[0], this._axes[1]);
-};
-
 module.exports = Float32Vector;
 
-},{"./Vector.js":8,"util":4}],6:[function(_dereq_,module,exports){
-var util = _dereq_('util'),
-  Vector = _dereq_('./Vector.js');
+},{"./Vector.js":8,"util":4}],6:[function(require,module,exports){
+'use strict';
+
+var util = require('util')
+  , Vector = require('./Vector.js');
 
 function ObjectVector(x, y) {
   if (this instanceof ObjectVector === false) {
@@ -726,16 +726,14 @@ util.inherits(ObjectVector, Vector);
 
 ObjectVector.prototype.ctor = ObjectVector;
 
-ObjectVector.prototype.clone = function() {
-  return new ObjectVector(this._axes[0], this._axes[1]);
-};
-
 module.exports = ObjectVector;
 
-},{"./Vector.js":8,"util":4}],7:[function(_dereq_,module,exports){
-var Vector = _dereq_('./Vector.js'),
-  Float32Vector = _dereq_('./Float32Vector.js'),
-  ObjectVector = _dereq_('./ObjectVector.js');
+},{"./Vector.js":8,"util":4}],7:[function(require,module,exports){
+'use strict';
+
+var Vector = require('./Vector.js')
+  , Float32Vector = require('./Float32Vector.js')
+  , ObjectVector = require('./ObjectVector.js');
 
 function Vec2D() {}
 
@@ -747,7 +745,9 @@ Vec2D.prototype = {
 
 module.exports = new Vec2D();
 
-},{"./Float32Vector.js":5,"./ObjectVector.js":6,"./Vector.js":8}],8:[function(_dereq_,module,exports){
+},{"./Float32Vector.js":5,"./ObjectVector.js":6,"./Vector.js":8}],8:[function(require,module,exports){
+'use strict';
+
 function Vector(x, y) {
   if (this instanceof Vector === false) {
     return new Vector(x, y);
@@ -757,7 +757,19 @@ function Vector(x, y) {
 }
 module.exports = Vector;
 
-var precision = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
+var precision = [
+  1,
+  10,
+  100,
+  1000,
+  10000,
+  100000,
+  1000000,
+  10000000,
+  100000000,
+  1000000000,
+  10000000000
+];
 
 Vector.prototype = {
   ctor: Vector,
@@ -819,7 +831,8 @@ Vector.prototype = {
    */
   toString: function(round) {
     if (round) {
-      return '(' + Math.round(this._axes[0]) + ', ' + Math.round(this._axes[1]) + ')';
+      return '(' + Math.round(this._axes[0]) +
+        ', ' + Math.round(this._axes[1]) + ')';
     }
     return '(' + this._axes[0] + ', ' + this._axes[1] + ')';
   },
@@ -966,9 +979,6 @@ Vector.prototype = {
    * @return  {Number}
    */
   magnitude: function() {
-    // This is faster than having multiple reads
-    // i.e faster than
-    // return Math.sqrt((this._axes[0] * this._axes[0]) + (this._axes[1] * this._axes[1]));
     var x = this._axes[0],
       y = this._axes[1];
 
@@ -1044,9 +1054,7 @@ Vector.prototype = {
    * @return  {Vector}
    */
   zero: function() {
-    // this._axes[0] = this._axes[1] = 0;
-    this._axes[0] = 0;
-    this._axes[1] = 0;
+    this._axes[0] = this._axes[1] = 0;
     return this;
   },
 
@@ -1090,10 +1098,12 @@ Vector.prototype = {
     // Default is two decimals
     n = n || 2;
 
+    var p = precision[n];
+
     // This performs waaay better than toFixed and give Float32 the edge again.
     // http://www.dynamicguru.com/javascript/round-numbers-with-precision/
-    this._axes[0] = ((0.5 + (this._axes[0] * precision[n])) << 0) / precision[n];
-    this._axes[1] = ((0.5 + (this._axes[1] * precision[n])) << 0) / precision[n];
+    this._axes[0] = ((0.5 + (this._axes[0] * p)) << 0) / p;
+    this._axes[1] = ((0.5 + (this._axes[1] * p)) << 0) / p;
 
     return this;
   },
@@ -1108,6 +1118,5 @@ Vector.prototype = {
   }
 };
 
-},{}]},{},[7])
-(7)
+},{}]},{},[7])(7)
 });
