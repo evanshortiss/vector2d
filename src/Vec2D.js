@@ -1,6 +1,8 @@
-var Vector = require('./Vector.js'),
-  Float32Vector = require('./Float32Vector.js'),
-  ObjectVector = require('./ObjectVector.js');
+'use strict';
+
+var Vector = require('./Vector.js')
+  , Float32Vector = require('./Float32Vector.js')
+  , ObjectVector = require('./ObjectVector.js');
 
 function Vec2D() {}
 

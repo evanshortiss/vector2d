@@ -1,3 +1,5 @@
+'use strict';
+
 function Vector(x, y) {
   if (this instanceof Vector === false) {
     return new Vector(x, y);
@@ -7,7 +9,19 @@ function Vector(x, y) {
 }
 module.exports = Vector;
 
-var precision = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 10000000000];
+var precision = [
+  1,
+  10,
+  100,
+  1000,
+  10000,
+  100000,
+  1000000,
+  10000000,
+  100000000,
+  1000000000,
+  10000000000
+];
 
 Vector.prototype = {
   ctor: Vector,
@@ -69,7 +83,8 @@ Vector.prototype = {
    */
   toString: function(round) {
     if (round) {
-      return '(' + Math.round(this._axes[0]) + ', ' + Math.round(this._axes[1]) + ')';
+      return '(' + Math.round(this._axes[0]) +
+        ', ' + Math.round(this._axes[1]) + ')';
     }
     return '(' + this._axes[0] + ', ' + this._axes[1] + ')';
   },
@@ -216,9 +231,6 @@ Vector.prototype = {
    * @return  {Number}
    */
   magnitude: function() {
-    // This is faster than having multiple reads
-    // i.e faster than
-    // return Math.sqrt((this._axes[0] * this._axes[0]) + (this._axes[1] * this._axes[1]));
     var x = this._axes[0],
       y = this._axes[1];
 

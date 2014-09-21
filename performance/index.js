@@ -16,9 +16,16 @@ function stats(item) {
 
 console.log('\nFloat32Vector:');
 fv.forEach(stats);
+global.gc();
 
-console.log('\nArrayVector:');
-av.forEach(stats);
+setTimeout(function () {
+  console.log('\nArrayVector:');
+  av.forEach(stats);
 
-console.log('\nObjectVector:');
-ov.forEach(stats);
+  global.gc();
+
+  setTimeout(function () {
+    console.log('\nObjectVector:');
+    ov.forEach(stats);
+  }, 4000);
+}, 4000);
