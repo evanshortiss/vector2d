@@ -13,12 +13,12 @@ function equal(a, b, digits) {
   return ((a == b) || (ar ==  br));
 }
 
-// Test each implementation
-testSuite(Vec2D.ArrayVector);
-testSuite(Vec2D.Float32Vector);
-testSuite(Vec2D.ObjectVector);
+// Test each implementation with the same test suite
+run(Vec2D.ArrayVector);
+run(Vec2D.Float32Vector);
+run(Vec2D.ObjectVector);
 
-function testSuite (ctor) {
+function run (ctor) {
 
   describe('\nTesting Class: ' + ctor.name.toString() + '\n', function() {
 
@@ -38,7 +38,7 @@ function testSuite (ctor) {
       });
     });
 
-    describe('Setting vector x and y params (Setters)', function() {
+    describe('setAxes', function() {
       it('Should modify vector axes to provided values.', function() {
         var v1 = new ctor(1, 2);
 
@@ -54,6 +54,27 @@ function testSuite (ctor) {
         // Just y
         v1.setX(47);
         assert(v1.getX() === 47);
+      });
+    });
+
+    describe('property get/set (use of instance.x or instance.y)', function () {
+      var v = new ctor(10, 20)
+          , x = v.x
+          , y = v.y;
+
+      it('Should get the vector x and y values', function () {
+        assert.equal(typeof x, 'number');
+        assert.equal(typeof y, 'number');
+        assert.equal(x, v._axes[0]);
+        assert.equal(y, v._axes[1]);
+      });
+
+      it ('Should set the vector x and y values', function () {
+        v.x = Math.random();
+        v.y = Math.random();
+
+        assert.notEqual(y, v.y);
+        assert.notEqual(x, v.x);
       });
     });
 

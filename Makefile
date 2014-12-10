@@ -1,6 +1,6 @@
-mocha				= ./node_modules/.bin/mocha
-jshint			= ./node_modules/.bin/jshint
-linelint 		= ./node_modules/.bin/linelint
+mocha		= ./node_modules/.bin/mocha
+jshint		= ./node_modules/.bin/jshint
+linelint 	= ./node_modules/.bin/linelint
 lintspaces 	= ./node_modules/.bin/lintspaces
 browserify 	= ./node_modules/.bin/browserify
 

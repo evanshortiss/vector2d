@@ -735,19 +735,21 @@ var Vector = require('./Vector.js')
   , Float32Vector = require('./Float32Vector.js')
   , ObjectVector = require('./ObjectVector.js');
 
-function Vec2D() {}
-
-Vec2D.prototype = {
+module.exports = {
   ArrayVector: Vector,
   ObjectVector: ObjectVector,
   Float32Vector: Float32Vector
 };
 
-module.exports = new Vec2D();
-
 },{"./Float32Vector.js":5,"./ObjectVector.js":6,"./Vector.js":8}],8:[function(require,module,exports){
 'use strict';
 
+/**
+ * Primary Vector class. Uses Array type for axis storage.
+ * @class Vector
+ * @param {Number} x The x component of this Vector
+ * @param {Number} y The y component of this Vector
+ */
 function Vector(x, y) {
   if (this instanceof Vector === false) {
     return new Vector(x, y);
@@ -773,6 +775,25 @@ var precision = [
 
 Vector.prototype = {
   ctor: Vector,
+
+
+  get x () {
+    return this._axes[0];
+  },
+
+  set x (x) {
+    this._axes[0] = x;
+    return this;
+  },
+
+  get y () {
+    return this._axes[1];
+  },
+
+  set y (y) {
+    this._axes[1] = y;
+    return this;
+  },
 
   /**
    * Set both x and y

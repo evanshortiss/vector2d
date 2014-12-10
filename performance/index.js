@@ -1,14 +1,14 @@
 var Vec2D = require('../src/Vec2D.js'),
   Suite = require('./Suite');
 
-var VECTOR_COUNT = 1000000,
-  TEST_PASSES = 10;
+var VECTOR_COUNT = 100000,
+  TEST_PASSES = 5;
 
 console.log('Tests are averaged from %d passes/runs on a set of %d vectors. Please wait...', TEST_PASSES, VECTOR_COUNT);
 
-var av = new Suite(Vec2D.ArrayVector, 100000, 5).run();
-var fv = new Suite(Vec2D.Float32Vector, 100000, 5).run();
-var ov = new Suite(Vec2D.ObjectVector, 100000, 5).run();
+var av = new Suite(Vec2D.ArrayVector, VECTOR_COUNT, TEST_PASSES).run();
+var fv = new Suite(Vec2D.Float32Vector, VECTOR_COUNT, TEST_PASSES).run();
+var ov = new Suite(Vec2D.ObjectVector, VECTOR_COUNT, TEST_PASSES).run();
 
 function stats(item) {
   console.log('"%s", %dms', item.name, item.time);
