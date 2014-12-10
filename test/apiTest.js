@@ -65,8 +65,8 @@ function run (ctor) {
       it('Should get the vector x and y values', function () {
         assert.equal(typeof x, 'number');
         assert.equal(typeof y, 'number');
-        assert.equal(x, v._axes[0]);
-        assert.equal(y, v._axes[1]);
+        assert.equal(x, v.x);
+        assert.equal(y, v.y);
       });
 
       it ('Should set the vector x and y values', function () {

@@ -32,33 +32,14 @@ var precision = [
 Vector.prototype = {
   ctor: Vector,
 
-
-  get x () {
-    return this._axes[0];
-  },
-
-  set x (x) {
-    this._axes[0] = x;
-    return this;
-  },
-
-  get y () {
-    return this._axes[1];
-  },
-
-  set y (y) {
-    this._axes[1] = y;
-    return this;
-  },
-
   /**
    * Set both x and y
    * @param x   New x val
    * @param y   New y val
    */
   setAxes: function(x, y) {
-    this._axes[0] = x;
-    this._axes[1] = y;
+    this.x = x;
+    this.y = y;
     return this;
   },
 
@@ -68,7 +49,7 @@ Vector.prototype = {
    * @return {Number}
    */
   getX: function() {
-    return this._axes[0];
+    return this.x;
   },
 
 
@@ -76,7 +57,7 @@ Vector.prototype = {
    * Setter for x axis.
    */
   setX: function(x) {
-    this._axes[0] = x;
+    this.x = x;
 
     return this;
   },
@@ -87,7 +68,7 @@ Vector.prototype = {
    * @return {Number}
    */
   getY: function() {
-    return this._axes[1];
+    return this.y;
   },
 
 
@@ -95,7 +76,7 @@ Vector.prototype = {
    * Setter for y axis.
    */
   setY: function(y) {
-    this._axes[1] = y;
+    this.y = y;
 
     return this;
   },
@@ -108,10 +89,10 @@ Vector.prototype = {
    */
   toString: function(round) {
     if (round) {
-      return '(' + Math.round(this._axes[0]) +
-        ', ' + Math.round(this._axes[1]) + ')';
+      return '(' + Math.round(this.x) +
+        ', ' + Math.round(this.y) + ')';
     }
-    return '(' + this._axes[0] + ', ' + this._axes[1] + ')';
+    return '(' + this.x + ', ' + this.y + ')';
   },
 
 
@@ -120,7 +101,7 @@ Vector.prototype = {
    * @return {Array}
    */
   toArray: function() {
-    return new Array(this._axes[0], this._axes[1]);
+    return new Array(this.x, this.y);
   },
 
 
@@ -130,8 +111,8 @@ Vector.prototype = {
    */
   toObject: function() {
     return {
-      x: this._axes[0],
-      y: this._axes[1]
+      x: this.x,
+      y: this.y
     };
   },
 
@@ -141,8 +122,8 @@ Vector.prototype = {
    * @param {Vector} vec
    */
   add: function(vec) {
-    this._axes[0] += vec._axes[0];
-    this._axes[1] += vec._axes[1];
+    this.x += vec.x;
+    this.y += vec.y;
     return this;
   },
 
@@ -152,8 +133,8 @@ Vector.prototype = {
    * @param {Vector} vec
    */
   subtract: function(vec) {
-    this._axes[0] -= vec._axes[0];
-    this._axes[1] -= vec._axes[1];
+    this.x -= vec.x;
+    this.y -= vec.y;
     return this;
   },
 
@@ -164,7 +145,7 @@ Vector.prototype = {
    * @return  {Boolean}
    */
   equals: function(vec) {
-    return (vec._axes[0] == this._axes[0] && vec._axes[1] == this._axes[1]);
+    return (vec.x == this.x && vec.y == this.y);
   },
 
 
@@ -173,8 +154,8 @@ Vector.prototype = {
    * @param {Vector} vec
    */
   multiplyByVector: function(vec) {
-    this._axes[0] *= vec._axes[0];
-    this._axes[1] *= vec._axes[1];
+    this.x *= vec.x;
+    this.y *= vec.y;
     return this;
   },
   mulV: function(v) {
@@ -187,8 +168,8 @@ Vector.prototype = {
    * @param {Vector} vec
    */
   divideByVector: function(vec) {
-    this._axes[0] /= vec._axes[0];
-    this._axes[1] /= vec._axes[1];
+    this.x /= vec.x;
+    this.y /= vec.y;
     return this;
   },
   divV: function(v) {
@@ -201,8 +182,8 @@ Vector.prototype = {
    * @param {Number} n
    */
   multiplyByScalar: function(n) {
-    this._axes[0] *= n;
-    this._axes[1] *= n;
+    this.x *= n;
+    this.y *= n;
 
     return this;
   },
@@ -216,8 +197,8 @@ Vector.prototype = {
    * @param {Number} n
    */
   divideByScalar: function(n) {
-    this._axes[0] /= n;
-    this._axes[1] /= n;
+    this.x /= n;
+    this.y /= n;
     return this;
   },
   divS: function(n) {
@@ -256,8 +237,8 @@ Vector.prototype = {
    * @return  {Number}
    */
   magnitude: function() {
-    var x = this._axes[0],
-      y = this._axes[1];
+    var x = this.x,
+      y = this.y;
 
     return Math.sqrt((x * x) + (y * y));
   },
@@ -277,8 +258,8 @@ Vector.prototype = {
    * @return {Number}
    */
   lengthSq: function() {
-    var x = this._axes[0],
-      y = this._axes[1];
+    var x = this.x,
+      y = this.y;
 
     return (x * x) + (y * y);
   },
@@ -290,7 +271,7 @@ Vector.prototype = {
    * @return  {Number}
    */
   dot: function(vec) {
-    return (vec._axes[0] * this._axes[0]) + (vec._axes[1] * this._axes[1]);
+    return (vec.x * this.x) + (vec.y * this.y);
   },
 
 
@@ -300,7 +281,7 @@ Vector.prototype = {
    * @return  {Number}
    */
   cross: function(vec) {
-    return ((this._axes[0] * vec._axes[1]) - (this._axes[1] * vec._axes[0]));
+    return ((this.x * vec.y) - (this.y * vec.x));
   },
 
 
@@ -308,8 +289,8 @@ Vector.prototype = {
    * Reverses this vector.
    */
   reverse: function() {
-    this._axes[0] = -this._axes[0];
-    this._axes[1] = -this._axes[1];
+    this.x = -this.x;
+    this.y = -this.y;
     return this;
   },
 
@@ -319,8 +300,8 @@ Vector.prototype = {
    * @param   {Vector} vec
    */
   abs: function() {
-    this._axes[0] = Math.abs(this._axes[0]);
-    this._axes[1] = Math.abs(this._axes[1]);
+    this.x = Math.abs(this.x);
+    this.y = Math.abs(this.y);
 
     return this;
   },
@@ -331,7 +312,7 @@ Vector.prototype = {
    * @return  {Vector}
    */
   zero: function() {
-    this._axes[0] = this._axes[1] = 0;
+    this.x = this.y = 0;
     return this;
   },
 
@@ -341,8 +322,8 @@ Vector.prototype = {
    * @param {Vector} v
    */
   distance: function (v) {
-    var x = this._axes[0] - v._axes[0];
-    var y = this._axes[1] - v._axes[1];
+    var x = this.x - v.x;
+    var y = this.y - v.y;
 
     return Math.sqrt((x * x) + (y * y));
   },
@@ -357,11 +338,11 @@ Vector.prototype = {
     var cos = Math.cos(rads),
       sin = Math.sin(rads);
 
-    var ox = this._axes[0],
-      oy = this._axes[1];
+    var ox = this.x,
+      oy = this.y;
 
-    this._axes[0] = ox * cos - oy * sin;
-    this._axes[1] = ox * sin + oy * cos;
+    this.x = ox * cos - oy * sin;
+    this.y = ox * sin + oy * cos;
 
     return this;
   },
@@ -379,8 +360,8 @@ Vector.prototype = {
 
     // This performs waaay better than toFixed and give Float32 the edge again.
     // http://www.dynamicguru.com/javascript/round-numbers-with-precision/
-    this._axes[0] = ((0.5 + (this._axes[0] * p)) << 0) / p;
-    this._axes[1] = ((0.5 + (this._axes[1] * p)) << 0) / p;
+    this.x = ((0.5 + (this.x * p)) << 0) / p;
+    this.y = ((0.5 + (this.y * p)) << 0) / p;
 
     return this;
   },
@@ -391,6 +372,24 @@ Vector.prototype = {
    * @return {Vector}
    */
   clone: function() {
-    return new this.ctor(this._axes[0], this._axes[1]);
+    return new this.ctor(this.x, this.y);
   }
 };
+
+Object.defineProperty(Vector.prototype, 'x', {
+  get: function () {
+    return this._axes[0];
+  },
+  set: function (x) {
+    this._axes[0] = x;
+  }
+});
+
+Object.defineProperty(Vector.prototype, 'y', {
+  get: function () {
+    return this._axes[1];
+  },
+  set: function (y) {
+    this._axes[1] = y;
+  }
+});

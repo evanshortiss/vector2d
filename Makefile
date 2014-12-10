@@ -1,5 +1,6 @@
 mocha		= ./node_modules/.bin/mocha
 jshint		= ./node_modules/.bin/jshint
+uglify		= ./node_modules/.bin/uglifyjs
 linelint 	= ./node_modules/.bin/linelint
 lintspaces 	= ./node_modules/.bin/lintspaces
 browserify 	= ./node_modules/.bin/browserify
@@ -28,3 +29,4 @@ performance:
 
 build:test
 	$(browserify) -e ./src/Vec2D.js -o ./dist/vec2d.js -s Vec2D
+	$(uglify) ./dist/vec2d.js -o ./dist/vec2d.min.js -mc

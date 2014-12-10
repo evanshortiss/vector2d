@@ -8,12 +8,28 @@ function ObjectVector(x, y) {
     return new ObjectVector(x, y);
   }
 
-  this._axes = {
-    0: x,
-    1: y
-  };
+  this._x = x;
+  this._y = y;
 }
 util.inherits(ObjectVector, Vector);
+
+Object.defineProperty(ObjectVector.prototype, 'x', {
+  get: function () {
+    return this._x;
+  },
+  set: function (x) {
+    this._x = x;
+  }
+});
+
+Object.defineProperty(ObjectVector.prototype, 'y', {
+  get: function () {
+    return this._y;
+  },
+  set: function (y) {
+    this._y = y;
+  }
+});
 
 ObjectVector.prototype.ctor = ObjectVector;
 
