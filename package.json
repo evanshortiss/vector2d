@@ -37,9 +37,9 @@
   "devDependencies": {
     "linelint": "0.0.3",
     "lintspaces-cli": "0.0.4",
-    "mocha": "^1.21.4",
-    "jshint": "^2.5.5",
-    "browserify": "^5.12.0"
+    "mocha": "1.21.4",
+    "jshint": "2.5.5",
+    "browserify": "5.12.0"
   },
   "directories": {
     "test": "./test"
