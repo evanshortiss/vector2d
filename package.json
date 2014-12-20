@@ -17,6 +17,9 @@
     "type": "git",
     "url": "https://github.com/evanshortiss/vec2d.git"
   },
+  "scripts": {
+    "test": "make test"
+  },
   "testling": {
     "harness": "mocha-bdd",
     "files": "test/*.js",
