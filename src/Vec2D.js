@@ -8,4 +8,6 @@ module.exports = {
   ArrayVector: Vector,
   ObjectVector: ObjectVector,
   Float32Vector: Float32Vector
+
+  // TODO: Add instance methods in the future
 };
