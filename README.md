@@ -1,6 +1,9 @@
 Vec2D - 2D Vector Library for JavaScript
 ===
 
+[![build-status](https://travis-ci.org/evanshortiss/vec2d.svg?branch=master)
+](https://travis-ci.org/evanshortiss/vec2d.svg?branch=master)
+
 ## Browser Support
 [![browser support](https://ci.testling.com/evanshortiss/vec2d.png)
 ](https://ci.testling.com/evanshortiss/vec2d)
@@ -54,51 +57,57 @@ Just include a script tag as you'd expect:
 Performance can be gauged by running the command below. This currently only operates in a node environment so you need to run it from a terminal.
 
 ```bash
-  ~/workspaces/vec2d$ node performance/index.js
+Evan@Evans-MacBook-Pro:~/vec2d$ make performance
+node --expose-gc ./performance/index.js
+Tests are averaged from 5 passes/runs on a set of 100000 vectors. Please wait...
 
-  Tests are averaged from 5 passes/runs on a set of 100000 vectors. Please wait...
+Float32Vector:
+"generate (e.g new Float32Vector)", 936ms
+"add", 38ms
+"subtract", 36.8ms
+"round", 6ms
+"abs", 6.2ms
+"magnitude", 3.8ms
+"clone", 883.2ms
+"zero", 3ms
+"reverse", 6.8ms
+"toString", 8.4ms
+"multiplyByScalar", 6.6ms
+"normalise", 11.4ms
+"divS", 7ms
+"lengthSq", 4.8ms
 
-  Float32Vector:
-  "generate (e.g new Float32Vector)", 1222ms
-  "add", 33ms
-  "subtract", 32.6ms
-  "round", 4.6ms
-  "abs", 3ms
-  "magnitude", 3ms
-  "clone", 1056.6ms
-  "zero", 2.8ms
-  "reverse", 3ms
-  "toString", 10.6ms
-  "multiplyByScalar", 4ms
-  "normalise", 6.6ms
+ArrayVector:
+"generate (e.g new Vector)", 34ms
+"add", 39.8ms
+"subtract", 36.4ms
+"round", 4.6ms
+"abs", 4.2ms
+"magnitude", 2ms
+"clone", 6.2ms
+"zero", 1.6ms
+"reverse", 4.4ms
+"toString", 14ms
+"multiplyByScalar", 5.8ms
+"normalise", 9ms
+"divS", 6.4ms
+"lengthSq", 4.2ms
 
-  ArrayVector:
-  "generate (e.g new Vector)", 31ms
-  "add", 59.2ms
-  "subtract", 40.2ms
-  "round", 7ms
-  "abs", 4.4ms
-  "magnitude", 5.2ms
-  "clone", 7ms
-  "zero", 2.8ms
-  "reverse", 5.8ms
-  "toString", 12.6ms
-  "multiplyByScalar", 7.4ms
-  "normalise", 13ms
-
-  ObjectVector:
-  "generate (e.g new ObjectVector)", 103ms
-  "add", 54ms
-  "subtract", 55ms
-  "round", 25.6ms
-  "abs", 6.8ms
-  "magnitude", 6ms
-  "clone", 25.8ms
-  "zero", 3ms
-  "reverse", 16.4ms
-  "toString", 13.4ms
-  "multiplyByScalar", 6.4ms
-  "normalise", 16.8ms
+ObjectVector:
+"generate (e.g new ObjectVector)", 10ms
+"add", 24.2ms
+"subtract", 23.6ms
+"round", 7ms
+"abs", 6.6ms
+"magnitude", 3.2ms
+"clone", 6.8ms
+"zero", 3.6ms
+"reverse", 5.4ms
+"toString", 27.6ms
+"multiplyByScalar", 7ms
+"normalise", 10.4ms
+"divS", 8.4ms
+"lengthSq", 4ms
 ```
 
 ## Library Function Structure
