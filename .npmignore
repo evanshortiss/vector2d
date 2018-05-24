@@ -1,6 +1,13 @@
-test
-bower.json
-index.html
-performance
-build
-Gruntfile.js
+# No need to publish typescript source files
+*.ts
+
+# These are ignored by Git, but we DO want to publish them to npm
+!*.js
+!*.d.ts
+
+# Tests, examples, etc. should be ignored too
+__test__
+dist
+example
+.travis.yml
+.editorconfig

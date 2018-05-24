@@ -1,16 +1,11 @@
-/**
- * apiTest.js
- * Test the vector API
- */
-
-var assert = require('assert')
-  , Vec2D = require('../src/Vec2D.js');
+import * as Vec2D from '../src/Vec2D'
+import * as assert from 'assert'
 
 function equal(a, b, digits) {
-  var ar = a.toFixed(digits)
-    , br = b.toFixed(digits);
+  const ar = a.toFixed(digits)
+  const br = b.toFixed(digits);
 
-  return ((a == b) || (ar ==  br));
+  return a === b || ar ===  br;
 }
 
 // Test each implementation with the same test suite
@@ -18,19 +13,19 @@ run(Vec2D.ArrayVector);
 run(Vec2D.Float32Vector);
 run(Vec2D.ObjectVector);
 
-function run (ctor) {
+function run (ctor: Vec2D.VectorConstructable<Vec2D.AbstractVector>) {
 
   describe('\nTesting Class: ' + ctor.name.toString() + '\n', function() {
 
     describe('Vector creation methods.', function() {
-      it('Should create a vector successfully', function() {
+      it('should create a vector successfully', function() {
         var v1 = new ctor(1, 2);
         assert(v1);
         assert(v1.getX() === 1);
         assert(v1.getY() === 2);
       });
 
-      it('Should create an ArrayVector directly', function() {
+      it('should create an ArrayVector directly', function() {
         var v = new ctor(0, 23);
 
         assert(v.getX() === 0);
@@ -39,7 +34,7 @@ function run (ctor) {
     });
 
     describe('setAxes', function() {
-      it('Should modify vector axes to provided values.', function() {
+      it('should modify vector axes to provided values.', function() {
         var v1 = new ctor(1, 2);
 
         // Set both x and y
@@ -52,24 +47,24 @@ function run (ctor) {
         assert(v1.getX() === 10);
 
         // Just y
-        v1.setX(47);
-        assert(v1.getX() === 47);
+        v1.setY(47);
+        assert(v1.getY() === 47);
       });
     });
 
     describe('property get/set (use of instance.x or instance.y)', function () {
       var v = new ctor(10, 20)
-          , x = v.x
-          , y = v.y;
+        , x = v.x
+        , y = v.y;
 
-      it('Should get the vector x and y values', function () {
+      it('should get the vector x and y values', function () {
         assert.equal(typeof x, 'number');
         assert.equal(typeof y, 'number');
         assert.equal(x, v.x);
         assert.equal(y, v.y);
       });
 
-      it ('Should set the vector x and y values', function () {
+      it ('should set the vector x and y values', function () {
         v.x = Math.random();
         v.y = Math.random();
 
@@ -79,7 +74,7 @@ function run (ctor) {
     });
 
     describe('toString()', function() {
-      it('Should return vector as properly formatted string', function() {
+      it('should return vector as properly formatted string', function() {
         var v1 = new ctor(10.9, 20.3);
 
         assert(v1.toString() === '(' + v1.getX() + ', ' + v1.getY() + ')');
@@ -88,7 +83,7 @@ function run (ctor) {
     });
 
     describe('toArray()', function() {
-      it('Should return vector as standard array.', function() {
+      it('should return vector as standard array.', function() {
         var v1 = new ctor(645, 234);
 
         var res = v1.toArray();
@@ -98,7 +93,7 @@ function run (ctor) {
     });
 
     describe('toObject()', function() {
-      it('Should return an object containgin x and y properties', function() {
+      it('should return an object containgin x and y properties', function() {
         var v1 = new ctor(645, 234);
 
         var res = v1.toObject();
@@ -108,7 +103,7 @@ function run (ctor) {
     });
 
     describe('add()', function() {
-      it('Should add two vectors using the instance method.', function() {
+      it('should add two vectors using the instance method.', function() {
         var v1 = new ctor(2, 4);
         var v2 = new ctor(3, 34);
 
@@ -119,7 +114,7 @@ function run (ctor) {
     });
 
     describe('subtract()', function() {
-      it('Should subtract one vector from another via instance method', function() {
+      it('should subtract one vector from another via instance method', function() {
         var v1 = new ctor(2, 4);
         var v2 = new ctor(3, 34);
 
@@ -130,7 +125,7 @@ function run (ctor) {
     });
 
     describe('equals()', function() {
-      it('Should determine vectors are equal before any modifications and not after.', function() {
+      it('should determine vectors are equal before any modifications and not after.', function() {
         var v1 = new ctor(3, 34);
         var v2 = new ctor(3, 34);
 
@@ -143,11 +138,11 @@ function run (ctor) {
     });
 
     describe('multiplyByVector()', function() {
-      it('Should multiply vector by another  without producing a new vector.', function() {
+      it('should multiply vector by another  without producing a new vector.', function() {
         var v1 = new ctor(5, 3);
         var v2 = new ctor(3, 10);
 
-        v1.multiplyByVector(v2);
+        v1.mulV(v2);
 
         assert(v1.getX() === 15);
         assert(v1.getY() === 30);
@@ -157,11 +152,11 @@ function run (ctor) {
     });
 
     describe('divideByVector', function() {
-      it('Should dive one vector by another without producing a new vector.', function() {
+      it('should dive one vector by another without producing a new vector.', function() {
         var v1 = new ctor(10, 20);
         var v2 = new ctor(2, 10);
 
-        v1.divideByVector(v2);
+        v1.divV(v2);
 
         assert(v1.getX() === 5);
         assert(v1.getY() === 2);
@@ -171,10 +166,10 @@ function run (ctor) {
     });
 
     describe('multiplyByScalar()', function() {
-      it('Should multiply vector by number without producing a new vector.', function() {
+      it('should multiply vector by number without producing a new vector.', function() {
         var v1 = new ctor(5, 3);
 
-        v1.multiplyByScalar(3);
+        v1.mulS(3);
 
         assert(v1.getX() === 15);
         assert(v1.getY() === 9);
@@ -182,27 +177,28 @@ function run (ctor) {
     });
 
     describe('divideByScalar()', function() {
-      it('Should divide vector by number without producing a new vector.', function() {
+      it('should divide vector by number without producing a new vector.', function() {
         var v1 = new ctor(6, 9);
 
-        v1.divideByScalar(3);
+        v1.divS(3);
 
         assert(v1.getX() === 2);
         assert(v1.getY() === 3);
       });
     });
 
-    describe('magnitude()', function() {
-      it('Should return length of the vector.', function() {
+    describe('magnitude() & length()', function() {
+      it('should return length of the vector.', function() {
         var v1 = new ctor(6, 9);
         var len = Math.sqrt(v1.getX() * v1.getX() + v1.getY() * v1.getY());
 
-        assert(v1.magnitude() === len);
+        assert.equal(v1.magnitude(), len);
+        assert.equal(v1.length(), len);
       });
     });
 
     describe('normalise()', function() {
-      it('Should return unit/normalised version of this vector.', function() {
+      it('should return unit/normalised version of this vector.', function() {
         var v1 = new ctor(6, 9);
         var len = v1.magnitude();
         var v2 = new ctor(v1.getX() / len, v1.getY() / len);
@@ -215,8 +211,36 @@ function run (ctor) {
       });
     });
 
+    describe('normalize()', function() {
+      it('should return unit/normalised version of this vector.', function() {
+        var v1 = new ctor(6, 9);
+        var len = v1.magnitude();
+        var v2 = new ctor(v1.getX() / len, v1.getY() / len);
+        v1.normalize();
+
+        v1.round();
+        v2.round();
+
+        assert(v1.equals(v2));
+      });
+    });
+
+    describe('unit()', function() {
+      it('should return unit/normalised version of this vector.', function() {
+        var v1 = new ctor(6, 9);
+        var len = v1.magnitude();
+        var v2 = new ctor(v1.getX() / len, v1.getY() / len);
+        v1.unit();
+
+        v1.round();
+        v2.round();
+
+        assert(v1.equals(v2));
+      });
+    });
+
     describe('dot()', function() {
-      it('Should apply dot result to the vector method is called on.', function() {
+      it('should apply dot result to the vector method is called on.', function() {
         var v1 = new ctor(6, 9);
         var v2 = new ctor(10, 9);
 
@@ -228,7 +252,7 @@ function run (ctor) {
     });
 
     describe('reverse()', function() {
-      it('Should reverse vector axes', function() {
+      it('should reverse vector axes', function() {
         var v1 = new ctor(6, 9);
         v1.reverse();
 
@@ -237,8 +261,28 @@ function run (ctor) {
       });
     });
 
+    describe('distance(v)', function() {
+      it('should return distance between two vectors', function() {
+        var v1 = new ctor(3, 6);
+        var v2 = new ctor(6, 9);
+
+        assert.equal(v1.distance(v2), 4.242640687119285)
+      });
+    });
+
+    describe('zero()', function() {
+      it('should set x and y to 0', function() {
+        var v1 = new ctor(6, 9);
+
+        v1.zero()
+
+        assert.equal(v1.getX(), 0);
+        assert.equal(v1.getY(), 0);
+      });
+    });
+
     describe('round()', function() {
-      it('Should return the correct rounded value.', function() {
+      it('should return the correct rounded value.', function() {
         var v1 = new ctor(5.222, 0.592);
         v1.round();
 
@@ -253,7 +297,7 @@ function run (ctor) {
     });
 
     describe('abs()', function() {
-      it('Should set values to positives', function() {
+      it('should set values to positives', function() {
         var v1 = new ctor(-1.43, -8.3);
         v1.abs();
 
@@ -263,7 +307,7 @@ function run (ctor) {
     });
 
     describe('clone()', function() {
-      it('Should create a copy of the vector.', function() {
+      it('should create a copy of the vector.', function() {
         var v1 = new ctor(47, 345);
         var clone = v1.clone();
 
@@ -274,7 +318,7 @@ function run (ctor) {
     });
 
     describe('cross()', function() {
-      it('Should return a scalar value.', function() {
+      it('should return a scalar value.', function() {
         var v1 = new ctor(12, 32);
         var v2 = new ctor(2, 56);
 

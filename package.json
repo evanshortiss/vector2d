@@ -3,56 +3,83 @@
   "keywords": [
     "physics",
     "math",
+    "vector",
     "vectors",
     "2d",
     "float",
     "float32",
-    "Float32Array"
+    "Float32Array",
+    "typescript",
+    "tsc"
   ],
   "description": "2D Vector library offering Float32Array, Object or standard Array based vectors.",
-  "main": "./src/Vec2D.js",
-  "author": "Evan Shortiss",
-  "version": "2.1.0",
+  "main": "src/Vec2D.js",
+  "typings": "src/Vec2D.d.ts",
+  "author": {
+    "name": "Evan Shortiss",
+    "email": "evanshortiss@gmail.com",
+    "url": "http://evanshortiss.com"
+  },
+  "version": "3.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/evanshortiss/vec2d.git"
   },
   "scripts": {
-    "test": "make test"
+    "tsc": "tsc",
+    "test": "tsc && jest",
+    "coveralls": "cat coverage/lcov.info | coveralls",
+    "prepublish": "tsc",
+    "prettier": "prettier src/*.ts !src/*.d.ts --write --no-semi",
+    "precommit": "npm run preitter && npm run test",
+    "browserify": "browserify -s Vec2D -e src/Vec2D.js -o dist/vec2d.js",
+    "uglify": "uglifyjs -c -m -o dist/vec2d.min.js dist/vec2d.js"
   },
-  "testling": {
-    "harness": "mocha-bdd",
-    "files": "test/*.js",
-    "browsers": [
-      "ie/8..latest",
-      "chrome/22..latest",
-      "firefox/16..latest",
-      "safari/4..latest",
-      "opera/11.0..latest",
-      "iphone/6..latest",
-      "ipad/6..latest",
-      "android-browser/latest"
+  "jest": {
+    "testEnvironment": "node",
+    "cache": false,
+    "collectCoverage": true,
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
     ]
   },
   "devDependencies": {
-    "linelint": "0.0.3",
-    "lintspaces-cli": "0.0.4",
-    "mocha": "1.21.4",
-    "jshint": "2.5.5",
-    "browserify": "5.12.0"
-  },
-  "directories": {
-    "test": "./test"
+    "@types/jest": "~22.2.3",
+    "@types/node": "~10.0.8",
+    "browserify": "~16.2.2",
+    "coveralls": "~3.0.1",
+    "husky": "~0.14.3",
+    "jest": "~22.0.6",
+    "prettier": "~1.12.1",
+    "ts-jest": "~22.0.4",
+    "typescript": "~2.8.3",
+    "uglify-js": "~3.3.27"
   },
   "bugs": {
     "url": "https://github.com/evanshortiss/vec2d/issues"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
+  "license": "MIT",
   "engines": {
-    "node": ">=0.8.8"
+    "node": ">=4"
   }
 }

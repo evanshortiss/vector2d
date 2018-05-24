@@ -1,14 +1,9 @@
-Vec2D - 2D Vector Library for JavaScript
-===
+# Vec2D - 2D Vectors for TypeScript & JavaScript
 
-[![build-status](https://travis-ci.org/evanshortiss/vec2d.svg?branch=master)
-](https://travis-ci.org/evanshortiss/vec2d.svg?branch=master)
-
-## Browser Support
-[![browser support](https://ci.testling.com/evanshortiss/vec2d.png)
-](https://ci.testling.com/evanshortiss/vec2d)
-
-Full API support is available in the browsers listed in green above. Browsers marked in red generally support the library, but do not support Float32Vectors so simply don't use these and you'll be fine.
+[![Travis CI](https://travis-ci.org/evanshortiss/vec2d.svg?branch=master)](https://travis-ci.org/evanshortiss/vec2d)
+[![Coverage Status](https://coveralls.io/repos/github/evanshortiss/vec2d/badge.svg?branch=master)](https://coveralls.io/github/evanshortiss/vec2d?branch=master)
+[![npm version](https://badge.fury.io/js/vec2d.svg)](https://badge.fury.io/js/vec2d)
+[![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 
 ## Version 2.0.0+ Breaking Changes
 Version 2.0.0 has been updated to remove my manual build steps in favour of using the awesome [browserify](http://browserify.org/).
@@ -43,14 +38,6 @@ To use:
   // Usage in node.js application if installed via npm
   var Vec2D = require('vector2d');
 ```
-
-### Browser
-Just include a script tag as you'd expect:
-
-```javascript
-<script src="path/to/vec2d.js" type="text/javascript"></script>
-```
-
 
 ## Performance
 
