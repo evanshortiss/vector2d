@@ -10,6 +10,7 @@ Dates are YYYY-MM-DD.
 * Publish code coverage to Coveralls
 * Increase code coverage
 * Test against multiple Node.js versions in CI
+* Add generated documentation
 
 ## 2.x
 * Build using browserify
