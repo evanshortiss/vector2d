@@ -12,18 +12,14 @@
     "typescript",
     "tsc"
   ],
-  "description": "2D Vector library offering Float32Array, Object or standard Array based vectors.",
+  "description": "2D Vector library offering Float32Array, Array or standard Object based vectors.",
   "main": "src/Vec2D.js",
   "typings": "src/Vec2D.d.ts",
-  "author": {
-    "name": "Evan Shortiss",
-    "email": "evanshortiss@gmail.com",
-    "url": "http://evanshortiss.com"
-  },
+  "author": "Evan Shortiss <evanshortiss@gmail.com> (http://evanshortiss.com)",
   "version": "3.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/evanshortiss/vec2d.git"
+    "url": "git+https://github.com/evanshortiss/vector2d.git"
   },
   "scripts": {
     "tsc": "tsc",
@@ -78,10 +74,15 @@
     "uglify-js": "~3.3.27"
   },
   "bugs": {
-    "url": "https://github.com/evanshortiss/vec2d/issues"
+    "url": "https://github.com/evanshortiss/vector2d/issues"
   },
   "license": "MIT",
   "engines": {
     "node": ">=6"
-  }
+  },
+  "homepage": "https://github.com/evanshortiss/vector2d#readme",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {}
 }
