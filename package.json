@@ -34,7 +34,7 @@
     "precommit": "npm run prettier && npm run test && npm run typedoc",
     "browserify": "browserify -s Vec2D -e src/Vec2D.js -o dist/vec2d.js",
     "uglify": "uglifyjs -c -m -o dist/vec2d.min.js dist/vec2d.js",
-    "typedoc": "typedoc --out docs/ src/"
+    "typedoc": "typedoc --out docs/ src/ && touch docs/.nojekyll"
   },
   "jest": {
     "testEnvironment": "node",

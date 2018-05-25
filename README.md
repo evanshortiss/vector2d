@@ -1,4 +1,4 @@
-# Vec2D - 2D Vectors for TypeScript & JavaScript
+# Vector2D - 2D Vectors for TypeScript & JavaScript
 
 [![Travis CI](https://travis-ci.org/evanshortiss/vector2d.svg?branch=master)](https://travis-ci.org/evanshortiss/vector2d)
 [![Coverage Status](https://coveralls.io/repos/github/evanshortiss/vector2d/badge.svg?branch=master)](https://coveralls.io/github/evanshortiss/vector2d?branch=master)
@@ -48,7 +48,7 @@ the repository that you can include via `<script>` tags.
 An easy to use 2D Vector library with 3 methods of Vector representation to
 optimise for your particular use case.
 
-Vec2D provides 3 main modes of Vector representations (classes):
+Vector2D provides 3 main modes of Vector representations (classes):
 
 * Vec2D.ArrayVector
 * Vec2D.Float32Vector
