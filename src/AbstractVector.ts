@@ -1,4 +1,3 @@
-
 /**
  * These values are used by the `AbstractVector.round` method to increase
  * performance vs. using  Number.toFixed.

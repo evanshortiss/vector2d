@@ -2,7 +2,6 @@
 
 [![Travis CI](https://travis-ci.org/evanshortiss/vec2d.svg?branch=master)](https://travis-ci.org/evanshortiss/vec2d)
 [![Coverage Status](https://coveralls.io/repos/github/evanshortiss/vec2d/badge.svg?branch=master)](https://coveralls.io/github/evanshortiss/vec2d?branch=master)
-[![npm version](https://badge.fury.io/js/vector2d.svg)](https://badge.fury.io/js/vector2d)
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 
 ## About
