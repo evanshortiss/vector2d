@@ -6,6 +6,7 @@ Dates are YYYY-MM-DD.
 * Convert codebase to TypeScript
 * Add support for TypeScript
 * Expose `AbstractVector` class for extension if desired
+* Enforce need for `new` keyword when creating vectors
 * Publish code coverage to Coveralls
 * Increase code coverage
 * Test against multiple Node.js versions in CI

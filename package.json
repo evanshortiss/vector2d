@@ -31,9 +31,10 @@
     "coveralls": "cat coverage/lcov.info | coveralls",
     "prepublish": "tsc",
     "prettier": "prettier src/*.ts !src/*.d.ts --write --no-semi",
-    "precommit": "npm run preitter && npm run test",
+    "precommit": "npm run prettier && npm run test && npm run typedoc",
     "browserify": "browserify -s Vec2D -e src/Vec2D.js -o dist/vec2d.js",
-    "uglify": "uglifyjs -c -m -o dist/vec2d.min.js dist/vec2d.js"
+    "uglify": "uglifyjs -c -m -o dist/vec2d.min.js dist/vec2d.js",
+    "typedoc": "typedoc --out docs/ src/"
   },
   "jest": {
     "testEnvironment": "node",
@@ -72,6 +73,7 @@
     "jest": "~22.0.6",
     "prettier": "~1.12.1",
     "ts-jest": "~22.0.4",
+    "typedoc": "~0.11.1",
     "typescript": "~2.8.3",
     "uglify-js": "~3.3.27"
   },

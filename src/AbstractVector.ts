@@ -1,3 +1,8 @@
+
+/**
+ * These values are used by the `AbstractVector.round` method to increase
+ * performance vs. using  Number.toFixed.
+ */
 const precision = [
   1,
   10,
@@ -16,6 +21,24 @@ export interface VectorConstructable<T> {
   new (x: number, y: number): T
 }
 
+/**
+ * The class that all other vector representations are derived from.
+ *
+ * Contains the core implementation for all methods that will be exposed by
+ * vector instances.
+ *
+ * Example of creating a custom implementation:
+ *
+ * ```ts
+ * import { AbstractVector } from "./AbstractVector"
+ *
+ * export class MyCustomVector extends AbstractVector {
+ *  constructor (x: number, y: number) {
+ *    super(CustomVectorType)
+ *  }
+ * }
+ * ```
+ */
 export abstract class AbstractVector {
   constructor(protected ctor: VectorConstructable<AbstractVector>) {}
 
@@ -26,7 +49,7 @@ export abstract class AbstractVector {
   abstract get y(): number
 
   /**
-   * Set both x and y
+   * Set both x and y axis value
    * @param x   New x val
    * @param y   New y val
    */
@@ -37,14 +60,14 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Getter for x axis.
+   * Getter for x the axis value
    */
   getX() {
     return this.x
   }
 
   /**
-   * Setter for x axis
+   * Setter for x axis value
    */
   setX(x: number) {
     this.x = x
@@ -53,8 +76,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Getter for y axis.
-   * @return {Number}
+   * Getter for y axis value
    */
   getY() {
     return this.y
@@ -70,7 +92,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * View vector as a string such as "Vec2D: (0, 4)"
+   * Return the vector as a formatted string, e.g "(0, 4)"
    */
   toString(round = false) {
     if (round) {
@@ -80,14 +102,14 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Return an array containing the vector axes.
+   * Return an Array containing the vector axes, e.g [0, 4]
    */
   toArray() {
     return [this.x, this.y]
   }
 
   /**
-   * Return an array containing the vector axes.
+   * Return an Object containing the vector axes, e.g { x: 0, y: 4 }
    */
   toObject() {
     return {
@@ -97,8 +119,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Add the provided Vector to this one.
-   * @param {Vector} vec
+   * Add the provided vector to this one
    */
   add(vec: AbstractVector) {
     this.x += vec.x
@@ -108,8 +129,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Subtract the provided vector from this one.
-   * @param {Vector} vec
+   * Subtract the provided vector from this one
    */
   subtract(vec: AbstractVector) {
     this.x -= vec.x
@@ -119,17 +139,14 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Check is the vector provided equal to this one.
-   * @param   {Vec2D}   vec
-   * @return  {Boolean}
+   * Check if the provided vector equal to this one
    */
   equals(vec: AbstractVector) {
     return vec.x === this.x && vec.y === this.y
   }
 
   /**
-   * Multiply this vector by the provided vector.
-   * @param {Vector} vec
+   * Multiply this vector by the provided vector
    */
   multiplyByVector(vec: AbstractVector) {
     this.x *= vec.x
@@ -138,13 +155,15 @@ export abstract class AbstractVector {
     return this
   }
 
+  /**
+   * Multiply this vector by the provided vector
+   */
   mulV(vec: AbstractVector) {
     return this.multiplyByVector(vec)
   }
 
   /**
-   * Multiply this vector by the provided vector.
-   * @param {Vector} vec
+   * Divide this vector by the provided vector
    */
   divideByVector(vec: AbstractVector) {
     this.x /= vec.x
@@ -152,13 +171,15 @@ export abstract class AbstractVector {
     return this
   }
 
+  /**
+   * Divide this vector by the provided vector
+   */
   divV(v: AbstractVector) {
     return this.divideByVector(v)
   }
 
   /**
    * Multiply this vector by the provided number
-   * @param n
    */
   multiplyByScalar(n: number) {
     this.x *= n
@@ -167,13 +188,15 @@ export abstract class AbstractVector {
     return this
   }
 
+  /**
+   * Multiply this vector by the provided number
+   */
   mulS(n: number) {
     return this.multiplyByScalar(n)
   }
 
   /**
    * Divive this vector by the provided number
-   * @param {Number} n
    */
   divideByScalar(n: number) {
     this.x /= n
@@ -181,35 +204,36 @@ export abstract class AbstractVector {
     return this
   }
 
+  /**
+   * Divive this vector by the provided number
+   */
   divS(n: number) {
     return this.divideByScalar(n)
   }
 
   /**
-   * Normalise this vector. Directly affects this vector.
-   * Use Vec2D.normalise(vector) to create a normalised clone of this.
+   * Normalise this vector
    */
   normalise() {
     return this.divideByScalar(this.magnitude())
   }
 
   /**
-   * For American spelling.
-   * Same as unit/normalise function.
+   * For American spelling. Same as unit/normalise function
    */
   normalize() {
     return this.normalise()
   }
 
   /**
-   * The same as normalise.
+   * The same as normalise and normalize
    */
   unit() {
     return this.normalise()
   }
 
   /**
-   * Return the magnitude (length) of this vector.
+   * Returns the magnitude (length) of this vector
    */
   magnitude() {
     const x = this.x
@@ -219,14 +243,14 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Return the magnitude (length) of this vector.
+   * Returns the magnitude (length) of this vector
    */
   length() {
     return this.magnitude()
   }
 
   /**
-   * Return the squred length of a vector
+   * Returns the squred length of this vector
    */
   lengthSq() {
     const x = this.x
@@ -236,23 +260,21 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Get the dot product of this vector by another.
-   * @param {Vector} vec
+   * Returns the dot product of this vector by another
    */
   dot(vec: AbstractVector) {
     return vec.x * this.x + vec.y * this.y
   }
 
   /**
-   * Get the cross product of this vector by another.
-   * @param {Vector} vec
+   * Returns the cross product of this vector by another.
    */
   cross(vec: AbstractVector) {
     return this.x * vec.y - this.y * vec.x
   }
 
   /**
-   * Reverses this vector.
+   * Reverses this vector i.e multiplies it by -1
    */
   reverse() {
     this.x = -this.x
@@ -261,8 +283,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Convert vector to absolute values.
-   * @param   {Vector} vec
+   * Set the vector axes values to absolute values
    */
   abs() {
     this.x = Math.abs(this.x)
@@ -272,7 +293,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Zeroes the vector
+   * Zeroes the vector i.e sets all axes to 0
    */
   zero() {
     this.x = this.y = 0
@@ -281,8 +302,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Distance between this vector and another.
-   * @param {Vector} v
+   * Returns the distance between this vector and another
    */
   distance(v: AbstractVector) {
     var x = this.x - v.x
@@ -292,8 +312,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Rotate the vetor by provided radians.
-   * @param   {Number}  rads
+   * Rotates the vetor by provided radians
    */
   rotate(rads: number) {
     const cos = Math.cos(rads)
@@ -309,8 +328,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Round this vector to n decimal places
-   * @param {Number}  n
+   * Rounds this vector to n decimal places
    */
   round(n = 2) {
     var p = precision[n]
@@ -324,7 +342,7 @@ export abstract class AbstractVector {
   }
 
   /**
-   * Create a copy of this vector.
+   * Returns a copy of this vector
    */
   clone() {
     return new this.ctor(this.x, this.y)

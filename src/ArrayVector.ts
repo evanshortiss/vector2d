@@ -1,5 +1,12 @@
 import { AbstractVector } from "./AbstractVector"
 
+/**
+ * A vector representation that stores the axes in an Array
+ *
+ * ```
+ * const v = new Vec2D.ArrayVector(2, 5)
+ * ```
+ */
 export class ArrayVector extends AbstractVector {
   protected axes: number[]
 

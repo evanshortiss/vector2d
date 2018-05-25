@@ -1,5 +1,12 @@
 import { AbstractVector } from "./AbstractVector"
 
+/**
+ * A vector representation that stores the axes in a Float32Array
+ *
+ * ```
+ * const v = new Vec2D.Float32Vector(2, 5)
+ * ```
+ */
 export class Float32Vector extends AbstractVector {
   protected axes: Float32Array
 

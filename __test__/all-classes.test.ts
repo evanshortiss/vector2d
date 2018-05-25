@@ -11,7 +11,7 @@ function equal(a, b, digits) {
 // Test each implementation with the same test suite
 run(Vec2D.ArrayVector);
 run(Vec2D.Float32Vector);
-run(Vec2D.ObjectVector);
+run(Vec2D.Vector);
 
 function run (ctor: Vec2D.VectorConstructable<Vec2D.AbstractVector>) {
 
