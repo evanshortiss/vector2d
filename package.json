@@ -26,8 +26,8 @@
     "test": "tsc && jest",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "prepublish": "tsc",
-    "prettier": "prettier src/*.ts --write --no-semi",
-    "precommit": "rm src/*.d.ts src/*.js src/*.map && npm run prettier && npm run test && npm run typedoc",
+    "prettier": "prettier src/*.ts --write --no-semi --trailing-comma none",
+    "precommit": "npm run test && rm src/*.d.ts src/*.js src/*.map && npm run prettier && npm run typedoc",
     "browserify": "browserify -s Vec2D -e src/Vec2D.js -o dist/vec2d.js",
     "uglify": "uglifyjs -c -m -o dist/vec2d.min.js dist/vec2d.js",
     "typedoc": "typedoc --out docs/ src/Vec2D.ts && touch docs/.nojekyll && git add ."
