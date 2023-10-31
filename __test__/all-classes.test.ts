@@ -1,7 +1,7 @@
 import * as Vec2D from '../src/Vec2D'
 import * as assert from 'assert'
 
-function equal(a, b, digits) {
+function equal(a: number, b: number, digits: number) {
   const ar = a.toFixed(digits)
   const br = b.toFixed(digits);
 

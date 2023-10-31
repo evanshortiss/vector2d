@@ -26,11 +26,11 @@
     "test": "tsc && jest",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "prepublish": "tsc",
-    "prettier": "prettier src/*.ts !src/*.d.ts --write --no-semi",
-    "precommit": "npm run prettier && npm run test && npm run typedoc",
+    "prettier": "prettier src/*.ts --write --no-semi",
+    "precommit": "rm src/*.d.ts src/*.js src/*.map && npm run prettier && npm run test && npm run typedoc",
     "browserify": "browserify -s Vec2D -e src/Vec2D.js -o dist/vec2d.js",
     "uglify": "uglifyjs -c -m -o dist/vec2d.min.js dist/vec2d.js",
-    "typedoc": "typedoc --out docs/ src/ && touch docs/.nojekyll && git add ."
+    "typedoc": "typedoc --out docs/ src/Vec2D.ts && touch docs/.nojekyll && git add ."
   },
   "jest": {
     "testEnvironment": "node",
@@ -61,16 +61,16 @@
     ]
   },
   "devDependencies": {
-    "@types/jest": "~22.2.3",
-    "@types/node": "~10.0.8",
+    "@types/jest": "^29.5.7",
+    "@types/node": "^18.18.8",
     "browserify": "~16.2.2",
-    "coveralls": "~3.0.1",
+    "coveralls": "^3.1.1",
     "husky": "~0.14.3",
-    "jest": "~22.0.6",
-    "prettier": "~1.12.1",
-    "ts-jest": "~22.0.4",
-    "typedoc": "~0.11.1",
-    "typescript": "~2.8.3",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "ts-jest": "^29.1.1",
+    "typedoc": "^0.25.3",
+    "typescript": "^5.2.2",
     "uglify-js": "~3.3.27"
   },
   "bugs": {
@@ -83,6 +83,5 @@
   "homepage": "https://github.com/evanshortiss/vector2d#readme",
   "directories": {
     "doc": "docs"
-  },
-  "dependencies": {}
+  }
 }
