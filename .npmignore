@@ -1,6 +1,3 @@
-# No need to publish typescript source files
-*.ts
-
 # These are ignored by Git, but we DO want to publish them to npm
 !src/*.js
 !src/*.d.ts
