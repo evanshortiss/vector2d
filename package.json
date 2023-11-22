@@ -78,7 +78,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=6"
+    "node": ">=14"
   },
   "homepage": "https://github.com/evanshortiss/vector2d#readme",
   "directories": {
