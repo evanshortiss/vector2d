@@ -16,7 +16,7 @@
   "main": "src/Vec2D.js",
   "typings": "src/Vec2D.d.ts",
   "author": "Evan Shortiss <evanshortiss@gmail.com> (http://evanshortiss.com)",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/evanshortiss/vector2d.git"
@@ -78,7 +78,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">=16"
+    "node": ">=6"
   },
   "homepage": "https://github.com/evanshortiss/vector2d#readme",
   "directories": {
